@@ -1,0 +1,40 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: common.yml }
+    - { resource: exceptions.yml }
+    - { resource: rest.yml }
+
+parameters:
+    app.name: "Pantaflix Pro"
+
+services:
+    app:
+        class: Silex\Application
+
+    request:
+        class: Symfony\Component\HttpFoundation\Request
+        factory: [ 'Symfony\Component\HttpFoundation\Request', createFromGlobals ]
+
+    service.session:
+        class: App\Service\Session
+        arguments: [ "@cache", "@request", "@model.user" ]
+
+    router.rest:
+        class: App\Router\RestRouter
+        arguments: [ "@app", "@service_container" ]
+        calls:
+            - [ setSession, [ "@service.session" ] ]
+
+    router.twig:
+        class: App\Router\TwigRouter
+        arguments: [ "@app", "@service_container", "@twig" ]
+        calls:
+            - [ setSession, [ "@service.session" ] ]
+
+    router.error:
+        class: App\Router\ErrorRouter
+        arguments: [ "@app", "@twig", %exception.codes%, %exception.messages%, %app.debug% ]
+
+    controller.web.index:
+        class: App\Controller\Web\IndexController
+        arguments: [ "@form.factory" ]

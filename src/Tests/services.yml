@@ -1,0 +1,9 @@
+services:
+    service.session:
+        class: App\Service\Session
+        arguments: [ "@cache", "@request", "@model.user" ]
+
+    service.mail:
+        class: App\Service\Mail
+        shared: false
+        arguments: [ "@mailer", "@twig", { %app.email%: %app.name%} ]

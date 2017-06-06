@@ -1,0 +1,20 @@
+services:
+    controller.rest.fake:
+        class: App\Tests\Router\FakeRestController
+
+    controller.web.fake:
+        class: App\Tests\Router\FakeWebController
+
+    controller.web.index:
+        class: App\Controller\Web\IndexController
+        arguments: [ "@form.factory" ]
+
+    controller.rest.session:
+        class: App\Controller\Rest\SessionController
+        arguments: [ "@service.session", "@model.user", "1.2.3", true ]
+
+    controller.rest.users:
+        class: App\Controller\Rest\UsersController
+        arguments: [ "@service.session", "@model.factory", "@form.factory" ]
+        calls:
+            - [ setMailService, [ "@service.mail" ] ]

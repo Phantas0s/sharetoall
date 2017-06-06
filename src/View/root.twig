@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>{{ app_name }}{% if page_name %} - {{ page_name }}{% endif %}</title>
+    <link rel="stylesheet" href="/assets/build/{{ realm }}.css?{{ "web/assets/build/#{realm}.css" | md5sum }}" data-type="replaceable">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body>
+    {% block header %}
+        {% include 'partials/header.twig' %}
+    {% endblock %}
+
+    {% block content %}
+        {# the page content goes here #}
+    {% endblock %}
+
+    <script src="/assets/build/{{ realm }}.js?{{ "web/assets/build/#{realm}.js" | md5sum }}"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+name: Symlex Migrations
+migrations_namespace: DoctrineMigrations
+table_name: Migration
+migrations_directory: db/migrations

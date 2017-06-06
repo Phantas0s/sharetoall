@@ -1,0 +1,74 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: common.yml }
+
+services:
+    app:
+        class: Symfony\Component\Console\Application
+        arguments: [%app.name%, %app.version%]
+        calls:
+            - [ setCatchExceptions, [ true ] ]
+            - [ setHelperSet, [ "@console.helpers" ] ]
+            - [ add, [ "@doctrine.migrations.execute" ] ]
+            - [ add, [ "@doctrine.migrations.generate" ] ]
+            - [ add, [ "@doctrine.migrations.migrate" ] ]
+            - [ add, [ "@doctrine.migrations.status" ] ]
+            - [ add, [ "@doctrine.migrations.version" ] ]
+            - [ add, [ "@command.user.reset-password" ] ]
+            - [ add, [ "@command.user.create" ] ]
+            - [ add, [ "@command.user.delete" ] ]
+            - [ add, [ "@command.database.create" ] ]
+            - [ add, [ "@command.database.drop" ] ]
+            - [ add, [ "@command.database.insert-fixtures" ]]
+
+    command.user.reset-password:
+        class: App\Command\UserResetPasswordCommand
+        arguments: [ 'user:reset-password', "@service.mail", "@model.user", "@twig" ]
+
+    command.user.create:
+        class: App\Command\UserCreateCommand
+        arguments: [ 'user:create', "@model.user", "@form.factory" ]
+
+    command.user.delete:
+        class: App\Command\UserDeleteCommand
+        arguments: [ 'user:delete', "@model.user" ]
+
+    command.database.create:
+        class: App\Command\DatabaseCreateCommand
+        arguments: [ 'database:create', "@db" ]
+
+    command.database.drop:
+        class: App\Command\DatabaseDropCommand
+        arguments: [ 'database:drop', "@db" ]
+
+    command.database.insert-fixtures:
+        class: App\Command\DatabaseInsertFixturesCommand
+        arguments: [ "database:insert-fixtures", "@db", "%app.path%/db/fixtures" ]
+
+    console.helper.db:
+        class: Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper
+        arguments:
+            - "@db"
+
+    console.helper.question:
+        class: Symfony\Component\Console\Helper\QuestionHelper
+
+    console.helpers:
+        class: Symfony\Component\Console\Helper\HelperSet
+        arguments:
+            - { db: "@console.helper.db", question: "@console.helper.question" }
+
+    doctrine.migrations.execute:
+        class: Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand
+
+    doctrine.migrations.generate:
+        class: Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand
+
+    doctrine.migrations.migrate:
+        class: Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand
+
+    doctrine.migrations.status:
+        class: Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand
+
+    doctrine.migrations.version:
+        class: Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand

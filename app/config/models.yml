@@ -1,0 +1,34 @@
+services:
+    dao.factory:
+        class: Doctrine\ActiveRecord\Dao\Factory
+        arguments:
+            - "@db"
+        calls:
+            - [ setFactoryNamespace, [ 'App\Dao' ] ]
+            - [ setFactoryPostfix, [ 'Dao' ] ]
+
+    model.factory:
+        class: App\Model\ModelFactory
+        arguments:
+            - "@dao.factory"
+        calls:
+            - [ setFactoryNamespace, [ 'App\Model' ] ]
+            - [ setFactoryPostfix, [ '' ] ]
+
+    model.user:
+        class: App\Model\User
+        shared: false
+        arguments:
+            - "@model.factory"
+
+    model.licensor:
+        class: App\Model\Licensor
+        shared: false
+        arguments:
+            - "@model.factory"
+
+    model.content:
+        class: App\Model\Content
+        shared: false
+        arguments:
+            - "@model.factory"

@@ -1,0 +1,25 @@
+{% extends 'root.twig' %}
+
+{% block content %}
+    <div id="app">
+        <main>
+            <h1>Send your message!</h1>
+
+            <form ref="form" method="post" action="/index">
+                {% for name, field in form %}
+                        <md-input-container>
+                            <label>{{ field.caption }}</label>
+                            <md-input
+                                    {% if field.required %}required{% endif %}
+                                    id="{{ field.uid }}" v-model="form.{{ name }}" name="{{ name }}"></md-input>
+                        </md-input-container>
+                {% endfor %}
+                {% if token is defined %}
+                    {{ token }}
+                {% endif %}
+
+                <md-button type="submit" class="md-primary md-raised">Send</md-button>
+            </form>
+        </main>
+    </div>
+{% endblock %}

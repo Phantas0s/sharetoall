@@ -1,0 +1,4 @@
+services:
+    controller.rest.domain:
+        class: App\Controller\Rest\DomainController
+        arguments: [ "@model.factory", "@form.factory" ]

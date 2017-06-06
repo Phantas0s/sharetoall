@@ -1,0 +1,55 @@
+imports:
+    - { resource: const.yml }
+    - { resource: twig.yml }
+    - { resource: mailer.yml }
+    - { resource: services.yml }
+    - { resource: forms.yml }
+    - { resource: models.yml }
+
+services:
+    log.handler:
+        class: Monolog\Handler\StreamHandler
+        arguments:
+            - "%app.log_path%/%app.environment%.log"
+
+    log:
+        class: Monolog\Logger
+        arguments:
+            - "main"
+        calls:
+            - [ pushHandler, [ "@log.handler" ] ]
+
+    redis:
+        class: Redis
+        calls:
+            - [ 'connect', [ '%redis.host%', '%redis.port%' ] ]
+
+    cache:
+        class: Symfony\Component\Cache\Simple\RedisCache
+        arguments:
+            - "@redis"
+
+    db.driver:
+        class: Doctrine\DBAL\Driver\PDOMySql\Driver
+
+    db:
+        class: Doctrine\DBAL\Connection
+        arguments:
+            - %db.options%
+            - "@db.driver"
+
+    message_selector:
+        class: Symfony\Component\Translation\MessageSelector
+
+    yaml_loader:
+        class: Symfony\Component\Translation\Loader\YamlFileLoader
+
+    array_loader:
+        class: Symfony\Component\Translation\Loader\ArrayLoader
+
+    translator:
+        class: Symfony\Component\Translation\Translator
+        arguments: [ "%app.locale%", "@message_selector" ]
+        calls:
+            - [ addLoader, [ "yaml", "@yaml_loader" ] ]
+            - [ addResource, [ "yaml", "%app.path%/l10n/en.yml", "en" ] ]

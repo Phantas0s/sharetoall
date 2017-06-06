@@ -1,0 +1,27 @@
+parameters:
+    app.version: '1.0'
+    app.domain: sharetoall.loc
+    app.url: sharetoall.loc
+    app.email: root@localhost
+    app.locale: en
+
+    db.host: db
+    db.port: 3306
+    db.name: sharetoall
+    db.user: sharetoall
+    db.password: sharetoall
+
+    redis.host: redis
+    redis.port: 6379
+
+    mailer.host: mailhog
+    mailer.port: 1025
+    mailer.encryption: null
+    mailer.username: ''
+    mailer.password: ''
+    mailer.auth_mode: ''
+
+    feature.example: true
+
+    minified_js: true
+    minified_css: true

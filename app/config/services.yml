@@ -1,0 +1,8 @@
+services:
+    service.mail:
+        class: App\Service\Mail
+        shared: false
+        arguments:
+            - "@mailer"
+            - "@twig.mailer"
+            - { %app.email%: %app.name%}

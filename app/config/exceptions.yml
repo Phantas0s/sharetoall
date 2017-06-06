@@ -1,0 +1,29 @@
+parameters:
+    exception.codes:
+        InvalidArgumentException: 400
+        App\Exception\UnauthorizedException: 401
+        App\Exception\AccessDeniedException: 403
+        App\Exception\AccessDeniedException: 403
+        App\Exception\NotFoundException: 404
+        Doctrine\ActiveRecord\Exception\NotFoundException: 404
+        Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException: 403
+        App\Exception\MethodNotAllowedException: 405
+        App\Exception\FormInvalidException: 409
+        App\Exception\InvalidPasswordException: 401
+        App\Exception\SessionException: 401
+        Swift_TransportException: 503
+        Exception: 500
+
+    exception.messages:
+        400: 'Bad request'
+        401: 'Unauthorized'
+        402: 'Payment Required'
+        403: 'The action you have requested is not allowed'
+        404: 'Not Found'
+        405: 'Method Not Allowed'
+        406: 'Not Acceptable'
+        407: 'Proxy Authentication Required'
+        408: 'Request Timeout'
+        410: 'Gone'
+        500: 'An error occurred - please try later again or contact customer support'
+        503: 'Service unavailable - check server configuration'

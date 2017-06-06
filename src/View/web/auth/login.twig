@@ -1,0 +1,53 @@
+{% extends 'root.twig' %}
+
+{% block content %}
+    <div class="login-page__form-container">
+        <div class="auth-manager__container">
+            <div class="login-form"><h1 class="login-form__title">Sign In: Filmmaker</h1>
+                {% if user_id %}
+
+                    <form id="login" class="form-signin" role="form" method="post" ref="form" action="/auth/logout">
+                        <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="session_token" />
+                        <h2 class="form-signin-heading">Logged in as {{ firstname }}</h2>
+                        <button type="button" @click="logout" class="btn btn-lg btn-primary btn-block">Logout</button>
+                    </form>
+
+                {% else %}
+
+                    <form class="form-signin" role="form" id="login" method="post" name="login_form" action="/auth/login" ref="form" @keyup.enter="login">
+                        <panta-loading-bar ref="loadingBar" height="4"></panta-loading-bar>
+                        <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="session_token" />
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </div>
+                        {% endif %}
+                        <div class="field-block "><label class="field-block__label" for="email">Your
+                                email</label><!-- react-empty: 279 --><input type="text" name="email" id="email"
+                                                                             value="" class="text-input" v-model="email"></div>
+                        <div class="field-block "><label class="field-block__label" for="email">Your
+                                password</label><!-- react-empty: 283 --><span class="password-input"><input
+                                        type="password" name="password" id="password" value=""
+                                        class="password-input__input " v-model="password"><span
+                                        class="password-input__icon-wrapper"><svg class="password-input__icon"
+                                                                                  width="18" height="12"
+                                                                                  viewBox="0 0 18 12"
+                                                                                  xmlns="http://www.w3.org/2000/svg"><title>B86C60DB-D5DA-41D0-B40C-E7C89D539BB3</title><path
+                                                d="M9 .008C4.91.008 1.39 2.485 0 6c1.39 3.515 4.91 5.992 9 5.992S16.61 9.515 18 6C16.61 2.485 13.09.008 9 .008zm0 9.987C6.71 9.995 4.91 8.237 4.91 6S6.71 2.005 9 2.005 13.09 3.763 13.09 6 11.29 9.995 9 9.995zm0-6.392C7.61 3.603 6.545 4.642 6.545 6 6.545 7.358 7.61 8.397 9 8.397c1.39 0 2.455-1.039 2.455-2.397 0-1.358-1.064-2.397-2.455-2.397z"
+                                                class="icon icon-eye" fill="#B6B6B6"></path></svg></span></span>
+                        </div>
+                        <p class="login-form__paragraph"><span>Forgot your password?</span>
+                            <!-- react-text: 293 --> <!-- /react-text --><a href="/auth/reset" class="login-form__link">Click
+                                here.</a></p><!-- react-empty: 295 -->
+                        <button type="button" class="login-form__submit button button--primary button--normal" @click="login">Sign In:
+                            Filmmaker
+                        </button>
+                        <p class="login-form__registration"><!-- react-text: 298 -->Not got a filmmaker/ rights
+                            holder account? It’s quick, easy and<!-- /react-text --><!-- react-text: 299 -->
+                            <!-- /react-text --><a href="#" class="login-form__link">free to register.</a></p>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

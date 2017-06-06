@@ -1,0 +1,23 @@
+parameters:
+    app.debug: false
+    app.name: 'Unit Test'
+    app.version: 1.2.3
+    app.url: 'http://sharetoall.loc'
+    app.email: 'app@example.com'
+    app.cache_path: '%base.path%/Tests/_cache'
+    app.locale: en
+    db.host: db
+    db.port: 3306
+    db.name: sharetoall
+    db.user: sharetoall
+    db.password: sharetoall
+    mailer.host: mailhog
+    mailer.port: 1025
+    mailer.encryption: null
+    mailer.username: ''
+    mailer.password: ''
+    mailer.auth_mode: ''
+    debug: true
+    feature.example: true
+    minified_js: true
+    minified_css: true

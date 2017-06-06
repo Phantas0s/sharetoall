@@ -1,0 +1,20 @@
+services:
+    form.validator:
+        class: InputValidation\Form\Validator
+
+    form.options:
+        class: InputValidation\Form\Options\JsonOptions
+        arguments:
+            - "@translator"
+        calls:
+            - [ setOptionsPath, [ "%base.path%/../app/options" ] ]
+
+    form.factory:
+        class: App\Form\FormFactory
+        arguments:
+            - "@translator"
+            - "@form.validator"
+            - "@form.options"
+        calls:
+            - [ setFactoryNamespace, [ 'App\Form' ] ]
+            - [ setFactoryPostfix, [ 'Form' ] ]
