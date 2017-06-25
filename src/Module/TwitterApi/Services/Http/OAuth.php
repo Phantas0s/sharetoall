@@ -5,69 +5,53 @@ namespace App\Module\TwitterApi\Services\Http;
 
 use App\Module\TwitterApi\TwitterApi;
 
-/**
- * Class OAuth
- */
 class OAuth
 {
     const API_TOKEN_REQUEST_METHOD = 'oauth/request_token';
     const API_OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1';
     const API_OAUTH_VERSION = '1.0';
 
-    /**
-     * @var QueryBuilder
-     */
+    /** @var QueryBuilder */
     private $queryBuilder;
 
-    /**
-     * @var Token
-     */
+    /** @var Token */
     private $token;
 
-    /**
-     * @var Consumer
-     */
+    /** @var Consumer */
     private $consumer;
 
-    /**
-     * @var ClientInterface
-     */
+    /** @var ClientInterface */
     private $client;
 
-    /**
-     * @todo Find a way to pass all those parameters - from paramters.yml?
-     */
     public function __construct(
         ClientInterface $client,
-        Consumer $consumer
+        Consumer $consumer,
+        Token $token
     ) {
         $this->consumer = $consumer;
         $this->client = $client;
+        $this->token = $token;
+
         $this->queryBuilder = new QueryBuilder();
-        $this->token = new Token();
     }
 
     public function requestToken()
     {
         $url = TwitterApi::API_HOST . self::API_TOKEN_REQUEST_METHOD;
 
-        $headers = [ 'headers' =>[
+        $headers = ['headers' => [
             'Content-Type' => 'multipart/form-data',
             'Authorization' => $this->buildOauthHeaders($url, 'POST', $this->getOauthParameters())
         ]];
 
-        try {
-            $response = $this->client->callPost($url, $headers);
-            return (string)$response;
-        } catch (Exception $e) {
-            echo 'Exception: ' . $e->getMessage();
-        }
+        $response = $this->client->callPost($url, $headers);
+        return (string)$response;
     }
 
     public function getOauthParameters()
     {
         $parameters = [
-            'oauth_consumer_key' => (string)$this->consumer->getKey(),
+            'oauth_consumer_key' => $this->consumer->getKey(),
             'oauth_nonce' => $this->generateNonce(),
             'oauth_signature_method' => self::API_OAUTH_SIGNATURE_METHOD,
             'oauth_timestamp' => (string)time(),
@@ -83,7 +67,7 @@ class OAuth
 
     private function generateNonce(): string
     {
-        return md5(microtime() . mt_rand());
+        return md5(microtime().mt_rand());
     }
 
     public function buildOauthHeaders(

@@ -1,10 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Module\TwitterApi\Services\Http;
 
 class Token
 {
+    /** @var string */
     private $key;
+
+    /** @var string */
     private $secret;
 
     public function __construct(string $key = '', string $secret = '')

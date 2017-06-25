@@ -1,10 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Module\TwitterApi\Services\Http;
 
 class Consumer
 {
+    /** @var string */
     private $key;
+
+    /** @var string */
     private $secret;
 
     public function __construct(string $key, string $secret)
@@ -21,13 +25,5 @@ class Consumer
     public function getSecret(): string
     {
         return $this->secret;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return "Consumer[key=$this->key,secret=$this->secret]";
     }
 }

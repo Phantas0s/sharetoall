@@ -7,6 +7,7 @@ use App\Module\TwitterApi\Services\Http\ClientInterface;
 use App\Module\TwitterApi\Services\Http\Consumer;
 use App\Module\TwitterApi\Services\Http\OAuth;
 use App\Module\TwitterApi\Services\Http\QueryBuilder;
+use App\Module\TwitterApi\Services\Http\Token;
 
 class TwitterApi
 {
@@ -31,7 +32,7 @@ class TwitterApi
 
     public function authenticate()
     {
-        $this->oAuth = new OAuth($this->client, $this->consumer);
+        $this->oAuth = new OAuth($this->client, $this->consumer, new Token());
         $token = $this->oAuth->requestToken();
 
         return $token;
@@ -40,6 +41,10 @@ class TwitterApi
     public function postTweet(Token $token, string $content)
     {
         if (empty($content)) {
+            throw new InvalidArgumentException('You can\'t tweet an empty content!');
+        }
+
+        if (empty($token->getKey())) {
             throw new InvalidArgumentException('You can\'t tweet an empty content!');
         }
 
