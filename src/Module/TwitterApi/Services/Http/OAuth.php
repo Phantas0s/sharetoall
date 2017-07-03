@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Module\TwitterApi\Services\Http;
 
-use App\Module\TwitterApi\TwitterApi;
+use App\Module\TwitterApi\TwitterApi; 
 
 class OAuth
 {
@@ -30,22 +30,29 @@ class OAuth
     ) {
         $this->consumer = $consumer;
         $this->client = $client;
-        $this->token = $token;
-
         $this->queryBuilder = new QueryBuilder();
+        $this->token = $token;
     }
 
     public function requestToken()
     {
         $url = TwitterApi::API_HOST . self::API_TOKEN_REQUEST_METHOD;
 
-        $headers = ['headers' => [
+        $headers = [
             'Content-Type' => 'multipart/form-data',
-            'Authorization' => $this->buildOauthHeaders($url, 'POST', $this->getOauthParameters())
-        ]];
+            'Authorization' => $this->buildOauthHeaders($url, 'post')
+        ];
 
-        $response = $this->client->callPost($url, $headers);
-        return (string)$response;
+        try {
+            $response = $this->client->post($url, $headers);
+        } catch (\Exception $e) {
+            $this->handleOauthException($e);
+        }
+
+        $response = $response->getBodyAsArray();
+
+        $this->token = new Token($response['oauth_token'], $response['oauth_token_secret']);
+        return $this->token;
     }
 
     public function getOauthParameters()
@@ -55,19 +62,15 @@ class OAuth
             'oauth_nonce' => $this->generateNonce(),
             'oauth_signature_method' => self::API_OAUTH_SIGNATURE_METHOD,
             'oauth_timestamp' => (string)time(),
-            "oauth_version" => self::API_OAUTH_VERSION
+            'oauth_version' => self::API_OAUTH_VERSION
         ];
 
         if (!empty($this->token->getKey())) {
-            $parameters['oauth_token'] = (string)$this->token->getKey();
+            $parameters['oauth_token'] = $this->token->getKey();
         }
 
+        ksort($parameters);
         return $parameters;
-    }
-
-    private function generateNonce(): string
-    {
-        return md5(microtime().mt_rand());
     }
 
     public function buildOauthHeaders(
@@ -75,6 +78,7 @@ class OAuth
         string $method = 'GET',
         array $parameters = []
     ): string {
+        $parameters = array_merge($this->getOauthParameters(), $parameters);
         $queryParameters = $this->queryBuilder->createUrlParameters($parameters);
         $signature = $this->buildSignature($url, $method, $queryParameters);
 
@@ -83,6 +87,31 @@ class OAuth
         sort($parameterQueryParts);
 
         return 'OAuth '.implode(',', $parameterQueryParts);
+    }
+
+    public function getLongTimeToken(string $oAuthVerifier, Token $oneTimeToken)
+    {
+        $this->token = $oneTimeToken;
+        $url = TwitterApi::API_HOST . 'oauth/access_token';
+
+        $headers = [
+            'Authorization' => $this->buildOauthHeaders($url, 'POST')
+        ];
+
+        $parameters = [
+            'oauth_verifier' => $oAuthVerifier
+        ];
+
+        try {
+            $response = $this->client->post($url, $headers,$parameters);
+        } catch (\Exception $e) {
+            $this->handleOauthException($e);
+        }
+
+        $response = $response->getBodyAsArray();
+
+        $this->token = new Token($response['oauth_token'], $response['oauth_token_secret']);
+        return $this->token;
     }
 
     private function buildSignature(string $url, string $method, string $queryParameters): string
@@ -97,5 +126,18 @@ class OAuth
         $signature = base64_encode(hash_hmac('sha1', $signatureString, $signatureKey, true));
 
         return $signature;
+    }
+
+    private function generateNonce(): string
+    {
+        return md5(microtime().mt_rand());
+    }
+
+    /**
+     * @todo
+     */
+    private function handleOauthException(\Exception $e)
+    {
+        throw $e;
     }
 }

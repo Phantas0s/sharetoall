@@ -41,9 +41,9 @@ class Session
         $this->request = $request;
     }
 
-    public function login(string $email, string $password, $licensorId = null)
+    public function login(string $email, string $password)
     {
-        $results = $this->user->findAll(['userEmail' => $email, 'licensorId' => $licensorId]);
+        $results = $this->user->findAll(['userEmail' => $email]);
 
         if (count($results) === 0) {
             throw new NotFoundException('User not found');
@@ -59,7 +59,6 @@ class Session
         if (!$user->emailVerified()) {
             throw new UnauthorizedException('Impossible to login. You need to confirm your email address.');
         }
-
 
         if (!$user->passwordIsValid($password)) {
             throw new InvalidPasswordException('Invalid password');
@@ -83,19 +82,10 @@ class Session
     public function generateToken(): Session
     {
         $newToken = hash($this->hashAlgorithm, random_bytes(128), false);
-
         $this->cache->set($newToken, '', $this->sessionTokenTTL);
-
         $this->setToken($newToken);
 
         return $this;
-    }
-
-    public function getLicensorId(): ?int
-    {
-        $result = $this->getUser()->licensorId;
-
-        return $result;
     }
 
     public function getUserId(): int
@@ -209,16 +199,12 @@ class Session
 
     public function getUserFirstName(): string
     {
-        $result = $this->isUser() ? $this->getUser()->userFirstname : '';
-
-        return $result;
+        return $this->isUser() ? $this->getUser()->userFirstname : '';
     }
 
     public function getUserLastName(): string
     {
-        $result = $this->isUser() ? $this->getUser()->userLastname : '';
-
-        return $result;
+        return $this->isUser() ? $this->getUser()->userLastname : '';
     }
 
     public function isAnonymous(): bool
@@ -236,15 +222,9 @@ class Session
         return $this->isUser() ? $this->getUser()->isAdmin() : false;
     }
 
-    public function isOwner(): bool
-    {
-        return $this->isUser() ? $this->getUser()->isOwner() : false;
-    }
-
     public function createOneTimeToken(): string
     {
         $oneTimeToken = hash($this->hashAlgorithm, random_bytes(128), false);
-
         $this->cache->set($oneTimeToken, $this->getToken(), $this->oneTimeTokenTTL);
 
         return $oneTimeToken;

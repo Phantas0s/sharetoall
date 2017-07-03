@@ -1,4 +1,8 @@
 services:
+    service.session:
+        class: App\Service\Session
+        arguments: [ "@cache", "@request", "@model.user" ]
+
     service.mail:
         class: App\Service\Mail
         shared: false
@@ -6,3 +10,13 @@ services:
             - "@mailer"
             - "@twig.mailer"
             - { %app.email%: %app.name%}
+
+    service.twitter:
+        class: App\Module\TwitterApi\TwitterApi
+        shared: false
+        arguments:
+            - "@cache"
+            - "@guzzleClient"
+            - %twitter.consumer_key%
+            - %twitter.consumer_secret%
+

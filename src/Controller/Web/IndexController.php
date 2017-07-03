@@ -11,23 +11,31 @@ use App\Service\Session;
 use InputValidation\Form;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @see https://github.com/lastzero/symlex#controllers
- */
 class IndexController
 {
     protected $session;
     protected $formFactory;
+    private $twitterApi;
 
     private $formName = 'Message\Create';
 
-    public function __construct(FormFactory $formFactory)
+    public function __construct(FormFactory $formFactory, TwitterApi $twitterApi)
     {
         $this->formFactory = $formFactory;
+        $this->twitterApi = $twitterApi;
     }
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        if ($request->get('oauth_token') && $request->get('oauth_verifier')) {
+            $this->twitterApi->verifyCallbackToken(
+                $request->get('oauth_token'),
+                $request->get('oauth_verifier')
+            );
+
+            $this->twitterApi->getLongTimeToken($request->get('oauth_verifier'));
+        }
+
         $messageForm = $this->formFactory->create($this->formName);
 
         $result = [
@@ -44,6 +52,16 @@ class IndexController
 
     public function postIndexAction(Request $request)
     {
+        $url = $this->twitterApi->getAuthUrl();
+        return $url;
+    }
+
+    public function tweetAction()
+    {
+    }
+
+    public function postTweetAction(Request $request)
+    {
         $form = $this->createForm($this->formName);
 
         $form->setDefinedWritableValues($request->request->all())->validate();
@@ -52,16 +70,6 @@ class IndexController
             throw new FormInvalidException($form->getFirstError());
         }
 
-        $twitterApi = new TwitterApi(
-            new GuzzleClient(),
-            'o9WYRPTW6PHEcDcjMVHgoLsLp',
-            '8D8Xemn4ntTVmLFReUNwQovqck5uiNYkxKwAO6rFNC3dN5IUcP'
-        );
-
-        $token = $twitterApi->authenticate();
-
-        $formValue = $form->getValues();
-
-        return ['token' => $token];
+        $this->twitterApi->postTweet($request->get('messageContent'));
     }
 }

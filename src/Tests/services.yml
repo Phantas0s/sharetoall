@@ -7,3 +7,10 @@ services:
         class: App\Service\Mail
         shared: false
         arguments: [ "@mailer", "@twig", { %app.email%: %app.name%} ]
+
+    service.twitter_consumer:
+        class: App\Module\TwitterApi\Services\Http\Consumer
+        shared: false
+        arguments:
+            - %twitter.consumer_key%
+            - %twitter.consumer_secret%

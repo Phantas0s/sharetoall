@@ -3,9 +3,14 @@
 {% block content %}
     <div id="app">
         <main>
-            <h1>Send your message!</h1>
+            <h1>Authorize twitter</h1>
 
             <form ref="form" method="post" action="/index">
+                <md-button type="submit" class="md-primary md-raised">Authorize Twitter</md-button>
+            </form>
+
+            <h1>Send your message!</h1>
+            <form ref="form" method="post" action="/index/tweet">
                 {% for name, field in form %}
                         <md-input-container>
                             <label>{{ field.caption }}</label>
@@ -17,7 +22,6 @@
                 {% if token is defined %}
                     {{ token }}
                 {% endif %}
-
                 <md-button type="submit" class="md-primary md-raised">Send</md-button>
             </form>
         </main>

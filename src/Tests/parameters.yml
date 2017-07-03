@@ -21,3 +21,6 @@ parameters:
     feature.example: true
     minified_js: true
     minified_css: true
+
+    twitter.consumer_key: 'o9WYRPTW6PHEcDcjMVHgoLsLp'
+    twitter.consumer_secret: '8D8Xemn4ntTVmLFReUNwQovqck5uiNYkxKwAO6rFNC3dN5IUcP'

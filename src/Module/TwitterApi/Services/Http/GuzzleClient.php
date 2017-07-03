@@ -4,27 +4,35 @@ declare(strict_types=1);
 namespace App\Module\TwitterApi\Services\Http;
 
 use GuzzleHttp\Client;
-use App\Module\TwitterApi\Services\Http\ClientInterface;
 
 class GuzzleClient implements ClientInterface
 {
-    private $username;
-    private $password;
-    private $url;
-    private $baseUrl;
-
     /**
      * To get the client, always use getClient() method
      * @var GuzzleHttp
      */
     private $client;
 
-    public function callPost(string $url, array $headers, string $content = '')
+    public function post(string $url, array $header = [], array $body = []): Response
     {
         $this->getClient();
+        $options = [];
 
-        $response = $this->client->request('POST', $url, $headers);
-        $response = $response->getBody();
+        if (!empty($header)) {
+            $options['headers'] = $header;
+        }
+
+        if (!empty($body)) {
+            $options['form_params'] = $body;
+        }
+
+        $response = $this->client->request('POST', $url, $options);
+
+        $response = new Response(
+            $response->getStatusCode(),
+            $response->getHeaders(),
+            $response->getBody()->getContents()
+        );
 
         return $response;
     }

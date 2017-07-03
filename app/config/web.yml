@@ -15,10 +15,6 @@ services:
         class: Symfony\Component\HttpFoundation\Request
         factory: [ 'Symfony\Component\HttpFoundation\Request', createFromGlobals ]
 
-    service.session:
-        class: App\Service\Session
-        arguments: [ "@cache", "@request", "@model.user" ]
-
     router.rest:
         class: App\Router\RestRouter
         arguments: [ "@app", "@service_container" ]
@@ -37,4 +33,4 @@ services:
 
     controller.web.index:
         class: App\Controller\Web\IndexController
-        arguments: [ "@form.factory" ]
+        arguments: [ "@form.factory", "@service.twitter" ]

@@ -5,23 +5,23 @@ namespace App\Module\TwitterApi\Services\Http;
 
 class Response
 {
-    /** @var string */
+    /** @var int */
     private $statusCode;
+
+    /** @var array */
+    private $headers;
 
     /** @var string */
     private $body;
 
-    /** @var string */
-    private $headers;
-
-    public function __construct(string $statusCode, string $body, string $headers)
+    public function __construct(int $statusCode, array $headers, string $body)
     {
         $this->statusCode = $statusCode;
+        $this->headers = $headers;
         $this->body = $body;
-        $this->headers = headers;
     }
 
-    public function getStatusCode(): string
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
@@ -31,7 +31,14 @@ class Response
         return $this->body;
     }
 
-    public function getHeaders():string
+    public function getBodyAsArray(): array
+    {
+        parse_str($this->body, $body);
+        return $body;
+    }
+
+
+    public function getHeaders(): array
     {
         return $this->headers;
     }
