@@ -5,9 +5,9 @@ namespace App\Controller\Web;
 use App\Exception\FormInvalidException;
 use App\Form\FormFactory;
 use App\Model\ModelFactory;
-use App\Module\TwitterApi\TwitterApi;
-use App\Module\TwitterApi\Services\Http\GuzzleClient;
-use App\Service\Session;
+use App\Service\Api\TwitterApi;
+use App\Service\Api\Client\GuzzleClient;
+use App\Service\Api\Client\Session;
 use InputValidation\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +18,9 @@ class IndexController
     private $twitterApi;
 
     private $formName = 'Message\Create';
+
+    /** @var Token */
+    private $token;
 
     public function __construct(FormFactory $formFactory, TwitterApi $twitterApi)
     {
@@ -33,7 +36,7 @@ class IndexController
                 $request->get('oauth_verifier')
             );
 
-            $this->twitterApi->getLongTimeToken($request->get('oauth_verifier'));
+            $this->token = $this->twitterApi->getLongTimeToken($request->get('oauth_verifier'));
         }
 
         $messageForm = $this->formFactory->create($this->formName);

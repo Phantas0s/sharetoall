@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Module\TwitterApi\Services\Http;
+namespace App\Service\Api\OAuth1;
 
-class Consumer
+class Token
 {
     /** @var string */
     private $key;
@@ -11,7 +11,7 @@ class Consumer
     /** @var string */
     private $secret;
 
-    public function __construct(string $key, string $secret)
+    public function __construct(string $key = '', string $secret = '')
     {
         $this->key = $key;
         $this->secret = $secret;

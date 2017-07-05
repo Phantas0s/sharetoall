@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Module\TwitterApi\Services\Http;
+namespace App\Service\Api\OAuth1;
 
-use App\Module\TwitterApi\TwitterApi; 
+use App\Service\Api\Client\ClientInterface;
+use App\Service\Api\TwitterApi;
 
-class OAuth
+class Auth
 {
-    const API_TOKEN_REQUEST_METHOD = 'oauth/request_token';
     const API_OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1';
     const API_OAUTH_VERSION = '1.0';
 
@@ -34,13 +34,11 @@ class OAuth
         $this->token = $token;
     }
 
-    public function requestToken()
+    public function requestToken(string $url)
     {
-        $url = TwitterApi::API_HOST . self::API_TOKEN_REQUEST_METHOD;
-
         $headers = [
             'Content-Type' => 'multipart/form-data',
-            'Authorization' => $this->buildOauthHeaders($url, 'post')
+            'Authorization' => $this->buildOauthHeaders($url, 'POST')
         ];
 
         try {
@@ -89,10 +87,9 @@ class OAuth
         return 'OAuth '.implode(',', $parameterQueryParts);
     }
 
-    public function getLongTimeToken(string $oAuthVerifier, Token $oneTimeToken)
+    public function getLongTimeToken(string $url, string $oAuthVerifier, Token $oneTimeToken)
     {
         $this->token = $oneTimeToken;
-        $url = TwitterApi::API_HOST . 'oauth/access_token';
 
         $headers = [
             'Authorization' => $this->buildOauthHeaders($url, 'POST')

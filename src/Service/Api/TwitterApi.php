@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Module\TwitterApi;
+namespace App\Service\Api;
 
-use App\Module\TwitterApi\Services\Http\ClientInterface;
-use App\Module\TwitterApi\Services\Http\Consumer;
-use App\Module\TwitterApi\Services\Http\OAuth;
-use App\Module\TwitterApi\Services\Http\QueryBuilder;
-use App\Module\TwitterApi\Services\Http\Token;
+use App\Service\Api\Client\ClientInterface;
+use App\Service\Api\OAuth1\Consumer;
+use App\Service\Api\OAuth1\Auth;
+use App\Service\Api\OAuth1\QueryBuilder;
+use App\Service\Api\OAuth1\Token;
+
 use Psr\SimpleCache\CacheInterface;
 
 class TwitterApi
@@ -16,7 +17,7 @@ class TwitterApi
 
     private $consumer;
 
-    private $oAuth;
+    private $auth;
 
     private $token;
 
@@ -27,6 +28,8 @@ class TwitterApi
     const API_VERSION = '1.0';
     const API_TIMEOUT = '1000';
 
+    const API_TOKEN_REQUEST_METHOD = 'oauth/request_token';
+
     public function __construct(
         CacheInterface $cache,
         ClientInterface $client,
@@ -36,7 +39,7 @@ class TwitterApi
         $this->cache = $cache;
         $this->client = $client;
         $this->consumer = new Consumer($consumerKey, $consumerSecret);
-        $this->oAuth = new OAuth($client, $this->consumer, $this->getToken());
+        $this->auth = new Auth($client, $this->consumer, $this->getToken());
     }
 
     public function getAuthUrl()
@@ -45,25 +48,36 @@ class TwitterApi
         return self::API_HOST . 'oauth/authenticate?oauth_token=' . $this->token->getKey().'&force_login=true';
     }
 
-    public function getLongTimeToken(string $oAuthVerifier)
+    public function getLongTimeToken(string $authVerifier)
     {
+        $url = TwitterApi::API_HOST . 'oauth/access_token';
+
         $oneTimeToken = $this->getOneTimeToken();
-        $token = $this->oAuth->getLongTimeToken($oAuthVerifier, $oneTimeToken);
+        $this->token = $this->auth->getLongTimeToken($url, $authVerifier, $oneTimeToken);
+        $this->cache->set('twitter.long_token', $this->token->getKey());
+        $this->cache->set('twitter.long_secret', $this->token->getSecret());
         return $token;
+    }
+
+    public function getLongTimeTokenFromCache()
+    {
+        return new Token($this->cache->get('twitter.long_token'),$this->cache->get('twitter.long_secret'));
     }
 
     private function fetchToken()
     {
+        $url = TwitterApi::API_HOST . TwitterApi::API_TOKEN_REQUEST_METHOD;
+
         $this->deleteCachedToken();
-        $this->token = $this->oAuth->requestToken();
-        $this->cache->set('twitter.oauth_token', $this->token->getKey());
-        $this->cache->set('twitter.oauth_secret', $this->token->getSecret());
+        $this->token = $this->auth->requestToken($url);
+        $this->cache->set('twitter.auth_token', $this->token->getKey());
+        $this->cache->set('twitter.auth_secret', $this->token->getSecret());
     }
 
     public function getOneTimeToken(): Token
     {
-        if ($this->cache->has('twitter.oauth_token') && $this->cache->has('twitter.oauth_secret')) {
-            return new Token($this->cache->get('twitter.oauth_token'), $this->cache->get('twitter.oauth_secret'));
+        if ($this->cache->has('twitter.auth_token') && $this->cache->has('twitter.auth_secret')) {
+            return new Token($this->cache->get('twitter.auth_token'), $this->cache->get('twitter.auth_secret'));
         }
 
         throw new Exception('one time token doesn\'t exists');
@@ -80,7 +94,7 @@ class TwitterApi
 
     public function postTweet(string $content)
     {
-        $token = $this->getToken();
+        $token = $this->getLongTimeTokenFromCache();
 
         if (empty($content)) {
             throw new InvalidArgumentException('You can\'t tweet an empty content!');
@@ -94,7 +108,7 @@ class TwitterApi
 
         $headers = [
             'Content-Type: multipart/form-data',
-            'Authorization: ' . $this->oAuth->buildOauthHeaders($url, 'POST')
+            'Authorization: ' . $this->auth->buildauthHeaders($url, 'POST')
         ];
 
         $this->client->post($url, $headers);
@@ -102,8 +116,8 @@ class TwitterApi
 
     private function deleteCachedToken()
     {
-        $this->cache->delete('twitter.oauth_token');
-        $this->cache->delete('twitter.oauth_secret');
+        $this->cache->delete('twitter.auth_token');
+        $this->cache->delete('twitter.auth_secret');
     }
 
     public function verifyCallbackToken(string $callbackToken)

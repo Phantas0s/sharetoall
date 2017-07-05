@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Tests\Model;
+namespace App\Tests\Service\Api\OAuth1;
 
-use App\Module\TwitterApi\Services\Http\Consumer;
-use App\Module\TwitterApi\Services\Http\GuzzleClient;
-use App\Module\TwitterApi\Services\Http\OAuth;
-use App\Module\TwitterApi\Services\Http\QueryBuilder;
-use App\Module\TwitterApi\Services\Http\Token;
+use App\Service\Api\OAuth1\Consumer;
+use App\Service\Api\Client\GuzzleClient;
+use App\Service\Api\OAuth1\Auth;
+use App\Service\Api\OAuth1\QueryBuilder;
+use App\Service\Api\OAuth1\Token;
 use TestTools\TestCase\UnitTestCase;
 
-class OAuthTest extends UnitTestCase
+class AuthTest extends UnitTestCase
 {
     /** @var QueryBuilder */
     private $queryBuilder;
@@ -34,7 +34,7 @@ class OAuthTest extends UnitTestCase
 
     public function testBuildSignature()
     {
-        $oAuth = new OAuth($this->client, $this->consumer, $this->token);
+        $oAuth = new Auth($this->client, $this->consumer, $this->token);
 
         $parameters = [
             'oauth_nonce' => '12e77c4946347f50162a49f13d2ebd62',

@@ -12,7 +12,7 @@ services:
             - { %app.email%: %app.name%}
 
     service.twitter:
-        class: App\Module\TwitterApi\TwitterApi
+        class: App\Service\Api\TwitterApi
         shared: false
         arguments:
             - "@cache"
@@ -20,3 +20,5 @@ services:
             - %twitter.consumer_key%
             - %twitter.consumer_secret%
 
+    guzzleclient:
+        class: App\Service\Api\Client\GuzzleClient

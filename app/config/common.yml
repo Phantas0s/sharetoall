@@ -54,5 +54,3 @@ services:
             - [ addLoader, [ "yaml", "@yaml_loader" ] ]
             - [ addResource, [ "yaml", "%app.path%/l10n/en.yml", "en" ] ]
 
-    guzzleclient:
-        class: App\Module\TwitterApi\Services\Http\GuzzleClient

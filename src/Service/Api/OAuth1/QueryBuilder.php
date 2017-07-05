@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Module\TwitterApi\Services\Http;
+namespace App\Service\Api\OAuth1;
 
 class QueryBuilder
 {
