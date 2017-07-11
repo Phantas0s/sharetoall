@@ -29,6 +29,7 @@ class TwitterApi
     const API_TIMEOUT = '1000';
 
     const API_TOKEN_REQUEST_METHOD = 'oauth/request_token';
+    const API_TOKEN_AUTHORISE_APP_METHOD = 'oauth/authorize';
 
     public function __construct(
         CacheInterface $cache,
@@ -44,8 +45,8 @@ class TwitterApi
 
     public function getAuthUrl()
     {
-        $this->fetchToken();
-        return self::API_HOST . 'oauth/authenticate?oauth_token=' . $this->token->getKey().'&force_login=true';
+        $token = $this->fetchToken();
+        return $this->auth->getAuthUrl($token);
     }
 
     public function getLongTimeToken(string $authVerifier)
@@ -61,7 +62,7 @@ class TwitterApi
 
     public function getLongTimeTokenFromCache()
     {
-        return new Token($this->cache->get('twitter.long_token'),$this->cache->get('twitter.long_secret'));
+        return new Token($this->cache->get('twitter.long_token'), $this->cache->get('twitter.long_secret'));
     }
 
     private function fetchToken()
@@ -69,9 +70,11 @@ class TwitterApi
         $url = TwitterApi::API_HOST . TwitterApi::API_TOKEN_REQUEST_METHOD;
 
         $this->deleteCachedToken();
-        $this->token = $this->auth->requestToken($url);
-        $this->cache->set('twitter.auth_token', $this->token->getKey());
-        $this->cache->set('twitter.auth_secret', $this->token->getSecret());
+        $token = $this->auth->requestToken($url);
+        $this->cache->set('twitter.auth_token', $token->getKey());
+        $this->cache->set('twitter.auth_secret', $token->getSecret());
+
+        return $token;
     }
 
     public function getOneTimeToken(): Token
@@ -95,6 +98,7 @@ class TwitterApi
     public function postTweet(string $content)
     {
         $token = $this->getLongTimeTokenFromCache();
+        $this->auth->setToken($token);
 
         if (empty($content)) {
             throw new InvalidArgumentException('You can\'t tweet an empty content!');
@@ -104,14 +108,15 @@ class TwitterApi
             throw new InvalidArgumentException('The token is impossible to find');
         }
 
-        $url = self::API_HOST . '1.1/statuses/update.json?status='.rawurlencode($content);
+        $parameters = ['status' => $content];
+
+        $url = self::API_HOST . '1.1/statuses/update.json';
 
         $headers = [
-            'Content-Type: multipart/form-data',
-            'Authorization: ' . $this->auth->buildauthHeaders($url, 'POST')
+            'Authorization' =>  $this->auth->buildOauthHeaders($url, 'POST', $parameters)
         ];
 
-        $this->client->post($url, $headers);
+        $this->client->post($url, $headers, $parameters);
     }
 
     private function deleteCachedToken()

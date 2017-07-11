@@ -15,7 +15,6 @@ class GuzzleClient implements ClientInterface
 
     public function post(string $url, array $header = [], array $body = []): Response
     {
-        $this->getClient();
         $options = [];
 
         if (!empty($header)) {
@@ -26,7 +25,29 @@ class GuzzleClient implements ClientInterface
             $options['form_params'] = $body;
         }
 
-        $response = $this->client->request('POST', $url, $options);
+        return $this->request($url, $options);
+    }
+
+    public function get(string $url, array $header = [], array $body = []): Response
+    {
+        $options = [];
+
+        if (!empty($header)) {
+            $options['headers'] = $header;
+        }
+
+        if (!empty($body)) {
+            $options['query'] = $body;
+        }
+
+        return $this->request($url, $options, 'GET');
+    }
+
+    private function request(string $url, array $options, string $type = 'POST'): Response
+    {
+        $this->getClient();
+
+        $response = $this->client->request($type, $url, $options);
 
         $response = new Response(
             $response->getStatusCode(),
@@ -40,7 +61,7 @@ class GuzzleClient implements ClientInterface
     private function getClient()
     {
         if (null !== $this->client) {
-            return $this->client();
+            return $this->client;
         }
 
         $this->client = new Client();

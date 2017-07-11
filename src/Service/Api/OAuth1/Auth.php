@@ -8,8 +8,8 @@ use App\Service\Api\TwitterApi;
 
 class Auth
 {
-    const API_OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1';
-    const API_OAUTH_VERSION = '1.0';
+    const OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1';
+    const OAUTH_VERSION = '1.0';
 
     /** @var QueryBuilder */
     private $queryBuilder;
@@ -49,8 +49,8 @@ class Auth
 
         $response = $response->getBodyAsArray();
 
-        $this->token = new Token($response['oauth_token'], $response['oauth_token_secret']);
-        return $this->token;
+        $token = new Token($response['oauth_token'], $response['oauth_token_secret']);
+        return $token;
     }
 
     public function getOauthParameters()
@@ -58,9 +58,9 @@ class Auth
         $parameters = [
             'oauth_consumer_key' => $this->consumer->getKey(),
             'oauth_nonce' => $this->generateNonce(),
-            'oauth_signature_method' => self::API_OAUTH_SIGNATURE_METHOD,
-            'oauth_timestamp' => (string)time(),
-            'oauth_version' => self::API_OAUTH_VERSION
+            'oauth_signature_method' => self::OAUTH_SIGNATURE_METHOD,
+            'oauth_timestamp' => (string)gmdate('U', time()),
+            'oauth_version' => self::OAUTH_VERSION
         ];
 
         if (!empty($this->token->getKey())) {
@@ -87,6 +87,11 @@ class Auth
         return 'OAuth '.implode(',', $parameterQueryParts);
     }
 
+    public function setToken(Token $token)
+    {
+        $this->token = $token;
+    }
+
     public function getLongTimeToken(string $url, string $oAuthVerifier, Token $oneTimeToken)
     {
         $this->token = $oneTimeToken;
@@ -100,7 +105,7 @@ class Auth
         ];
 
         try {
-            $response = $this->client->post($url, $headers,$parameters);
+            $response = $this->client->post($url, $headers, $parameters);
         } catch (\Exception $e) {
             $this->handleOauthException($e);
         }
@@ -136,5 +141,16 @@ class Auth
     private function handleOauthException(\Exception $e)
     {
         throw $e;
+    }
+    public function getAuthUrl(Token $token)
+    {
+        $url = TwitterApi::API_HOST . TwitterApi::API_TOKEN_AUTHORISE_APP_METHOD;
+
+        $params = [
+            'oauth_token' => $token->getKey(),
+            'force_login' => 'true',
+        ];
+
+        return $this->queryBuilder->createUrl($url, $params);
     }
 }
