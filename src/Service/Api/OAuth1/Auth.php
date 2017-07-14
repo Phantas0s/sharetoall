@@ -3,42 +3,51 @@ declare(strict_types=1);
 
 namespace App\Service\Api\OAuth1;
 
+use App\Exception\OAuthException;
 use App\Service\Api\Client\ClientInterface;
 use App\Service\Api\TwitterApi;
+use Psr\SimpleCache\CacheInterface;
 
 class Auth
 {
     const OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1';
     const OAUTH_VERSION = '1.0';
 
-    /** @var QueryBuilder */
-    private $queryBuilder;
-
-    /** @var Token */
-    private $token;
-
-    /** @var Consumer */
-    private $consumer;
+    /** @var CacheInterface */
+    private $cache;
 
     /** @var ClientInterface */
     private $client;
 
+    /** @var Consumer */
+    private $consumer;
+
+    /** @var QueryBuilder */
+    private $queryBuilder;
+
     public function __construct(
+        CacheInterface $cache,
         ClientInterface $client,
-        Consumer $consumer,
-        Token $token
+        Consumer $consumer
     ) {
+        $this->cache = $cache;
         $this->consumer = $consumer;
         $this->client = $client;
+
         $this->queryBuilder = new QueryBuilder();
-        $this->token = $token;
     }
 
-    public function requestToken(string $url)
+    public function fetchOnetimeToken(string $url)
+    {
+        $token = $this->requestToken($url);
+        $this->cacheOnetimeToken($token);
+    }
+
+    private function requestToken(string $url)
     {
         $headers = [
             'Content-Type' => 'multipart/form-data',
-            'Authorization' => $this->buildOauthHeaders($url, 'POST')
+            'Authorization' => $this->buildOauthHeaders($url, 'POST', new Token())
         ];
 
         try {
@@ -49,11 +58,44 @@ class Auth
 
         $response = $response->getBodyAsArray();
 
-        $token = new Token($response['oauth_token'], $response['oauth_token_secret']);
-        return $token;
+        return new Token($response['oauth_token'], $response['oauth_token_secret']);
     }
 
-    public function getOauthParameters()
+    private function cacheOnetimeToken(Token $token)
+    {
+        $this->cache->set('onetime_token_key', $token->getKey());
+        $this->cache->set('onetime_token_secret', $token->getSecret());
+    }
+
+    private function getCachedOnetimeToken(): Token
+    {
+        if ($this->cache->has('onetime_token_key') && $this->cache->has('onetime_token_secret')) {
+            return new Token($this->cache->get('onetime_token_key'), $this->cache->get('onetime_token_secret'));
+        }
+
+        throw new Exception('one time token doesn\'t exists');
+    }
+
+    public function getAuthUrl(string $url)
+    {
+        $token = $this->getCachedOnetimeToken();
+        $params = [
+            'oauth_token' => $token->getKey(),
+            'force_login' => 'true',
+        ];
+
+        return $this->queryBuilder->createUrl($url, $params);
+    }
+
+    public function verifyCallbackToken(string $callbackToken)
+    {
+        $token = $this->getCachedOnetimeToken();
+        if ($callbackToken != $token->getKey()) {
+            throw new OAuthException('The token from the callback url is different than the one time token.');
+        }
+    }
+
+    public function getOauthParameters(Token $token): array
     {
         $parameters = [
             'oauth_consumer_key' => $this->consumer->getKey(),
@@ -63,8 +105,8 @@ class Auth
             'oauth_version' => self::OAUTH_VERSION
         ];
 
-        if (!empty($this->token->getKey())) {
-            $parameters['oauth_token'] = $this->token->getKey();
+        if (!empty($token->getKey())) {
+            $parameters['oauth_token'] = $token->getKey();
         }
 
         ksort($parameters);
@@ -74,11 +116,13 @@ class Auth
     public function buildOauthHeaders(
         string $url,
         string $method = 'GET',
+        Token $token,
         array $parameters = []
     ): string {
-        $parameters = array_merge($this->getOauthParameters(), $parameters);
+        $parameters = array_merge($this->getOauthParameters($token), $parameters);
         $queryParameters = $this->queryBuilder->createUrlParameters($parameters);
-        $signature = $this->buildSignature($url, $method, $queryParameters);
+
+        $signature = $this->buildSignature($url, $method, $token, $queryParameters);
 
         $parameterQueryParts = explode('&', $queryParameters);
         $parameterQueryParts[] = 'oauth_signature='.rawurlencode($signature);
@@ -92,12 +136,12 @@ class Auth
         $this->token = $token;
     }
 
-    public function getLongTimeToken(string $url, string $oAuthVerifier, Token $oneTimeToken)
+    public function getLongTimeToken(string $url, string $oAuthVerifier)
     {
-        $this->token = $oneTimeToken;
+        $onetimeToken = $this->getCachedOnetimeToken();
 
         $headers = [
-            'Authorization' => $this->buildOauthHeaders($url, 'POST')
+            'Authorization' => $this->buildOauthHeaders($url, 'POST', $onetimeToken)
         ];
 
         $parameters = [
@@ -112,17 +156,32 @@ class Auth
 
         $response = $response->getBodyAsArray();
 
-        $this->token = new Token($response['oauth_token'], $response['oauth_token_secret']);
-        return $this->token;
+        $token = new Token($response['oauth_token'], $response['oauth_token_secret']);
+        $this->cacheLongTimeToken($token);
     }
 
-    private function buildSignature(string $url, string $method, string $queryParameters): string
+    public function cacheLongTimeToken(Token $token)
+    {
+        $this->cache->set('longtime_token_key', $token->getKey());
+        $this->cache->set('longtime_token_secret', $token->getSecret());
+    }
+
+    public function getCachedLongtimeToken(): Token
+    {
+        if ($this->cache->has('longtime_token_key') && $this->cache->has('longtime_token_secret')) {
+            return new Token($this->cache->get('longtime_token_key'), $this->cache->get('longtime_token_secret'));
+        }
+
+        throw new \Exception('long time token is not in the cache');
+    }
+
+    private function buildSignature(string $url, string $method, Token $token, string $queryParameters): string
     {
         $signatureString = strtoupper($method).'&'.rawurlencode($url).'&'.rawurlencode($queryParameters);
         $signatureKey = rawurlencode($this->consumer->getSecret()).'&';
 
-        if (!empty($this->token->getSecret())) {
-            $signatureKey .= rawurlencode($this->token->getSecret());
+        if (!empty($token->getSecret())) {
+            $signatureKey .= rawurlencode($token->getSecret());
         }
 
         $signature = base64_encode(hash_hmac('sha1', $signatureString, $signatureKey, true));
@@ -142,15 +201,5 @@ class Auth
     {
         throw $e;
     }
-    public function getAuthUrl(Token $token)
-    {
-        $url = TwitterApi::API_HOST . TwitterApi::API_TOKEN_AUTHORISE_APP_METHOD;
 
-        $params = [
-            'oauth_token' => $token->getKey(),
-            'force_login' => 'true',
-        ];
-
-        return $this->queryBuilder->createUrl($url, $params);
-    }
 }
