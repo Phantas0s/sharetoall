@@ -23,9 +23,6 @@ class AuthTest extends UnitTestCase
     /** @var Consumer */
     private $consumer;
 
-    /** @var Token */
-    private $token;
-
     /** @var Auth */
     private $oAuth;
 
