@@ -43,7 +43,7 @@ class Auth
         $this->cacheOnetimeToken($token);
     }
 
-    private function requestToken(string $url)
+    private function requestToken(string $url): Token
     {
         $headers = [
             'Content-Type' => 'multipart/form-data',
@@ -129,11 +129,6 @@ class Auth
         sort($parameterQueryParts);
 
         return 'OAuth '.implode(',', $parameterQueryParts);
-    }
-
-    public function setToken(Token $token)
-    {
-        $this->token = $token;
     }
 
     public function getLongTimeToken(string $url, string $oAuthVerifier)
