@@ -25,6 +25,8 @@ services:
         volumes:
             - ./:/sharetoall
             - ./docker/php/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
+            - ./docker/php/xdebug-custom.ini:/usr/local/etc/php/conf.d/xdebug-custom.ini
+
     redis:
         image: redis:3-alpine
 
