@@ -24,6 +24,7 @@ services:
             - redis
         volumes:
             - ./:/sharetoall
+            - ./docker/php/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
     redis:
         image: redis:3-alpine
 

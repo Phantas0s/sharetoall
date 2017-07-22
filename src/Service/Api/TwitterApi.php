@@ -83,5 +83,4 @@ class TwitterApi
 
         $this->client->post($url, $headers, $parameters);
     }
-
 }

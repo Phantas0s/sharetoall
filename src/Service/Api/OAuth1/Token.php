@@ -5,10 +5,8 @@ namespace App\Service\Api\OAuth1;
 
 class Token
 {
-    /** @var string */
     private $key;
 
-    /** @var string */
     private $secret;
 
     public function __construct(string $key = '', string $secret = '')

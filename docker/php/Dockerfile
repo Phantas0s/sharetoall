@@ -33,10 +33,6 @@ RUN pecl install apcu
 RUN echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
 
 RUN set -xe \
-    && docker-php-ext-install opcache
-COPY opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
-
-RUN set -xe \
     && sed -i -e "s/pm.max_children = 5/pm.max_children = 50/g" /usr/local/etc/php-fpm.d/www.conf \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \

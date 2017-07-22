@@ -33,6 +33,7 @@ class Response
 
     public function getBodyAsArray(): array
     {
+        $body = [];
         parse_str($this->body, $body);
         return $body;
     }
