@@ -33,4 +33,4 @@ services:
 
     controller.web.index:
         class: App\Controller\Web\IndexController
-        arguments: [ "@form.factory", "@service.twitter" ]
+        arguments: [ "@form.factory", "@service.twitter", '@service.linkedin' ]

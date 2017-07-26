@@ -20,5 +20,14 @@ services:
             - %twitter.consumer_key%
             - %twitter.consumer_secret%
 
+    service.linkedin:
+        class: App\Service\Api\LinkedinApi
+        shared: false
+        arguments:
+            - "@cache"
+            - "@guzzleClient"
+            - %linkedin.consumer_key%
+            - %linkedin.consumer_secret%
+
     guzzleclient:
         class: App\Service\Api\Client\GuzzleClient

@@ -13,7 +13,7 @@ class GuzzleClient implements ClientInterface
      */
     private $client;
 
-    public function post(string $url, array $header = [], array $body = []): Response
+    public function post(string $url, array $header = [], array $body = [], $bodyType = 'form_params'): Response
     {
         $options = [];
 
@@ -22,7 +22,7 @@ class GuzzleClient implements ClientInterface
         }
 
         if (!empty($body)) {
-            $options['form_params'] = $body;
+            $options[$bodyType] = $body;
         }
 
         return $this->request($url, $options);

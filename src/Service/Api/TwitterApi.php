@@ -13,12 +13,11 @@ use Psr\SimpleCache\CacheInterface;
 
 class TwitterApi
 {
+    /** @var ClientInterface */
     private $client;
 
+    /** @var Auth */
     private $auth;
-
-    /** @var CacheInterface */
-    private $cache;
 
     const API_HOST = 'https://api.twitter.com/';
     const API_VERSION = '1.1';
