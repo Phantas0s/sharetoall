@@ -23,10 +23,14 @@ class Auth
     /** @var QueryBuilder */
     private $queryBuilder;
 
+    /** @var string Name of the api to qualify the cache keys */
+    private $apiName;
+
     public function __construct(
         CacheInterface $cache,
         ClientInterface $client,
-        Consumer $consumer
+        Consumer $consumer,
+        string $apiName
     ) {
         $this->cache = $cache;
         $this->consumer = $consumer;
@@ -61,8 +65,8 @@ class Auth
 
     private function getCachedOnetimeToken(): Token
     {
-        if ($this->cache->has('onetime_token')) {
-            return new Token($this->cache->get('onetime_token'));
+        if ($this->cache->has($this->apiName . '_oauth2_onetime_token')) {
+            return new Token($this->cache->get($this->apiName . '_oauth2_onetime_token'));
         }
 
         throw new Exception('one time token doesn\'t exists');
@@ -70,7 +74,7 @@ class Auth
 
     private function cacheOnetimeToken(string $token)
     {
-        $this->cache->set('onetime_token', $token);
+        $this->cache->set($this->apiName. '_oauth2_onetime_token', $token);
     }
 
     public function getLongTimeToken(string $url, string $oneTimeToken)
@@ -94,23 +98,28 @@ class Auth
         }
 
         $response = $response->getBodyAsArray();
-        
+
         $response = json_decode(array_keys($response)[0], true);
 
         $token = new Token($response['access_token'], $response['expires_in']);
         $this->cacheLongTimeToken($token);
     }
 
-    public function cacheLongTimeToken(Token $token)
+    private function cacheLongTimeToken(Token $token)
     {
-        $this->cache->set('oauth2_longtime_token_key', $token->getKey());
-        $this->cache->set('oauth2_longtime_token_ttl', $token->getTtl());
+        $tokenKeyName = $this->apiName . '_oauth2_longtime_token_key';
+        $tokenKeyTtl = $this->apiName . '_oauth2_longtime_token_ttl';
+        $this->cache->set($tokenKeyName, $token->getKey());
+        $this->cache->set($tokenKeyTtl, $token->getTtl());
     }
 
     public function getCachedLongtimeToken(): Token
     {
-        if ($this->cache->has('oauth2_longtime_token_key') && $this->cache->has('oauth2_longtime_token_ttl')) {
-            return new Token($this->cache->get('oauth2_longtime_token_key'), (int)$this->cache->get('oauth2_longtime_token_ttl'));
+        $tokenKeyName = $this->apiName . '_oauth2_longtime_token_key';
+        $tokenKeyTtl = $this->apiName . '_oauth2_longtime_token_ttl';
+
+        if ($this->cache->has($tokenKeyName) && $this->cache->has($tokenKeyTtl)) {
+            return new Token($this->cache->get($tokenKeyName), (int)$this->cache->get($tokenKeyTtl));
         }
 
         throw new \Exception('long time token is not in the cache');

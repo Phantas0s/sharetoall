@@ -37,7 +37,7 @@ class TwitterApi
     ) {
         $consumer = new Consumer($consumerKey, $consumerSecret);
         $this->client = $client;
-        $this->auth = new Auth($cache, $client, $consumer);
+        $this->auth = new Auth($cache, $client, $consumer, 'twitter');
     }
 
     public function getAuthUrl()

@@ -26,6 +26,9 @@ class AuthTest extends UnitTestCase
     /** @var Auth */
     private $oAuth;
 
+    /** @var Token */
+    private $token;
+
     public function setUp()
     {
         $container = $this->getContainer();
@@ -33,12 +36,12 @@ class AuthTest extends UnitTestCase
         $this->consumer = $container->get('service.twitter_consumer');
         $this->client = new GuzzleClient();
         $this->queryBuilder = new QueryBuilder();
-        $this->oAuth = new Auth($this->cache, $this->client, $this->consumer);
+        $this->oAuth = new Auth($this->cache, $this->client, $this->consumer, 'dummyApi');
+        $this->token = new Token('dummytoken', 'dummysecrettoken');
     }
 
     public function testBuildSignature()
     {
-        $token = new Token('dummytoken', 'dummysecrettoken');
 
         $parameters = [
             'oauth_nonce' => 'thisisadummynonce',
@@ -48,12 +51,17 @@ class AuthTest extends UnitTestCase
         $headers = $this->oAuth->buildOauthHeaders(
             'https://api.twitter.com/oauth/access_token',
             'post',
-            $token,
+            $this->token,
             $parameters
         );
 
         $correctHeaders = 'OAuth oauth_consumer_key=o9WYRPTW6PHEcDcjMVHgoLsLp,oauth_nonce=thisisadummynonce,oauth_signature=smwbG77Wk5UMeP0yRJ8Nw1SwF%2Bc%3D,oauth_signature_method=HMAC-SHA1,oauth_timestamp=1499105805,oauth_token=dummytoken,oauth_version=1.0';
 
         $this->assertEquals($headers, $correctHeaders);
+    }
+
+    public function testCache()
+    {
+        $this->oAuth->cacheOnetimeToken($this->token);
     }
 }

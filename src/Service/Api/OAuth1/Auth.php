@@ -25,10 +25,14 @@ class Auth
     /** @var QueryBuilder */
     private $queryBuilder;
 
+    /** @var string identifier for creating different cache depending on API */
+    private $apiName;
+
     public function __construct(
         CacheInterface $cache,
         ClientInterface $client,
-        Consumer $consumer
+        Consumer $consumer,
+        string $apiName
     ) {
         $this->cache = $cache;
         $this->consumer = $consumer;
@@ -63,14 +67,22 @@ class Auth
 
     private function cacheOnetimeToken(Token $token)
     {
-        $this->cache->set('onetime_token_key', $token->getKey());
-        $this->cache->set('onetime_token_secret', $token->getSecret());
+        $tokenKeyName = $this->apiName . '_onetime_token_key';
+        $tokenSecretName = $this->apiName . '_onetime_token_secret';
+
+        $this->cache->set($tokenKeyName, $token->getKey());
+        $this->cache->set($tokenSecretName, $token->getSecret());
     }
 
     private function getCachedOnetimeToken(): Token
     {
-        if ($this->cache->has('onetime_token_key') && $this->cache->has('onetime_token_secret')) {
-            return new Token($this->cache->get('onetime_token_key'), $this->cache->get('onetime_token_secret'));
+        $tokenKeyName = $this->apiName . '_onetime_token_key';
+        $tokenSecretName = $this->apiName . '_onetime_token_secret';
+
+        if ($this->cache->has($tokenKeyName) && $this->cache->has($tokenSecretName)) {
+            return new Token(
+                $this->cache->get($tokenKeyName), $this->cache->get($tokenSecretName)
+            );
         }
 
         throw new Exception('one time token doesn\'t exists');
@@ -155,16 +167,22 @@ class Auth
         $this->cacheLongTimeToken($token);
     }
 
-    public function cacheLongTimeToken(Token $token)
+    private function cacheLongTimeToken(Token $token)
     {
-        $this->cache->set('longtime_token_key', $token->getKey());
-        $this->cache->set('longtime_token_secret', $token->getSecret());
+        $tokenKeyName = $this->apiName . '_longtime_token_key';
+        $tokenSecretName = $this->apiName . '_longtime_token_secret';
+
+        $this->cache->set($tokenKeyName, $token->getKey());
+        $this->cache->set($tokenSecretName, $token->getSecret());
     }
 
     public function getCachedLongtimeToken(): Token
     {
-        if ($this->cache->has('longtime_token_key') && $this->cache->has('longtime_token_secret')) {
-            return new Token($this->cache->get('longtime_token_key'), $this->cache->get('longtime_token_secret'));
+        $tokenKeyName = $this->apiName . '_longtime_token_key';
+        $tokenSecretName = $this->apiName . '_longtime_token_secret';
+
+        if ($this->cache->has($tokenKeyName) && $this->cache->has($tokenSecretName)) {
+            return new Token($this->cache->get($tokenKeyName), $this->cache->get($tokenSecretName));
         }
 
         throw new \Exception('long time token is not in the cache');
@@ -196,5 +214,4 @@ class Auth
     {
         throw $e;
     }
-
 }
