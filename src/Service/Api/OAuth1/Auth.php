@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service\Api\OAuth1;
 
+use App\Exception\Exception;
 use App\Exception\OAuthException;
 use App\Service\Api\Client\ClientInterface;
 use App\Service\Api\TwitterApi;
@@ -41,10 +42,12 @@ class Auth
         $this->queryBuilder = new QueryBuilder();
     }
 
-    public function fetchOnetimeToken(string $url)
+    public function fetchOnetimeToken(string $url): Token
     {
         $token = $this->requestToken($url);
         $this->cacheOnetimeToken($token);
+
+        return $token;
     }
 
     private function requestToken(string $url): Token
@@ -107,7 +110,7 @@ class Auth
         }
     }
 
-    public function getOauthParameters(Token $token): array
+    private function getOauthParameters(Token $token): array
     {
         $parameters = [
             'oauth_consumer_key' => $this->consumer->getKey(),
@@ -157,7 +160,7 @@ class Auth
 
         try {
             $response = $this->client->post($url, $headers, $parameters);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->handleOauthException($e);
         }
 
