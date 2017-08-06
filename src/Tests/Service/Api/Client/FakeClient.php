@@ -10,8 +10,12 @@ class FakeClient implements ClientInterface
     /** @var array */
     private $responseBody;
 
-    public function __construct(array $responseBody = [])
+    /** @var string */
+    private $responseType;
+
+    public function __construct(array $responseBody = [], string $responseType = 'form_params')
     {
+        $this->responseType = $responseType;
         $this->responseBody = $responseBody;
     }
 
@@ -30,9 +34,20 @@ class FakeClient implements ClientInterface
         $response = new Response(
             '200',
             [],
-            implode('&', $this->responseBody)
+            $this->formatResponse()
         );
 
         return $response;
+    }
+
+    private function formatResponse()
+    {
+        if ($this->responseType == 'form_params') {
+            return implode('&', $this->responseBody);
+        }
+
+        if ($this->responseType == 'json') {
+            return json_encode($this->responseBody);
+        }
     }
 }

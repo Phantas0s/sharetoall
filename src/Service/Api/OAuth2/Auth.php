@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service\Api\OAuth2;
 
+use App\Exception\OAuthException;
 use App\Service\Api\Client\ClientInterface;
 use App\Service\Api\OAuth1\Consumer;
 use App\Service\Api\OAuth1\QueryBuilder;
@@ -39,17 +40,16 @@ class Auth
         $this->queryBuilder = new QueryBuilder();
     }
 
-    public function getAuthUrl(string $url)
+    public function getAuthUrl(string $url, array $params = []): string
     {
-        $token = rawurlencode($this->generateNonce());
-        $params = [
+        $params = array_merge([
             'response_type' => 'code',
             'client_id' => rawurlencode($this->consumer->getKey()),
             'redirect_uri' => 'http://sharetoall.loc',
-            'state' => $token
-        ];
+            'state' => rawurlencode($this->generateNonce())
+        ], $params);
 
-        $this->cacheOnetimeToken($token);
+        $this->cacheOnetimeToken($params['state']);
 
         return $this->queryBuilder->createUrl($url, $params);
     }
@@ -57,6 +57,7 @@ class Auth
     public function verifyCallbackToken(string $callbackToken)
     {
         $token = $this->getCachedOnetimeToken();
+
         if ($callbackToken != $token->getKey()) {
             // should be 401?
             throw new OAuthException('The token from the callback url is different than the token sent');
@@ -133,7 +134,7 @@ class Auth
     /**
      * @todo \Exception $e log the error
      */
-    public function handleOauthException(\Exception $e)
+    private function handleOauthException(\Exception $e)
     {
         throw $e;
     }

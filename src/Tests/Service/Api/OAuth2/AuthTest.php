@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Tests\Service\Api\OAuth2;
+
+use App\Exception\OAuthException;
+use App\Service\Api\OAuth1\Consumer;
+use App\Service\Api\OAuth2\Auth;
+use App\Tests\Service\Api\Client\FakeClient;
+use TestTools\TestCase\UnitTestCase;
+
+class AuthTest extends UnitTestCase
+{
+    /** @var CacheInterface */
+    private $cache;
+
+    /** @var Consumer */
+    private $consumer;
+
+    /** @var Auth */
+    private $oAuth;
+
+    public function setUp()
+    {
+        $container = $this->getContainer();
+        $this->cache = $container->get('cache');
+        $this->consumer = new Consumer('dummy', 'dummySecret');
+
+        $this->oAuth = new Auth($this->cache, new FakeClient(), $this->consumer, 'dummyApi');
+    }
+
+    public function testGetAuthUrl()
+    {
+        $authUrl = $this->generateOneTimeToken();
+
+        $this->assertEquals('http://dummyurl?response_type=code&client_id=dummy&redirect_uri=http%3A%2F%2Fsharetoall.loc&state=dummyToken', $authUrl);
+    }
+
+    public function testVerifyCallBackTokenWhenTokenWrong()
+    {
+        $this->generateOneTimeToken();
+        $this->expectException(OAuthException::class);
+        $this->oAuth->verifyCallbackToken('wrongToken');
+    }
+
+    public function testGetCachedLongTimeToken()
+    {
+        $this->generateLongTimeToken();
+        $token = $this->oAuth->getCachedLongtimeToken();
+
+        $this->assertEquals('dummyAccessToken', $token->getKey());
+        $this->assertEquals(60, $token->getTtl());
+    }
+
+    private function generateOneTimeToken()
+    {
+        return $this->oAuth->getAuthUrl('http://dummyurl', ['state' => 'dummyToken']);
+    }
+
+    private function generateLongTimeToken()
+    {
+        $responseBody = [
+            'access_token' => 'dummyAccessToken',
+            'expires_in' => 60,
+        ];
+
+        $this->oAuth = new Auth($this->cache, new FakeClient($responseBody, 'json'), $this->consumer, 'dummyApi');
+        $this->oAuth->getLongTimeToken('http://dummyUrl', 'dummyToken');
+    }
+}

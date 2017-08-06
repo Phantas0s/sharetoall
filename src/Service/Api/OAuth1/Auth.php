@@ -146,7 +146,7 @@ class Auth
         return 'OAuth '.implode(',', $parameterQueryParts);
     }
 
-    public function getLongTimeToken(string $url, string $oAuthVerifier)
+    public function getLongTimeToken(string $url, string $oAuthVerifier): Token
     {
         $onetimeToken = $this->getCachedOnetimeToken();
 
@@ -168,6 +168,8 @@ class Auth
 
         $token = new Token($response['oauth_token'], $response['oauth_token_secret']);
         $this->cacheLongTimeToken($token);
+
+        return $token;
     }
 
     private function cacheLongTimeToken(Token $token)

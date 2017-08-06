@@ -28,7 +28,7 @@ class AuthTest extends UnitTestCase
     {
         $container = $this->getContainer();
         $this->cache = $container->get('cache');
-        $this->consumer = $container->get('service.twitter_consumer');
+        $this->consumer = new Consumer('dummy', 'dummysecret');
         $this->queryBuilder = new QueryBuilder();
 
         $this->oAuth = new Auth($this->cache, new FakeClient(), $this->consumer, 'dummyApi');
@@ -50,7 +50,7 @@ class AuthTest extends UnitTestCase
             $parameters
         );
 
-        $correctHeaders = 'OAuth oauth_consumer_key=o9WYRPTW6PHEcDcjMVHgoLsLp,oauth_nonce=thisisadummynonce,oauth_signature=smwbG77Wk5UMeP0yRJ8Nw1SwF%2Bc%3D,oauth_signature_method=HMAC-SHA1,oauth_timestamp=1499105805,oauth_token=dummytoken,oauth_version=1.0';
+        $correctHeaders = 'OAuth oauth_consumer_key=dummy,oauth_nonce=thisisadummynonce,oauth_signature=%2BySrIJ06VI7K7maG7rzUmxskLOg%3D,oauth_signature_method=HMAC-SHA1,oauth_timestamp=1499105805,oauth_token=dummytoken,oauth_version=1.0';
 
         $this->assertEquals($headers, $correctHeaders);
     }
