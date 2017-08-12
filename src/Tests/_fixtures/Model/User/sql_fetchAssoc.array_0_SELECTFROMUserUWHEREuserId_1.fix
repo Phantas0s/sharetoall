@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:8:"Matthieu";s:12:"userLastname";N;s:9:"userEmail";N;s:12:"userPassword";N;s:21:"userVerificationToken";N;s:12:"userVerified";N;s:17:"userPasswordToken";N;s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}s:4:"args";a:1:{i:0;s:4746:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:9:"Firstname";s:12:"userLastname";s:8:"Lastname";s:9:"userEmail";s:19:"user@sharetoall.com";s:12:"userPassword";s:8:"password";s:21:"userVerificationToken";N;s:12:"userVerified";N;s:17:"userPasswordToken";N;s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}s:4:"args";a:1:{i:0;s:4745:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (
@@ -65,7 +65,7 @@ a:2:{s:6:"result";a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:8:"Matthieu"
 
             [_isRollbackOnly:Doctrine\DBAL\Connection:private] => 
             [defaultFetchMode:protected] => 2
-            [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Dao/UserDao/
+            [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Model/User/
             [_fixturePrefix:TestTools\Doctrine\DBAL\Connection:private] => sql
             [_fixtureOfflineMode:TestTools\Doctrine\DBAL\Connection:private] => 
             [_fixtureInstance:TestTools\Doctrine\DBAL\Connection:private] => parent

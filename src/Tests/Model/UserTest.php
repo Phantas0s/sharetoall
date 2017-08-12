@@ -3,10 +3,10 @@
 namespace App\Tests\Model;
 
 use App\Dao\DaoAbstract;
+use App\Exception\InvalidArgumentException;
 use App\Exception\NotFoundException;
-use App\Form\User\RegisterForm;
-use App\Model\Licensor;
 use App\Model\User;
+use Doctrine\ActiveRecord\Exception\Exception As DoctrineException;
 use Mockery\Mock;
 use Symfony\Component\HttpFoundation\Request;
 use TestTools\TestCase\UnitTestCase;
@@ -20,62 +20,42 @@ class UserTest extends UnitTestCase
 
     public function setUp()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
         $this->model = $this->get('model.user');
-        $this->licensorSlug = 'licensor';
     }
 
     public function testFind()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
         $this->model->find(1);
 
         $this->assertEquals(1, $this->model->getId());
-        $this->assertNotNull($this->model->userEmail);
-        $this->assertNotNull($this->model->userPassword);
+
+        $this->assertInternalType('string', $this->model->userEmail);
+        $this->assertInternalType('string', $this->model->userPassword);
     }
 
     public function testFindAll()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $users = $this->model->findAll(['userEmail' => 'user@pantaflix.com', 'licensorId' => 2]);
+        $users = $this->model->findAll(['userEmail' => 'user@sharetoall.com']);
         $this->assertCount(1, $users);
 
         $user = $users[0];
 
-        $this->assertEquals('user@pantaflix.com', $user->userEmail);
-        $this->assertEquals(2, $user->licensorId);
+        $this->assertEquals('user@sharetoall.com', $user->userEmail);
     }
 
-    /**
-     * @expectedException \Doctrine\ActiveRecord\Exception\Exception
-     */
     public function testGetPasswordException()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
+        $this->expectException(DoctrineException::class);
         $this->model->userPassword;
     }
 
-    /**
-     * @expectedException \App\Exception\InvalidArgumentException
-     */
     public function testInsecurePassword()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $password = 'fooBar';
+        $password = 'foo';
 
-        $this->model->find(3);
+        $this->model->find(1);
 
+        $this->expectException(InvalidArgumentException::class);
         $this->model->updatePassword($password);
     }
 

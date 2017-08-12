@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-use App\Dao\LicensorDao;
 use App\Exception\InvalidArgumentException;
 use App\Exception\NotFoundException;
 use App\Form\User\RegisterForm;
@@ -33,17 +32,6 @@ class User extends ModelAbstract
 
             $userDao->userPassword = $form->getPasswordHash();
             $userDao->userVerificationToken = $form->getVerificationToken();
-
-            /** @var LicensorDao $licensorDao */
-            $licensorDao = $this->createDao('Licensor');
-
-            $licensorDao->setValues($form->getValuesByTag('licensor'));
-
-            $licensorDao->save();
-
-            $userDao->licensorId = $licensorDao->getId();
-
-            $userDao->save();
         });
     }
 
@@ -138,12 +126,6 @@ class User extends ModelAbstract
         }
 
         return $this;
-    }
-
-    public function getLicensor()
-    {
-        $licensor = $this->createModel('Licensor')->find($this->licensorId);
-        return $licensor;
     }
 
     public function passwordIsValid($password)

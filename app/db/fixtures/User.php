@@ -3,6 +3,9 @@
 return [
     [
         'userId' => 1,
-        'userFirstname' => 'Matthieu',
+        'userFirstname' => 'Firstname',
+        'userLastname' => 'Lastname',
+        'userEmail' => 'user@sharetoall.com',
+        'userPassword' => 'password',
     ],
 ];
