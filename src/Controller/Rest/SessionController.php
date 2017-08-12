@@ -19,15 +19,12 @@ class SessionController
 
     protected $debug;
 
-    protected $acpSubdomain;
-
-    public function __construct(Session $session, User $user, $appVersion, $debug, $acpSubdomain)
+    public function __construct(Session $session, User $user, $appVersion, $debug)
     {
         $this->session = $session;
         $this->user = $user;
         $this->appVersion = $appVersion;
         $this->debug = $debug;
-        $this->acpSubdomain = $acpSubdomain;
     }
 
     public function oneTimeTokenAction()
@@ -44,7 +41,7 @@ class SessionController
 
     public function postAction(Request $request)
     {
-        if($this->session->hasToken()) {
+        if ($this->session->hasToken()) {
             $this->session->invalidate();
         }
 
@@ -58,17 +55,12 @@ class SessionController
 
         $email = $request->request->get('email');
         $password = $request->request->get('password');
+
         $slug = explode('.', $request->getHost())[0];
         $licensorId = null;
 
-        if($slug != $this->acpSubdomain) {
-            $licensor = $this->user->createModel('Licensor')->findEnabledBySlug($slug);
-            $licensorId = $licensor->getId();
-            $result['licensor'] = $licensor->getValues();
-        }
-
-        if($email) {
-            $this->session->login($email, $password, $licensorId);
+        if ($email) {
+            $this->session->login($email, $password);
             $result['user'] = $this->session->getUser()->getValues();
         }
 

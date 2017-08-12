@@ -32,7 +32,7 @@ class SessionTest extends UnitTestCase
         $container = $this->getContainer();
         $this->cache = $container->get('cache');
         $this->session = $container->get('service.session');
-        $this->request = Request::create('http://licensor.yoda.pantadev.com');
+        $this->request = Request::create('http://sharetoall.loc');
         $this->url = $this->request->getUri();
         $this->user = $container->get('model.user');
     }

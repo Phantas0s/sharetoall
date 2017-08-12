@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const PATHS = {
     web: path.join(__dirname, 'src/web.js'),
+    auth: path.join(__dirname, 'src/auth.js'),
     build: path.join(__dirname, '../web/assets/build'),
 };
 
@@ -16,6 +17,7 @@ process.noDeprecation = true;
 module.exports = {
     entry: {
         web: PATHS.web,
+        auth: PATHS.auth,
     },
     output: {
         path: PATHS.build,

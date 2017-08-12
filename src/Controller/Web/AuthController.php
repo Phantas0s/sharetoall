@@ -25,7 +25,7 @@ class AuthController
 
     public function loginAction()
     {
-        return array('page_name' => 'Login');
+        return array('realm' => 'auth', 'page_name' => 'Login');
     }
 
     public function postLoginAction(Request $request)
@@ -57,7 +57,6 @@ class AuthController
         $email = $request->get('email');
 
         try {
-
             $user = $this->user->findByEmail($email);
 
             $this->mail->passwordReset($user);

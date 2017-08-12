@@ -11,6 +11,9 @@ services:
     app:
         class: Silex\Application
 
+    service.session:
+        class: App\Service\Session
+        arguments: [ "@cache", "@request", "@model.user" ]
     request:
         class: Symfony\Component\HttpFoundation\Request
         factory: [ 'Symfony\Component\HttpFoundation\Request', createFromGlobals ]
@@ -33,4 +36,8 @@ services:
 
     controller.web.index:
         class: App\Controller\Web\IndexController
-        arguments: [ "@form.factory", "@service.twitter", '@service.linkedin' ]
+        arguments: [ "@form.factory"]
+
+    controller.web.auth:
+        class: App\Controller\Web\AuthController
+        arguments: [ "@service.session", "@model.user", "@service.mail" ]

@@ -25,3 +25,9 @@ parameters:
 
     minified_js: true
     minified_css: true
+
+    twitter.consumer_key: 'dummy'
+    twitter.consumer_secret: 'superDummy'
+
+    linkedin.consumer_key: 'dummy'
+    linkedin.consumer_secret: 'superDummy'

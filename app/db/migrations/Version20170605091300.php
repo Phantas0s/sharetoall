@@ -21,6 +21,7 @@ class Version20170605091300 extends AbstractMigration
             `userId` INT NOT NULL AUTO_INCREMENT,
             `userFirstname` VARCHAR(100) NULL,
             `userLastname` VARCHAR(100) NULL,
+            `userEmail` VARCHAR(100) NULL,
             `userPassword` VARCHAR(100) NULL,
             `userVerificationToken` VARCHAR(255) NULL,
             `userVerified` DATETIME NULL,

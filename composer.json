@@ -1,8 +1,8 @@
 {
-    "name": "pantaflix/yoda",
-    "description": "Pantaflix Pro: Media Asset Management System & Admin Panel",
+    "name": "sharetoall",
+    "description": "Sharetoall: share easily on multiple social network",
     "type": "project",
-    "homepage": "https://bitbucket.org/pantaflix/yoda",
+    "homepage": "https://bitbucket.org/phantas0s/sharetoall",
     "require": {
         "php": ">=7.1",
         "ext-pdo_mysql": "*",

@@ -1,7 +1,9 @@
 import Vue from 'vue';
+import '../styles/sass/pages/web/_login.scss';
 import Api from 'common/api';
 import VueMaterial from 'vue-material';
 import Session from 'common/session';
+// import SharetoallComponents from 'component/sharetoall-components';
 import Alert from 'common/alert';
 import Event from 'pubsub-js';
 
@@ -14,9 +16,9 @@ Vue.use(VueMaterial);
 
 /* eslint-disable no-unused-vars */
 const app = new Vue({
-    el: '#app',
+    el: '#login',
     data: {
-        form: {},
+        email: '',
         password: '',
         session_token: '',
     },
@@ -25,22 +27,20 @@ const app = new Vue({
         this.session_token = this.$session.getToken();
     },
     methods: {
-        open() {
-            this.$refs.snackbar.open();
+        logout: function (e) {
+            this.$session.deleteToken();
+            this.$refs.form.submit();
         },
-
-        showNotification() {
-            this.$alert.success('Yeah yeah yeahhhhh');
-        },
-
-        logout() {
-            this.$session.logout();
-        },
-        register: function (e) {
+        login: function (e) {
             e.preventDefault();
 
-            Api.post('registration', this.form).then(response => {
-                window.location = '/register/confirm';
+            Api.post('session', {email: this.email, password: this.password}).then(response => {
+                this.$refs.session_token.value = response.data.token;
+
+                this.$session.setToken(response.data.token);
+                this.$session.setUser(response.data.user);
+
+                this.$refs.form.submit();
             }, error => {});
         },
     },

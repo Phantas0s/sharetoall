@@ -17,11 +17,7 @@ class UserDaoTest extends UnitTestCase
 
     public function testFind()
     {
-        $this->markTestSkipped(
-            'User dao not implemented'
-        );
-
-        $this->dao->find(6);
-        $this->assertInternalType('array', $this->dao->userRoles);
+        $this->dao->find(1);
+        $this->assertInternalType('string', $this->dao->userFirstname);
     }
 }

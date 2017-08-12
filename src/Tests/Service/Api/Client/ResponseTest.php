@@ -10,6 +10,7 @@ class ResponseTest extends UnitTestCase
     public function testResponse()
     {
         $response = new Response('200', ['header' => 'header'], 'first=value&arr[]=foo+bar&arr[]=baz');
+
         $this->assertEquals('200', $response->getStatusCode());
         $this->assertArrayHasKey('header', $response->getHeaders());
         $this->assertEquals('first=value&arr[]=foo+bar&arr[]=baz', $response->getBody());

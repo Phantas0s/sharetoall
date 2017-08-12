@@ -2,3 +2,7 @@ services:
     controller.rest.domain:
         class: App\Controller\Rest\DomainController
         arguments: [ "@model.factory", "@form.factory" ]
+
+    controller.rest.session:
+        class: App\Controller\Rest\SessionController
+        arguments: [ "@service.session", "@model.user", %app.version%, %app.debug%]

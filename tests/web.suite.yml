@@ -2,7 +2,7 @@ actor: WebTester
 modules:
     enabled:
         - WebDriver:
-            url: 'https://www.yoda.pantadev.com/'
+            url: 'http://sharetoall.loc'
             host: webdriver
             port: 4444
             browser: chrome
