@@ -56,9 +56,6 @@ class SessionController
         $email = $request->request->get('email');
         $password = $request->request->get('password');
 
-        $slug = explode('.', $request->getHost())[0];
-        $licensorId = null;
-
         if ($email) {
             $this->session->login($email, $password);
             $result['user'] = $this->session->getUser()->getValues();

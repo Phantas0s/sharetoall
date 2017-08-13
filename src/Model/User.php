@@ -13,28 +13,6 @@ class User extends ModelAbstract
 {
     protected $_daoName = 'User';
 
-    const ROLE_OWNER = 'owner';
-    const ROLE_ADMIN = 'admin';
-    const ROLE_SUPERCOW = 'supercow';
-
-    private $listRoles = [
-        self::ROLE_OWNER,
-        self::ROLE_ADMIN,
-        self::ROLE_SUPERCOW
-    ];
-
-    public function register(RegisterForm $form)
-    {
-        $this->transactional(function () use ($form) {
-            $userDao = $this->getEntityDao();
-
-            $userDao->setValues($form->getValuesByTag('user'));
-
-            $userDao->userPassword = $form->getPasswordHash();
-            $userDao->userVerificationToken = $form->getVerificationToken();
-        });
-    }
-
     public function updatePassword($password)
     {
         if ($password == '') {
@@ -50,12 +28,12 @@ class User extends ModelAbstract
 
         $this->getDao()->userPassword = $hash;
         $this->getDao()->update();
+        // @codeCoverageIgnoreEnd
     }
-    // @codeCoverageIgnoreEnd
 
     public function findByPasswordResetToken($token)
     {
-        $users = $this->findAll(array('userPasswordToken' => $token));
+        $users = $this->findAll(array('userResetPasswordToken' => $token));
 
         if (count($users) != 1) {
             throw new InvalidArgumentException('Invalid password reset token');
@@ -66,7 +44,7 @@ class User extends ModelAbstract
 
     public function findByVerificationToken($token)
     {
-        $users = $this->findAll(array('userVerificationToken' => $token));
+        $users = $this->findAll(array('userVerifEmailToken' => $token));
 
         if (count($users) != 1) {
             throw new InvalidArgumentException('Invalid verification token');
@@ -93,7 +71,7 @@ class User extends ModelAbstract
             throw new InvalidArgumentException('Password reset token is too short');
         }
 
-        $this->getDao()->userPasswordToken = $token;
+        $this->getDao()->userResetPasswordToken = $token;
         $this->getDao()->update();
 
         return $this;
@@ -101,8 +79,8 @@ class User extends ModelAbstract
 
     public function deleteVerificationToken()
     {
-        if ($this->getDao()->userVerificationToken) {
-            $this->getDao()->userVerificationToken = null;
+        if ($this->getDao()->userVerifEmailToken) {
+            $this->getDao()->userVerifEmailToken = null;
             $this->getDao()->update();
         }
 
@@ -120,8 +98,8 @@ class User extends ModelAbstract
 
     public function deletePasswordResetToken()
     {
-        if ($this->getDao()->userPasswordToken) {
-            $this->getDao()->userPasswordToken = '';
+        if ($this->getDao()->userResetPasswordToken) {
+            $this->getDao()->userResetPasswordToken = '';
             $this->getDao()->update();
         }
 
@@ -133,48 +111,12 @@ class User extends ModelAbstract
         return password_verify($password, $this->userPassword);
     }
 
-    public function getRoles(): array
-    {
-        return (array)$this->userRoles;
-    }
-
-    public function addRole(string $role)
-    {
-        if (!in_array($role, $this->listRoles)) {
-            throw new NotFoundException('The role '.$role.' doesn\'t exists!');
-        }
-
-        $roles = $this->getRoles();
-
-        $roles[] = $role;
-
-        $this->getDao()->userRoles = $roles;
-        $this->getDao()->update();
-
-        return $this;
-    }
-
-    public function isAdmin()
-    {
-        return in_array(self::ROLE_ADMIN, $this->getRoles());
-    }
-
-    public function isOwner()
-    {
-        return in_array(self::ROLE_OWNER, $this->getRoles());
-    }
-
-    public function isSuperCow()
-    {
-        return in_array(self::ROLE_SUPERCOW, $this->getRoles());
-    }
-
     public function emailVerified()
     {
-        if ($this->isAdmin()) {
-            return true;
-        }
-
         return !empty($this->userVerified);
+    }
+
+    public function getId(){
+        return $this->userId;
     }
 }

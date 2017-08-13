@@ -26,11 +26,16 @@ class UserTest extends UnitTestCase
     public function testFind()
     {
         $this->model->find(1);
-
         $this->assertEquals(1, $this->model->getId());
 
         $this->assertInternalType('string', $this->model->userEmail);
         $this->assertInternalType('string', $this->model->userPassword);
+    }
+
+    public function testGetId()
+    {
+        $this->model->find(1);
+        $this->assertEquals(1, $this->model->getId());
     }
 
     public function testFindAll()
@@ -52,241 +57,106 @@ class UserTest extends UnitTestCase
     public function testInsecurePassword()
     {
         $password = 'foo';
-
         $this->model->find(1);
 
         $this->expectException(InvalidArgumentException::class);
         $this->model->updatePassword($password);
     }
 
-    /**
-     * @expectedException \App\Exception\InvalidArgumentException
-     */
     public function testEmptyPassword()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $password = '';
+        $this->model->find(1);
 
-        $this->model->find(3);
-
-        $this->model->updatePassword($password);
+        $this->expectException(InvalidArgumentException::class);
+        $this->model->updatePassword('');
     }
 
     public function testFindByPasswordResetToken()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $user = $this->model->findByPasswordResetToken('4wai87E67cuDCe9');
-
-        $this->assertEquals(65946, $user->getId());
+        $user = $this->model->findByPasswordResetToken('123456');
+        $this->assertEquals(2, $user->getId());
     }
 
-    /**
-     * @expectedException \App\Exception\InvalidArgumentException
-     */
     public function testFindByPasswordResetTokenWithInvalidToken()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
+        $this->expectException(InvalidArgumentException::class);
         $this->model->findByPasswordResetToken('XXX');
     }
 
     public function testFindByVerificationToken()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $user = $this->model->findByVerificationToken('tkkqEUTj1P13ucm');
-
-        $this->assertEquals(65776, $user->getId());
+        $user = $this->model->findByVerificationToken('123456');
+        $this->assertEquals(2, $user->getId());
     }
 
-    /**
-     * @expectedException \App\Exception\InvalidArgumentException
-     */
     public function testFindByVerificationTokenWithInvalidToken()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
+        $this->expectException(InvalidArgumentException::class);
         $this->model->findByVerificationToken('XXX');
     }
 
     public function testFindByEmail()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $user = $this->model->findByEmail('admin@pantaflix.com');
-
+        $user = $this->model->findByEmail('user_cow@sharetoall.com');
         $this->assertEquals(2, $user->getId());
     }
 
-    /**
-     * @expectedException \App\Exception\InvalidArgumentException
-     */
     public function testFindByEmailError()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
+        $this->expectException(InvalidArgumentException::class);
         $this->model->findByEmail('admin@XXX.com');
     }
 
     public function testPasswordIsValid()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $user = $this->model->find(2);
-
-        $password = 'passwd';
-
-        $result = $user->passwordIsValid($password);
+        $user = $this->model->find(1);
+        $result = $user->passwordIsValid('password');
 
         $this->assertTrue($result);
     }
 
-    public function testRegister()
-    {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        DaoAbstract::setDateTimeClassName('\TestTools\Util\FixedDateTime');
-
-        /** @var RegisterForm $form */
-        $form = $this->get('form.factory')->create('User\Register');
-
-        $inputValues = array(
-            'userFirstname' => 'Jens',
-            'userLastname' => 'Mander',
-            'userEmail' => 'test@example.com',
-            'userEmailConfirm' => 'test@example.com',
-            'userPassword' => 'es58bhst89e5',
-            'licensorName' => 'Foo Bar GmbH',
-            'licensorSlug' => 'foobar',
-            'userTermsAccepted' => 1,
-            'userNewsletter' => 0
-        );
-
-        $form->setDefinedWritableValues($inputValues);
-
-        $form->setPasswordHash('$6$5ygXjBO2gNbW$p1eaS7isBLD1JfN6PaQzrGKJHf9UGmUOBCZiqq3VnhDSPhdbIzOnu3kbKO2mcKEFiD11jFoPE5YSyvA7cYbbK1');
-
-        $form->setVerificationToken('5e6e341dcd74b472a63144cdaf239070');
-
-        $this->model->register($form);
-
-        $licensor = $this->model->getLicensor();
-
-        $this->assertInstanceOf(Licensor::class, $licensor);
-        $this->assertGreaterThan(0, $licensor->getId());
-
-        $this->assertGreaterThan(0, $this->model->getId());
-    }
-
-    public function testGetLicensor()
-    {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $user = $this->model->find(9);
-        $licensor = $user->getLicensor();
-
-        $this->assertInstanceOf(Licensor::class, $licensor);
-        $this->assertEquals(2, $licensor->getId());
-    }
-
     public function testEmailVerified()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        $user = $this->model->find(9);
+        $user = $this->model->find(1);
         $this->assertTrue($user->emailVerified());
-    }
-
-    public function testAddRole()
-    {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        DaoAbstract::setDateTimeClassName('\TestTools\Util\FixedDateTime');
-        $user = $this->model->find(11);
-
-        $user->addRole(User::ROLE_OWNER);
-        $this->assertEquals($user->getRoles(), ['owner']);
-        $user->addRole(User::ROLE_ADMIN);
-        $this->assertEquals($user->getRoles(), ['owner', 'admin']);
-    }
-
-    public function testAddUnknownRole()
-    {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        DaoAbstract::setDateTimeClassName('\TestTools\Util\FixedDateTime');
-        $user = $this->model->find(11);
-        $this->expectException(NotFoundException::class);
-        $user->addRole('thisRoleWillNeverExists');
     }
 
     public function testSetPasswordResetToken()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
         DaoAbstract::setDateTimeClassName('\TestTools\Util\FixedDateTime');
         /** @var User $user */
-        $user = $this->model->find(3);
-        $token = '123456789';
+        $user = $this->model->find(2);
+        $token = '123456';
         $user->setPasswordResetToken($token);
-        $this->assertInternalType('string', $user->userPasswordToken);
-        $this->assertGreaterThan(5, strlen($user->userPasswordToken));
+        $this->assertInternalType('string', $user->userResetPasswordToken);
+        $this->assertGreaterThan(5, strlen($user->userResetPasswordToken));
     }
 
-    /**
-     * @expectedException \App\Exception\InvalidArgumentException
-     */
     public function testSetPasswordResetTokenError()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
         /** @var User $user */
-        $user = $this->model->find(3);
-        $token = '1234';
-        $user->setPasswordResetToken($token);
+        $user = $this->model->find(2);
+        $this->expectException(InvalidArgumentException::class);
+        $user->setPasswordResetToken(1234);
     }
 
     public function testDeletePasswordResetToken()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
-        /** @var User $user */
-        $user = $this->model->find(65946);
-        $this->assertInternalType('string', $user->userPasswordToken);
-        $this->assertGreaterThan(5, strlen($user->userPasswordToken));
+        $user = $this->model->find(2);
+        $this->assertInternalType('string', $user->userResetPasswordToken);
+        $this->assertGreaterThan(5, strlen($user->userResetPasswordToken));
         $user->deletePasswordResetToken();
-        $this->assertEmpty($user->userPasswordToken);
+        $this->assertEmpty($user->userResetPasswordToken);
     }
 
     public function testDeleteVerificationToken()
     {
-        $this->markTestSkipped(
-            'User Model not implemented'
-        );
         DaoAbstract::setDateTimeClassName('\TestTools\Util\FixedDateTime');
         /** @var User $user */
-        $user = $this->model->find(65961);
-        $this->assertInternalType('string', $user->userVerificationToken);
-        $this->assertGreaterThan(5, strlen($user->userVerificationToken));
+        $user = $this->model->find(2);
+        $this->assertInternalType('string', $user->userVerifEmailToken);
+        $this->assertGreaterThan(5, strlen($user->userVerifEmailToken));
         $user->deleteVerificationToken();
-        $this->assertNull($user->userVerificationToken);
+        $this->assertNull($user->userVerifEmailToken);
     }
 }

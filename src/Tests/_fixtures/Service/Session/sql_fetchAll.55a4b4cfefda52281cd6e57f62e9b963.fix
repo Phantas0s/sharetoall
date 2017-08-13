@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:1:{i:0;a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:9:"Firstname";s:12:"userLastname";s:8:"Lastname";s:9:"userEmail";s:19:"user@sharetoall.com";s:12:"userPassword";s:8:"password";s:21:"userVerificationToken";N;s:12:"userVerified";N;s:17:"userPasswordToken";N;s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}}s:4:"args";a:1:{i:0;s:4332:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:0:{}s:4:"args";a:1:{i:0;s:4337:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (
@@ -51,7 +51,7 @@ a:2:{s:6:"result";a:1:{i:0;a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:9:"
 
             [_isRollbackOnly:Doctrine\DBAL\Connection:private] => 
             [defaultFetchMode:protected] => 2
-            [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Model/User/
+            [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Service/Session/
             [_fixturePrefix:TestTools\Doctrine\DBAL\Connection:private] => sql
             [_fixtureOfflineMode:TestTools\Doctrine\DBAL\Connection:private] => 
             [_fixtureInstance:TestTools\Doctrine\DBAL\Connection:private] => parent
@@ -87,7 +87,7 @@ a:2:{s:6:"result";a:1:{i:0;a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:9:"
                     [type:Doctrine\DBAL\Query\Expression\CompositeExpression:private] => AND
                     [parts:Doctrine\DBAL\Query\Expression\CompositeExpression:private] => Array
                         (
-                            [0] => `userEmail` = 'user@sharetoall.com'
+                            [0] => `userEmail` = 'admin@pantaflix.com'
                             [1] => `deleted` IS NULL
                         )
 
@@ -108,7 +108,7 @@ a:2:{s:6:"result";a:1:{i:0;a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:9:"
 
         )
 
-    [sql:Doctrine\DBAL\Query\QueryBuilder:private] => SELECT * FROM User U WHERE (`userEmail` = 'user@sharetoall.com') AND (`deleted` IS NULL)
+    [sql:Doctrine\DBAL\Query\QueryBuilder:private] => SELECT * FROM User U WHERE (`userEmail` = 'admin@pantaflix.com') AND (`deleted` IS NULL)
     [params:Doctrine\DBAL\Query\QueryBuilder:private] => Array
         (
         )

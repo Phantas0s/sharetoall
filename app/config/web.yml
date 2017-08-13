@@ -5,7 +5,7 @@ imports:
     - { resource: rest.yml }
 
 parameters:
-    app.name: "Pantaflix Pro"
+    app.name: "Sharetoall"
 
 services:
     app:
