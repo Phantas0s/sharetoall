@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:0:{}s:4:"args";a:1:{i:0;s:4339:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:0:{}s:4:"args";a:1:{i:0;s:4320:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (
@@ -51,7 +51,7 @@ a:2:{s:6:"result";a:0:{}s:4:"args";a:1:{i:0;s:4339:"Argument could not be serial
 
             [_isRollbackOnly:Doctrine\DBAL\Connection:private] => 
             [defaultFetchMode:protected] => 2
-            [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Service/Session/
+            [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Model/User/
             [_fixturePrefix:TestTools\Doctrine\DBAL\Connection:private] => sql
             [_fixtureOfflineMode:TestTools\Doctrine\DBAL\Connection:private] => 
             [_fixtureInstance:TestTools\Doctrine\DBAL\Connection:private] => parent
@@ -87,7 +87,7 @@ a:2:{s:6:"result";a:0:{}s:4:"args";a:1:{i:0;s:4339:"Argument could not be serial
                     [type:Doctrine\DBAL\Query\Expression\CompositeExpression:private] => AND
                     [parts:Doctrine\DBAL\Query\Expression\CompositeExpression:private] => Array
                         (
-                            [0] => `userEmail` = 'admin@sharetoall.com'
+                            [0] => `userEmail` = 'admin@XXX.com'
                             [1] => `deleted` IS NULL
                         )
 
@@ -108,7 +108,7 @@ a:2:{s:6:"result";a:0:{}s:4:"args";a:1:{i:0;s:4339:"Argument could not be serial
 
         )
 
-    [sql:Doctrine\DBAL\Query\QueryBuilder:private] => SELECT * FROM User U WHERE (`userEmail` = 'admin@sharetoall.com') AND (`deleted` IS NULL)
+    [sql:Doctrine\DBAL\Query\QueryBuilder:private] => SELECT * FROM User U WHERE (`userEmail` = 'admin@XXX.com') AND (`deleted` IS NULL)
     [params:Doctrine\DBAL\Query\QueryBuilder:private] => Array
         (
         )
