@@ -13,10 +13,4 @@ class HomeCest
     public function _after(\WebTester $I)
     {
     }
-
-    public function loginLicensorOwner(\WebTester $I)
-    {
-        $I->amOnPage('/');
-        $I->see('PANTAFLIX PRO');
-    }
 }

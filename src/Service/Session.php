@@ -217,11 +217,6 @@ class Session
         return $this->hasUserId();
     }
 
-    public function isAdmin(): bool
-    {
-        return $this->isUser() ? $this->getUser()->isAdmin() : false;
-    }
-
     public function createOneTimeToken(): string
     {
         $oneTimeToken = hash($this->hashAlgorithm, random_bytes(128), false);

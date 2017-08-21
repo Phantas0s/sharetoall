@@ -30,14 +30,18 @@ class AuthController
 
     public function postLoginAction(Request $request)
     {
-        $email = $request->get('email');
-        $password = $request->get('password');
+        $session_token = $request->get('session_token');
 
-        $result = array('email' => $email, 'error' => '', 'page_name' => 'Login');
+        $result = array(
+            'page_name' => 'Login',
+            'realm' => 'auth',
+        );
 
         try {
-            $this->session->login($email, $password);
-            return '/';
+            $this->session->setToken($session_token);
+            $this->session->getUserId();
+
+            return '/sharetoall';
         } catch (\Exception $e) {
             $result['error'] = $e->getMessage();
         }

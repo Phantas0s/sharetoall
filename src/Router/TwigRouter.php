@@ -30,7 +30,7 @@ class TwigRouter extends Router
 
     public function route($routePrefix = '', $servicePrefix = 'controller.web.', $servicePostfix = '')
     {
-        $this->realm = strtolower(explode('.', $servicePrefix)[1]); // web, acp or mams
+        $this->realm = strtolower(explode('.', $servicePrefix)[1]); // web or sharetoall
         $app = $this->app;
         $container = $this->container;
 
@@ -132,7 +132,6 @@ class TwigRouter extends Router
         $this->twig->addGlobal('session_token', $session->hasToken() ? $session->getToken() : '');
         $this->twig->addGlobal('firstname', $this->session->getUserFirstName());
         $this->twig->addGlobal('lastname', $this->session->getUserLastName());
-        $this->twig->addGlobal('is_admin', $this->session->isAdmin());
         $this->twig->addGlobal('is_anonymous', $this->session->isAnonymous());
     }
 
