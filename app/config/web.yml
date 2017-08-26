@@ -41,3 +41,7 @@ services:
     controller.web.auth:
         class: App\Controller\Web\AuthController
         arguments: [ "@service.session", "@model.user", "@service.mail" ]
+
+    controller.web.sharetoall:
+        class: App\Controller\Web\SharetoallController
+        arguments: [ "@service.session", "@model.user", "@service.mail" ]
