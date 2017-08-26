@@ -3,7 +3,7 @@
 {% block content %}
     <div class="login-page__form-container">
         <div class="auth-manager__container">
-            <div class="login-form"><h1 class="login-form__title">Sharetoall: Filmmaker</h1>
+            <div class="login-form"><h1 class="login-form__title">Sharetoall</h1>
                 {% if user_id %}
 
                     <form id="login" class="form-signin" role="form" method="post" ref="form" action="/auth/logout">
@@ -32,9 +32,7 @@
                                             <p class="login-form__paragraph"><span>Forgot your password?</span>
 
                             <a href="/auth/reset" class="login-form__link">Click here.</a></p>
-                        <button type="button" class="login-form__submit button button--primary button--normal" @click="login">Sign In:
-                            Filmmaker
-                        </button>
+                        <button type="button" class="login-form__submit button button--primary button--normal" @click="login">Sign In</button>
                     </form>
                 {% endif %}
             </div>
