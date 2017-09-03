@@ -19,6 +19,7 @@ class Version20170606054940 extends AbstractMigration
         $this->addSql("
             CREATE TABLE `Message` (
             `messageId` INT NOT NULL AUTO_INCREMENT,
+            `userId` INT NOT NULL,
             `messageContent` TEXT NULL,
             `created` DATETIME NULL,
             `updated` DATETIME NULL,
@@ -26,6 +27,15 @@ class Version20170606054940 extends AbstractMigration
             PRIMARY KEY (`messageId`));
         ");
 
+        $this->addSql("
+            ALTER TABLE `Message`
+            ADD INDEX `fk_Message_1_idx` (`userId` ASC),
+            ADD CONSTRAINT `fk_Message_1`
+            FOREIGN KEY (`userId`)
+            REFERENCES `User` (`userId`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
+        ");
     }
 
     /**
@@ -34,6 +44,5 @@ class Version20170606054940 extends AbstractMigration
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-
     }
 }

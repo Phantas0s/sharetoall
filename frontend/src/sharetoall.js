@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import '../styles/sass/core/sharetoall.scss';
+import '../styles/sass/sharetoall.scss';
 import App from 'sharetoall/app.vue';
 import routes from 'sharetoall/routes';
 import Api from 'common/api';

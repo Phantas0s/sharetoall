@@ -19,7 +19,14 @@ class CreateForm extends FormAbstract
                 'max' => 64,
                 'required' => true,
             ],
-       ];
+            'userId' => [
+                'type' => 'int',
+                'hidden' => true,
+                'readonly' => true,
+                'caption' => 'User',
+                'default' => $this->getParam('session')->getUserId()
+            ]
+        ];
 
         $this->setDefinition($definition);
     }

@@ -1,0 +1,46 @@
+.alert {
+    border-radius: 2px;
+    display: block;
+    height: auto;
+    left: 20%;
+    position: fixed;
+    right: 20%;
+    top: 10px;
+    z-index: 1051;
+
+    &-message {
+        border-radius: 0;
+        color: $c-white;
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        left: 0;
+        margin: 1px 0 0 0;
+        min-height: 14px;
+        opacity: 1;
+        padding: 8px 10px 8px 10px;
+        right: 0;
+
+        &:first-letter {
+            text-transform: uppercase;
+        }
+    }
+
+    // States
+    &.success {
+        background-color: $c-success;
+    }
+
+    &.error {
+        background-color: $c-error;
+    }
+
+    &.warning {
+        background-color: $c-warning;
+    }
+
+    &.info {
+        background-color: $c-info;
+    }
+}
+
