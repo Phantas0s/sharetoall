@@ -6,3 +6,7 @@ services:
     controller.rest.session:
         class: App\Controller\Rest\SessionController
         arguments: [ "@service.session", "@model.user", %app.version%, %app.debug%]
+
+    controller.rest.network:
+        class: App\Controller\Rest\NetworkController
+        arguments: [ "@service.session", "@model.factory", "@form.factory" ]

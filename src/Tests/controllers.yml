@@ -18,3 +18,7 @@ services:
         arguments: [ "@service.session", "@model.factory", "@form.factory" ]
         calls:
             - [ setMailService, [ "@service.mail" ] ]
+
+    controller.rest.network:
+        class: App\Controller\Rest\NetworkController
+        arguments: [ "@service.session", "@model.factory", "@form.factory" ]

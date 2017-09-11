@@ -1,0 +1,8 @@
+a:2:{s:6:"result";s:267:"'GET /api/network HTTP/1.1\r\nAccept:          text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Charset:  ISO-8859-1,utf-8;q=0.7,*;q=0.7\r\nAccept-Language: en-us,en;q=0.5\r\nHost:            localhost\r\nUser-Agent:      Symfony/3.X\r\n\r\n'";s:4:"args";a:1:{i:0;s:251:"GET /api/network HTTP/1.1
+Accept:          text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Charset:  ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Accept-Language: en-us,en;q=0.5
+Host:            localhost
+User-Agent:      Symfony/3.X
+
+";}}

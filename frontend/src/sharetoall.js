@@ -4,6 +4,7 @@ import '../styles/sass/sharetoall.scss';
 import App from 'sharetoall/app.vue';
 import routes from 'sharetoall/routes';
 import Api from 'common/api';
+import Network from 'common/network';
 import VueMaterial from 'vue-material';
 // import PantaComponents from 'component/panta-components';
 import Alert from 'common/alert';
@@ -22,6 +23,7 @@ Vue.prototype.$event = Event;
 Vue.prototype.$alert = Alert;
 Vue.prototype.$session = session;
 Vue.prototype.$api = Api;
+Vue.prototype.$network = new Network();
 
 Vue.use(VueMaterial);
 Vue.use(Router);

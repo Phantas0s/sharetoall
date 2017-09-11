@@ -20,3 +20,8 @@ services:
         shared: false
         arguments: [ "@model.factory" ]
 
+    model.network:
+        class: App\Model\Network
+        shared: false
+        arguments: [ "@model.factory" ]
+

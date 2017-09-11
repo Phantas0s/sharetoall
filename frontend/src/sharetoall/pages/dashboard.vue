@@ -1,50 +1,55 @@
 <template>
     <div class="dashboard">
         <h1>{{ msg }} {{username}}</h1>
-        <ul id="networks">
-            <li v-for="network in networks">
-                <button :class=network.class @click="toggleNetwork">{{ network.text }}</button>
+        <ul id="networks" v-for="network in networks">
+            <li >
+                <button v-bind:class="{'active': isNetworkRegistered(network)}" @click="toggleNetwork">{{ network.networkName }}</button>
             </li>
         </ul>
         <form>
             <label for="message">Message</label>
-            <input id="message" name="message" />
+            <textarea id="message" name="message"></textarea>
             <button>Send</button>
         </form>
         <md-button @click.native="showNotification()" class="md-primary md-raised">Show notification</md-button>
         <md-button @click.native="logout()" class="md-primary md-raised">Logout {{ username }}</md-button>
+        <md-button @click.native="test()" class="md-primary md-raised">test</md-button>
     </div>
 </template>
 
 <script>
     export default {
         name: 'dashboard',
+        created () {
+            this.$network.findUserNetwork(this.userId).then(response => { 
+                this.networks = response;
+            });
+        },
         data() {
             return {
                 msg: 'Welcome to Sharetoall',
+                userId: this.$session.getUser().userId,
                 username: this.$session.getFullName(),
                 //For later: get list of network + networks the user already subscribed to
                 //networks: $network.getNetworkList(this.$session.getUserId());
-                networks: [
-                    { text: 'Twitter', class: 'twitter' },
-                    { text: 'Linkedin', class: 'linkedin' },
-                ]
+                networks: '',
             };
         },
         methods: {
             showNotification() {
-                this.$alert.success('Yeah wuwuwu');
-                this.$alert.warning('Yeah wuwuwu');
+                this.$alert.warning('hello this is a warning');
             },
-
             logout() {
                 this.$session.logout();
             },
+            isNetworkRegistered(network) {
+                return network.userId == this.userId;
+            },
             toggleNetwork(event) {
-                this.$api.post('connect', {network: this.network}).then(response => {
+                // this.$api.post('connect', {network: this.network}).then(response => {
                     event.target.classList.toggle('active');
-                }, error => {event.target.classList.toggle('active');
-});
+                // }, error => {event.target.classList.toggle('active');
+                // });
             }
         }
     };
