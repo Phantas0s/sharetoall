@@ -1,9 +1,17 @@
 <template>
     <div class="dashboard">
         <h1>{{ msg }} {{username}}</h1>
-        <ul id="networks" v-for="network in networks">
-            <li >
-                <button v-bind:class="{'active': isNetworkRegistered(network)}" @click="toggleNetwork">{{ network.networkName }}</button>
+        <ul id="networks">
+            <li v-for="network in networks">
+                <button
+                    v-bind:class="[
+                        network.networkSlug,
+                        {'connected': networkHasToken(network),
+                        'active': isNetworkRegistered(network)}
+                    ]"
+                    @click="toggleNetwork">
+                        {{ network.networkName }}
+                </button>
             </li>
         </ul>
         <form>
@@ -21,7 +29,7 @@
     export default {
         name: 'dashboard',
         created () {
-            this.$network.findUserNetwork(this.userId).then(response => { 
+            this.$network.findUserNetwork(this.userId).then(response => {
                 this.networks = response;
             });
         },
@@ -39,6 +47,9 @@
             showNotification() {
                 this.$alert.warning('hello this is a warning');
             },
+            networkHasToken(network) {
+                return network.userNetworkToken != null;
+            },
             logout() {
                 this.$session.logout();
             },
@@ -46,10 +57,13 @@
                 return network.userId == this.userId;
             },
             toggleNetwork(event) {
-                // this.$api.post('connect', {network: this.network}).then(response => {
-                    event.target.classList.toggle('active');
-                // }, error => {event.target.classList.toggle('active');
-                // });
+                event.target.classList.toggle('active');
+                if(!event.target.classList.contains('connected') && event.target.classList.contains('active')) {
+                    console.log('lala');
+//                    this.$api.post('connect', {network: this.networks}).then(response => {
+//                    }, error => {event.target.classList.toggle('active');
+//                    });
+                }
             }
         }
     };

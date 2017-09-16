@@ -6,7 +6,7 @@ use App\Service\Session;
 use TestTools\TestCase\UnitTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class NetworkControllerTest extends UnitTestCase
+class SessionControllerTest extends UnitTestCase
 {
     protected $controller;
     protected $session;
@@ -14,25 +14,22 @@ class NetworkControllerTest extends UnitTestCase
     public function setUp()
     {
         $container = $this->getContainer();
-        $this->session = $container->get('service.session');
-        $this->session->generateToken()->login('user@sharetoall.com', 'password');
-        $this->controller = $container->get('controller.rest.network');
+        // $this->session = $container->get('service.session');
+        // $this->session->generateToken()->login('user@sharetoall.com', 'password');
+        $this->controller = $container->get('controller.rest.session');
     }
 
-    public function testCgetAction()
+    public function testPostAction()
     {
-        $request = Request::create('https://localhost/api/network');
-        $networks = $this->controller->cgetAction($request);
+        $request = Request::create('http://sharetoall.com');
+        $result = $this->controller->postAction($request);
+        var_dump($result);
 
-        foreach ($networks as $values) {
-            $this->assertArrayHasKey('networkName', $values);
-            $this->assertArrayHasKey('networkSlug', $values);
-        }
+        $this->assertArrayHasKey('token', $result);
+        $this->assertArrayHasKey('app_version', $result);
+        $this->assertArrayHasKey('debug', $result);
 
-        $this->assertNotEmpty($networks);
-    }
-
-    public function testGetAction()
-    {
+        $this->assertTrue($result['debug']);
+        $this->assertEquals('1.2.3', $result['app_version']);
     }
 }

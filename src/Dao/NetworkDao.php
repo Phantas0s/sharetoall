@@ -17,7 +17,7 @@ class NetworkDao extends DaoAbstract
     {
         $defaults = [
             'table_alias' => 'n',
-            'columns' => ['n.*', 'un.*'],
+            'columns' => ['n.*', 'un.userId', 'un.userNetworkToken'],
             'left_join' => [
                 [
                     'n',

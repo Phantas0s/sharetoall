@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Doctrine\ActiveRecord\Search\SearchResult;
+
 /**
  * @see https://github.com/lastzero/doctrine-active-record
  */
@@ -17,11 +19,11 @@ class Network extends ModelAbstract
         return $results->getAllResultsAsArray();
     }
 
-    public function findWithNetworkUser(int $userId)
+    public function findWithNetworkUser(int $userId): SearchResult
     {
         $params[] = 'un.userId = ' . $userId . ' OR un.userId IS NULL';
         $results = $this->getDao()->searchWithNetworkUser(['cond' => $params]);
 
-        return $results->getAllResultsAsArray();
+        return $results;
     }
 }
