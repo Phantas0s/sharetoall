@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller\Rest;
 
@@ -16,7 +17,7 @@ class NetworkController extends EntityControllerAbstract
 
     public function getAction($userId, Request $request)
     {
-        $networks = $this->model->findWithNetworkUser($userId);
+        $networks = $this->model->findByNetworkUser($userId);
         return $networks->getAllResultsAsArray();
     }
 }

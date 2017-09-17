@@ -97,7 +97,7 @@ class AuthTest extends UnitTestCase
         $this->oAuth = new Auth($this->cache, new FakeClient($response), $this->consumer, 'dummyApi');
         return $this->oAuth->fetchOnetimeToken('http://dummyUrl');
     }
-    
+
     private function createAndCacheLongTimeToken()
     {
         $this->createAndCacheOneTimeToken();

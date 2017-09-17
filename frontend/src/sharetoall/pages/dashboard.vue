@@ -4,8 +4,8 @@
         <ul id="networks">
             <li v-for="network in networks">
                 <button
+                    v-bind:data-network-slug="network.networkSlug"
                     v-bind:class="[
-                        network.networkSlug,
                         {'connected': networkHasToken(network),
                         'active': isNetworkRegistered(network)}
                     ]"
@@ -57,12 +57,16 @@
                 return network.userId == this.userId;
             },
             toggleNetwork(event) {
-                event.target.classList.toggle('active');
+                const el = event.target;
+                el.classList.toggle('active');
+
                 if(!event.target.classList.contains('connected') && event.target.classList.contains('active')) {
-                    console.log('lala');
-//                    this.$api.post('connect', {network: this.networks}).then(response => {
-//                    }, error => {event.target.classList.toggle('active');
-//                    });
+                    const networkSlug = el.dataset.networkSlug;
+
+                    this.$api.post('connect', {networkSlug: networkSlug}).then(response => {
+                        console.log('success');
+                    }, error => {event.target.classList.toggle('active');
+                    });
                 }
             }
         }

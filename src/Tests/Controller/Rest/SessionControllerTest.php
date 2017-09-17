@@ -23,7 +23,6 @@ class SessionControllerTest extends UnitTestCase
     {
         $request = Request::create('http://sharetoall.com');
         $result = $this->controller->postAction($request);
-        var_dump($result);
 
         $this->assertArrayHasKey('token', $result);
         $this->assertArrayHasKey('app_version', $result);

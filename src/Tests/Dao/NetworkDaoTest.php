@@ -25,7 +25,7 @@ class NetworkDaoTest extends UnitTestCase
     {
         $result = $this->dao->searchWithNetworkUser(['cond' => ['un.userId' => 1]]);
 
-        $this->assertEquals('supernetwork', $result->getFirstResult()->networkSlug);
+        $this->assertEquals('linkedin', $result->getFirstResult()->networkSlug);
         $this->assertEquals('1234', $result->getFirstResult()->userNetworkToken);
     }
 }

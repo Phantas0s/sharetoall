@@ -27,3 +27,10 @@ services:
 
     guzzleclient:
         class: App\Service\Api\Client\GuzzleClient
+
+    service.network-factory:
+        class: App\Service\Api\NetworkFactory
+        arguments:
+            - "@service.twitter"
+            - "@service.linkedin"
+

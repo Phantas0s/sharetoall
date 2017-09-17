@@ -21,3 +21,9 @@ parameters:
     feature.example: true
     minified_js: true
     minified_css: true
+
+    twitter.consumer_key: '12345'
+    twitter.consumer_secret: '12345'
+
+    linkedin.consumer_key: '12345'
+    linkedin.consumer_secret: '12345'
