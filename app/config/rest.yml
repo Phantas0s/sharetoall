@@ -10,3 +10,7 @@ services:
     controller.rest.network:
         class: App\Controller\Rest\NetworkController
         arguments: [ "@service.session", "@model.factory", "@form.factory" ]
+
+    controller.rest.connect:
+        class: App\Controller\Rest\ConnectController
+        arguments: ["@service.session", "@model.factory", "@form.factory", "@service.network-factory"]

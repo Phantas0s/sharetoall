@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service\Api;
 
+use App\Exception\NotFoundException;
 use App\Service\Api\NetworkFactory;
 use TestTools\TestCase\UnitTestCase;
 
@@ -31,5 +32,13 @@ class ApiFactoryTest extends UnitTestCase
         }
 
         $this->assertCount(2, $results);
+    }
+
+    public function testCreateUnknownApiClass()
+    {
+        $network = $this->get('model.network')->find(['networkSlug' => 'supernetwork']);
+
+        $this->expectException(NotFoundException::class);
+        $this->networkFactory->create($network->networkSlug);
     }
 }

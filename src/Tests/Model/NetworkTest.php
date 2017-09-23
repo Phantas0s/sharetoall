@@ -36,9 +36,8 @@ class NetworkTest extends UnitTestCase
     public function testFindWithNetworkUser()
     {
         $results = $this->model->findWithNetworkUser(['un.userId' => 1]);
-        $results = $results->getAllResultsAsArray();
 
-        $this->assertEquals('Linkedin', $results[0]['networkName']);
-        $this->assertEquals('1234', $results[0]['userNetworkToken']);
+        $this->assertEquals('Linkedin', $results[0]->networkName);
+        $this->assertEquals('1234', $results[0]->userNetworkToken);
     }
 }

@@ -63,8 +63,8 @@
                 if(!event.target.classList.contains('connected') && event.target.classList.contains('active')) {
                     const networkSlug = el.dataset.networkSlug;
 
-                    this.$api.post('connect', {networkSlug: networkSlug}).then(response => {
-                        console.log('success');
+                    this.$api.get('connect/' + networkSlug).then(response => {
+                        console.log(response);
                     }, error => {event.target.classList.toggle('active');
                     });
                 }

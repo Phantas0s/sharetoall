@@ -40,13 +40,13 @@ class TwitterApi
         $this->auth = new Auth($cache, $client, $consumer, 'twitter');
     }
 
-    public function getAuthUrl()
+    public function getAuthUrl(int $uid)
     {
         $tokenUrl = self::API_HOST . self::API_TOKEN_REQUEST_METHOD;
         $authUrl = self::API_HOST . self::API_TOKEN_AUTHORISE_APP_METHOD;
 
-        $this->auth->fetchOnetimeToken($tokenUrl);
-        return $this->auth->getAuthUrl($authUrl);
+        $this->auth->fetchOnetimeToken($tokenUrl, $uid);
+        return $this->auth->getAuthUrl($authUrl, $uid);
     }
 
     public function getLongTimeToken(string $authVerifier)
@@ -55,9 +55,9 @@ class TwitterApi
         $this->auth->getLongTimeToken($url, $authVerifier);
     }
 
-    public function verifyCallbackToken(string $callbackToken)
+    public function verifyCallbackToken(string $callbackToken, int $uid)
     {
-        $this->auth->verifyCallbackToken($callbackToken);
+        $this->auth->verifyCallbackToken($callbackToken, $uid);
     }
 
     public function postTweet(string $content)
@@ -73,7 +73,6 @@ class TwitterApi
         }
 
         $parameters = ['status' => $content];
-
         $url = self::API_HOST . '/' . self::API_VERSION . '/' . self::API_POST_TWEET_METHOD;
 
         $headers = [

@@ -21,7 +21,6 @@ class NetworkFactory
     {
         $propertyName = $networkSlug . 'Api';
 
-        $class = $this->$propertyName;
         if (!property_exists($this, $propertyName)) {
             throw new NotFoundException(sprintf('The class %s doesn\'t exists', $propertyName));
         }

@@ -42,10 +42,10 @@ class Auth
         $this->queryBuilder = new QueryBuilder();
     }
 
-    public function fetchOnetimeToken(string $url): Token
+    public function fetchOnetimeToken(string $url, int $uid): Token
     {
         $token = $this->requestToken($url);
-        $this->cacheOnetimeToken($token);
+        $this->cacheOnetimeToken($token, $uid);
 
         return $token;
     }
@@ -68,32 +68,33 @@ class Auth
         return new Token($response['oauth_token'], $response['oauth_token_secret']);
     }
 
-    private function cacheOnetimeToken(Token $token)
+    private function cacheOnetimeToken(Token $token, $uid)
     {
-        $tokenKeyName = $this->apiName . '_onetime_token_key';
-        $tokenSecretName = $this->apiName . '_onetime_token_secret';
+        $tokenKeyName = sprintf('%s_%d_onetime_token_key', $this->apiName, $uid);
+        $tokenSecretName = sprintf('%s_%d_onetime_token_secret', $this->apiName, $uid);
 
         $this->cache->set($tokenKeyName, $token->getKey());
         $this->cache->set($tokenSecretName, $token->getSecret());
     }
 
-    private function getCachedOnetimeToken(): Token
+    private function getCachedOnetimeToken(int $uid): Token
     {
-        $tokenKeyName = $this->apiName . '_onetime_token_key';
-        $tokenSecretName = $this->apiName . '_onetime_token_secret';
+        $tokenKeyName = sprintf('%s_%d_onetime_token_key', $this->apiName, $uid);
+        $tokenSecretName = sprintf('%s_%d_onetime_token_secret', $this->apiName, $uid);
 
         if ($this->cache->has($tokenKeyName) && $this->cache->has($tokenSecretName)) {
             return new Token(
-                $this->cache->get($tokenKeyName), $this->cache->get($tokenSecretName)
+                $this->cache->get($tokenKeyName),
+                $this->cache->get($tokenSecretName)
             );
         }
 
         throw new Exception('one time token doesn\'t exists');
     }
 
-    public function getAuthUrl(string $url)
+    public function getAuthUrl(string $url, int $uid)
     {
-        $token = $this->getCachedOnetimeToken();
+        $token = $this->getCachedOnetimeToken($uid);
         $params = [
             'oauth_token' => $token->getKey(),
             'force_login' => 'true',
@@ -102,9 +103,9 @@ class Auth
         return $this->queryBuilder->createUrl($url, $params);
     }
 
-    public function verifyCallbackToken(string $callbackToken)
+    public function verifyCallbackToken(string $callbackToken, int $uid)
     {
-        $token = $this->getCachedOnetimeToken();
+        $token = $this->getCachedOnetimeToken($uid);
         if ($callbackToken != $token->getKey()) {
             throw new OAuthException('The token from the callback url is different than the one time token.');
         }
@@ -146,9 +147,9 @@ class Auth
         return 'OAuth '.implode(',', $parameterQueryParts);
     }
 
-    public function getLongTimeToken(string $url, string $oAuthVerifier): Token
+    public function getLongTimeToken(string $url, string $oAuthVerifier, int $uid): Token
     {
-        $onetimeToken = $this->getCachedOnetimeToken();
+        $onetimeToken = $this->getCachedOnetimeToken($uid);
 
         $headers = [
             'Authorization' => $this->buildOauthHeaders($url, 'POST', $onetimeToken)

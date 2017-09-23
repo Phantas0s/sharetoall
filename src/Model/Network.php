@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\Network;
 use Doctrine\ActiveRecord\Search\SearchResult;
 
 /**
@@ -11,7 +12,7 @@ class Network extends ModelAbstract
 {
     protected $_daoName = 'Network';
 
-    public function findByNetworkUser(int $userId): SearchResult
+    public function findByNetworkUser(string $userId): SearchResult
     {
         $params[] = 'un.userId = ' . $userId . ' OR un.userId IS NULL';
         $results = $this->getDao()->searchWithNetworkUser(['cond' => $params]);
@@ -19,9 +20,11 @@ class Network extends ModelAbstract
         return $results;
     }
 
-    public function findWithNetworkUser(array $params): SearchResult
+    public function findWithNetworkUser(array $params): array
     {
         $results = $this->getDao()->searchWithNetworkUser(['cond' => $params]);
+        $results = $this->wrapAll($results['rows']);
+
         return $results;
     }
 

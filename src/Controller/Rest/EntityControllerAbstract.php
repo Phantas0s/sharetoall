@@ -78,7 +78,7 @@ class EntityControllerAbstract
         return $this->model->search($form->getValues(), $options);
     }
 
-    public function getAction($id, Request $request)
+    public function getAction(string $id, Request $request)
     {
         return $this->model->find($id)->getValues();
     }

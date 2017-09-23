@@ -17,7 +17,7 @@ class TwitterApiTest extends UnitTestCase
 
         $twitterApi = $this->getTwitterApi($response);
 
-        $result = $twitterApi->getAuthUrl();
+        $result = $twitterApi->getAuthUrl(1234);
         $this->assertEquals('https://api.twitter.com/oauth/authorize?oauth_token=token&force_login=true', $result);
     }
 

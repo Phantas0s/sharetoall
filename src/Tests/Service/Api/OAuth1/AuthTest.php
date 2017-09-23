@@ -24,12 +24,17 @@ class AuthTest extends UnitTestCase
     /** @var Auth */
     private $oAuth;
 
+    /** @var int */
+    private $uid;
+
     public function setUp()
     {
         $container = $this->getContainer();
         $this->cache = $container->get('cache');
         $this->consumer = new Consumer('dummy', 'dummysecret');
         $this->queryBuilder = new QueryBuilder();
+        //Unique id in order to cache the tokens in different keys (if multiple tokens)
+        $this->uid = 1234;
 
         $this->oAuth = new Auth($this->cache, new FakeClient(), $this->consumer, 'dummyApi');
     }
@@ -57,7 +62,7 @@ class AuthTest extends UnitTestCase
 
     public function testRequestToken()
     {
-        $token = $this->createAndCacheOneTimeToken();
+        $token = $this->createAndCacheOneTimeToken($this->uid);
 
         $this->assertEquals('token', $token->getKey());
         $this->assertEquals('secret', $token->getSecret());
@@ -66,7 +71,7 @@ class AuthTest extends UnitTestCase
     public function testGetAuthUrl()
     {
         $this->createAndCacheOneTimeToken();
-        $url = $this->oAuth->getAuthUrl('http://dummyUrl');
+        $url = $this->oAuth->getAuthUrl('http://dummyUrl', $this->uid);
 
         $this->assertEquals('http://dummyUrl?oauth_token=token&force_login=true', $url);
     }
@@ -75,7 +80,7 @@ class AuthTest extends UnitTestCase
     {
         $this->createAndCacheOneTimeToken();
         $this->expectException(OAuthException::class);
-        $this->oAuth->verifyCallbackToken('wrongToken');
+        $this->oAuth->verifyCallbackToken('wrongToken', $this->uid);
     }
 
     public function testGetCachedLongTimeToken()
@@ -95,7 +100,7 @@ class AuthTest extends UnitTestCase
         ];
 
         $this->oAuth = new Auth($this->cache, new FakeClient($response), $this->consumer, 'dummyApi');
-        return $this->oAuth->fetchOnetimeToken('http://dummyUrl');
+        return $this->oAuth->fetchOnetimeToken('http://dummyUrl', $this->uid);
     }
 
     private function createAndCacheLongTimeToken()
@@ -107,6 +112,6 @@ class AuthTest extends UnitTestCase
         ];
 
         $this->oAuth = new Auth($this->cache, new FakeClient($response), $this->consumer, 'dummyApi');
-        return $this->oAuth->getLongTimeToken('http://dummyUrl', 'oauthVerifier');
+        return $this->oAuth->getLongTimeToken('http://dummyUrl', 'oauthVerifier', $this->uid);
     }
 }
