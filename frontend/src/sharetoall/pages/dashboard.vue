@@ -64,7 +64,7 @@
                     const networkSlug = el.dataset.networkSlug;
 
                     this.$api.get('connect/' + networkSlug).then(response => {
-                        console.log(response);
+                        window.location = response.data;
                     }, error => {event.target.classList.toggle('active');
                     });
                 }

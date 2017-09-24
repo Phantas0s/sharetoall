@@ -29,7 +29,7 @@ class NetworkTest extends UnitTestCase
         $results = $this->model->findByNetworkUser(1);
         $results = $results->getAllResultsAsArray();
 
-        $this->assertEquals('Linkedin', $results[0]['networkName']);
+        $this->assertEquals('Super Network', $results[0]['networkName']);
         $this->assertEquals('1234', $results[0]['userNetworkToken']);
     }
 
@@ -37,7 +37,7 @@ class NetworkTest extends UnitTestCase
     {
         $results = $this->model->findWithNetworkUser(['un.userId' => 1]);
 
-        $this->assertEquals('Linkedin', $results[0]->networkName);
+        $this->assertEquals('Super Network', $results[0]->networkName);
         $this->assertEquals('1234', $results[0]->userNetworkToken);
     }
 }

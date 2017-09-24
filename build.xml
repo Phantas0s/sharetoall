@@ -49,6 +49,12 @@
         <exec command="./app/console migrations:migrate -n" checkreturn="true" passthru="true" />
     </target>
 
+    <target name="generate-fixtures">
+        <phingcall target="build-database"/>
+        <exec command="rm -rf src/Tests/_fixtures/" checkreturn="true" passthru="true" />
+        <phingcall target="test-php"/>
+    </target>
+
     <target name="build-js">
         <delete>
             <fileset dir="./web/assets">

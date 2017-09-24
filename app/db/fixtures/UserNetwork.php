@@ -3,7 +3,7 @@
 return [
     [
         'userId' => 1,
-        'networkSlug' => 'linkedin',
+        'networkSlug' => 'supernetwork',
         'userNetworkToken' => 1234,
     ],
 ];
