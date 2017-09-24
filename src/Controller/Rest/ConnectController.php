@@ -35,7 +35,6 @@ class ConnectController extends EntityControllerAbstract
         }
 
         $network = $this->networkFactory->create($networkSlug);
-
         return $network->getAuthUrl($this->session->getUserId());
     }
 }

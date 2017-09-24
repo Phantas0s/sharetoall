@@ -43,10 +43,10 @@ class LinkedinApi
         $this->auth = new Auth($cache, $client, $consumer, 'linkedin');
     }
 
-    public function getAuthUrl()
+    public function getAuthUrl(int $uid, string $redirectUri = '/')
     {
         $url = $this->createAuthBaseUrl() . self::API_TOKEN_AUTHORISE_APP_METHOD;
-        return $this->auth->getAuthUrl($url);
+        return $this->auth->getAuthUrl($url, $uid, $redirectUri);
     }
 
     public function getLongTimeToken(string $oneTimeToken)
