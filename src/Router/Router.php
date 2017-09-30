@@ -24,7 +24,7 @@ abstract class Router
         try {
             $result = $this->container->get($serviceName);
         } catch (InvalidArgumentException $e) {
-            throw new NotFoundException ($e->getMessage());
+            throw new NotFoundException($e->getMessage());
         }
 
         return $result;

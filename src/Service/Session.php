@@ -30,7 +30,7 @@ class Session
     /** @var string */
     private $hashAlgorithm = 'sha256';
 
-    private $oneTimeTokenTTL = 60; // 1 minute
+    private $oneTimeTokenTTL = 180; // 3 minute
 
     private $sessionTokenTTL = 604800; // 7 days
 

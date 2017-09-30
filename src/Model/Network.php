@@ -28,8 +28,10 @@ class Network extends ModelAbstract
         return $results;
     }
 
-    public function hasToken()
+    public function saveUserNetwork(array $values)
     {
-        return !empty($this->userNetworkToken);
+        $networkUserDao = $this->createDao('UserNetwork');
+        $networkUserDao->setValues($values);
+        $networkUserDao->save();
     }
 }

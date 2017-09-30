@@ -27,6 +27,9 @@ class Version20170904174720 extends AbstractMigration
             `userId` INT(11) NOT NULL,
             `networkSlug` VARCHAR(100) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
             `userNetworkToken` VARCHAR(255) NOT NULL,
+            `created` DATETIME NULL,
+            `updated` DATETIME NULL,
+            `deleted` DATETIME NULL,
             PRIMARY KEY (`userId`, `networkSlug`),
             INDEX `fk_UserNetwork_2_idx` (`networkSlug` ASC),
             CONSTRAINT `fk_UserNetwork_1`

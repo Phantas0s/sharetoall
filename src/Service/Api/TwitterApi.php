@@ -40,19 +40,21 @@ class TwitterApi
         $this->auth = new Auth($cache, $client, $consumer, 'twitter');
     }
 
-    public function getAuthUrl(int $uid)
+    public function getAuthUrl(int $uid, string $redirectUri = '/')
     {
         $tokenUrl = self::API_HOST . self::API_TOKEN_REQUEST_METHOD;
         $authUrl = self::API_HOST . self::API_TOKEN_AUTHORISE_APP_METHOD;
 
-        $this->auth->fetchOnetimeToken($tokenUrl, $uid);
+        $this->auth->fetchOnetimeToken($tokenUrl, $uid, $redirectUri);
         return $this->auth->getAuthUrl($authUrl, $uid);
     }
 
-    public function getLongTimeToken(string $authVerifier)
+    public function getLongTimeToken(string $authVerifier, int $uid): Token
     {
         $url = self::API_HOST . self::API_TOKEN_FETCH_LONGTIME_METHOD;
-        $this->auth->getLongTimeToken($url, $authVerifier);
+
+        $token = $this->auth->getLongTimeToken($url, $authVerifier, $uid);
+        return $token;
     }
 
     public function verifyCallbackToken(string $callbackToken, int $uid)

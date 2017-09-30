@@ -32,8 +32,7 @@ class Auth
     public function __construct(
         CacheInterface $cache,
         ClientInterface $client,
-        Consumer $consumer,
-        string $apiName
+        Consumer $consumer
     ) {
         $this->cache = $cache;
         $this->consumer = $consumer;
@@ -42,19 +41,19 @@ class Auth
         $this->queryBuilder = new QueryBuilder();
     }
 
-    public function fetchOnetimeToken(string $url, int $uid): Token
+    public function fetchOnetimeToken(string $url, int $uid, $redirectUri = '/'): Token
     {
-        $token = $this->requestToken($url);
+        $token = $this->requestToken($url, $redirectUri);
         $this->cacheOnetimeToken($token, $uid);
 
         return $token;
     }
 
-    private function requestToken(string $url): Token
+    private function requestToken(string $url, $redirectUri = '/'): Token
     {
         $headers = [
             'Content-Type' => 'multipart/form-data',
-            'Authorization' => $this->buildOauthHeaders($url, 'POST', new Token())
+            'Authorization' => $this->buildOauthHeaders($url, 'POST', new Token(), ['oauth_callback' => $redirectUri])
         ];
 
         try {
@@ -111,7 +110,7 @@ class Auth
         }
     }
 
-    private function getOauthParameters(Token $token): array
+    private function getOauthParameters(): array
     {
         $parameters = [
             'oauth_consumer_key' => $this->consumer->getKey(),
@@ -121,11 +120,6 @@ class Auth
             'oauth_version' => self::OAUTH_VERSION
         ];
 
-        if (!empty($token->getKey())) {
-            $parameters['oauth_token'] = $token->getKey();
-        }
-
-        ksort($parameters);
         return $parameters;
     }
 
@@ -135,7 +129,13 @@ class Auth
         Token $token,
         array $parameters = []
     ): string {
-        $parameters = array_merge($this->getOauthParameters($token), $parameters);
+        $parameters = array_merge($this->getOauthParameters(), $parameters);
+
+        if (!empty($token->getKey())) {
+            $parameters['oauth_token'] = $token->getKey();
+        }
+
+        ksort($parameters);
         $queryParameters = $this->queryBuilder->createUrlParameters($parameters);
 
         $signature = $this->buildSignature($url, $method, $token, $queryParameters);
@@ -161,7 +161,7 @@ class Auth
 
         try {
             $response = $this->client->post($url, $headers, $parameters);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->handleOauthException($e);
         }
 

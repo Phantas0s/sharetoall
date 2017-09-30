@@ -45,3 +45,7 @@ services:
     controller.web.sharetoall:
         class: App\Controller\Web\SharetoallController
         arguments: [ "@service.session", "@model.user", "@service.mail" ]
+
+    controller.web.redirect:
+        class: App\Controller\Web\RedirectController
+        arguments: [ "@service.session", "@model.factory", "@service.twitter"]

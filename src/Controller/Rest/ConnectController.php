@@ -14,14 +14,19 @@ class ConnectController extends EntityControllerAbstract
 {
     protected $modelName = 'Network';
 
+    /** @var string */
+    private $redirectUri;
+
     public function __construct(
         Session $session,
         ModelFactory $modelFactory,
         FormFactory $formFactory,
-        NetworkFactory $networkFactory
+        NetworkFactory $networkFactory,
+        string $redirectUri
     ) {
         parent::__construct($session, $modelFactory, $formFactory);
         $this->networkFactory = $networkFactory;
+        $this->redirectUri = $redirectUri;
     }
 
     public function getAction(string $networkSlug, Request $request)
@@ -35,6 +40,10 @@ class ConnectController extends EntityControllerAbstract
         }
 
         $network = $this->networkFactory->create($networkSlug);
-        return $network->getAuthUrl($this->session->getUserId());
+
+        $oneTimeToken = $this->session->createOneTimeToken();
+        $redirectUri = $this->redirectUri . $networkSlug . '?t=' . $oneTimeToken;
+
+        return $network->getAuthUrl($this->session->getUserId(), $redirectUri);
     }
 }

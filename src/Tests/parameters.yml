@@ -2,6 +2,7 @@ parameters:
     app.debug: false
     app.name: 'Unit Test'
     app.version: 1.2.3
+    app.redirect_uri: 'http://dummyRedirectUrl'
     app.url: 'http://sharetoall.loc'
     app.email: 'app@example.com'
     app.cache_path: '%base.path%/Tests/_cache'
@@ -27,3 +28,5 @@ parameters:
 
     linkedin.consumer_key: '12345'
     linkedin.consumer_secret: '12345'
+
+

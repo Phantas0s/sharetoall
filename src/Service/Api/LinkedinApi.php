@@ -49,10 +49,10 @@ class LinkedinApi
         return $this->auth->getAuthUrl($url, $uid, $redirectUri);
     }
 
-    public function getLongTimeToken(string $oneTimeToken)
+    public function getLongTimeToken(string $oneTimeToken, int $uid)
     {
         $url = $this->createAuthBaseUrl() . self::API_TOKEN_FETCH_LONGTIME_METHOD;
-        $this->auth->getLongTimeToken($url, $oneTimeToken);
+        $this->auth->getLongTimeToken($url, $oneTimeToken, $uid);
     }
 
     public function verifyCallbackToken(string $callbackToken)

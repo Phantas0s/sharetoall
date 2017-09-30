@@ -13,4 +13,9 @@ services:
 
     controller.rest.connect:
         class: App\Controller\Rest\ConnectController
-        arguments: ["@service.session", "@model.factory", "@form.factory", "@service.network-factory"]
+        arguments: 
+            - "@service.session"
+            - "@model.factory"
+            - "@form.factory"
+            - "@service.network-factory"
+            - "%app.redirect_uri%"

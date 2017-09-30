@@ -1,0 +1,140 @@
+a:2:{s:6:"result";a:1:{i:0;a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:9:"Firstname";s:12:"userLastname";s:8:"Lastname";s:9:"userEmail";s:19:"user@sharetoall.com";s:12:"userPassword";s:60:"$2y$10$lQtIrnC2WGvOdz5crEt3L.WRjg3iHh.HsM8dEToXodfP6gF5kI8Vu";s:19:"userVerifEmailToken";N;s:12:"userVerified";s:19:"2012-12-12 00:00:00";s:22:"userResetPasswordToken";N;s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}}s:4:"args";a:1:{i:0;s:4889:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+(
+    [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
+        (
+            [showFixtureWarnings:protected] => 1
+            [_conn:protected] => Doctrine\DBAL\Driver\PDOConnection Object
+                (
+                )
+
+            [_config:protected] => Doctrine\DBAL\Configuration Object
+                (
+                    [_attributes:protected] => Array
+                        (
+                        )
+
+                )
+
+            [_eventManager:protected] => Doctrine\Common\EventManager Object
+                (
+                    [_listeners:Doctrine\Common\EventManager:private] => Array
+                        (
+                        )
+
+                )
+
+            [_expr:protected] => Doctrine\DBAL\Query\Expression\ExpressionBuilder Object
+                (
+                    [connection:Doctrine\DBAL\Query\Expression\ExpressionBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
+ *RECURSION*
+                )
+
+            [_isConnected:Doctrine\DBAL\Connection:private] => 1
+            [autoCommit:Doctrine\DBAL\Connection:private] => 1
+            [_transactionNestingLevel:Doctrine\DBAL\Connection:private] => 0
+            [_transactionIsolationLevel:Doctrine\DBAL\Connection:private] => 
+            [_nestTransactionsWithSavepoints:Doctrine\DBAL\Connection:private] => 
+            [_params:Doctrine\DBAL\Connection:private] => Array
+                (
+                    [host] => db
+                    [port] => 3306
+                    [dbname] => sharetoall
+                    [user] => sharetoall
+                    [password] => sharetoall
+                )
+
+            [platform:Doctrine\DBAL\Connection:private] => Doctrine\DBAL\Platforms\MySqlPlatform Object
+                (
+                    [doctrineTypeMapping:protected] => 
+                    [doctrineTypeComments:protected] => 
+                    [_eventManager:protected] => Doctrine\Common\EventManager Object
+                        (
+                            [_listeners:Doctrine\Common\EventManager:private] => Array
+                                (
+                                )
+
+                        )
+
+                    [_keywords:protected] => 
+                )
+
+            [_schemaManager:protected] => 
+            [_driver:protected] => Doctrine\DBAL\Driver\PDOMySql\Driver Object
+                (
+                )
+
+            [_isRollbackOnly:Doctrine\DBAL\Connection:private] => 
+            [defaultFetchMode:protected] => 2
+            [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Controller/Web/RedirectController/
+            [_fixturePrefix:TestTools\Doctrine\DBAL\Connection:private] => sql
+            [_fixtureOfflineMode:TestTools\Doctrine\DBAL\Connection:private] => 
+            [_fixtureInstance:TestTools\Doctrine\DBAL\Connection:private] => parent
+        )
+
+    [sqlParts:Doctrine\DBAL\Query\QueryBuilder:private] => Array
+        (
+            [select] => Array
+                (
+                    [0] => *
+                )
+
+            [from] => Array
+                (
+                    [0] => Array
+                        (
+                            [table] => User
+                            [alias] => U
+                        )
+
+                )
+
+            [join] => Array
+                (
+                )
+
+            [set] => Array
+                (
+                )
+
+            [where] => Doctrine\DBAL\Query\Expression\CompositeExpression Object
+                (
+                    [type:Doctrine\DBAL\Query\Expression\CompositeExpression:private] => AND
+                    [parts:Doctrine\DBAL\Query\Expression\CompositeExpression:private] => Array
+                        (
+                            [0] => `userEmail` = 'user@sharetoall.com'
+                            [1] => `deleted` IS NULL
+                        )
+
+                )
+
+            [groupBy] => Array
+                (
+                )
+
+            [having] => 
+            [orderBy] => Array
+                (
+                )
+
+            [values] => Array
+                (
+                )
+
+        )
+
+    [sql:Doctrine\DBAL\Query\QueryBuilder:private] => SELECT * FROM User U WHERE (`userEmail` = 'user@sharetoall.com') AND (`deleted` IS NULL)
+    [params:Doctrine\DBAL\Query\QueryBuilder:private] => Array
+        (
+        )
+
+    [paramTypes:Doctrine\DBAL\Query\QueryBuilder:private] => Array
+        (
+        )
+
+    [type:Doctrine\DBAL\Query\QueryBuilder:private] => 0
+    [state:Doctrine\DBAL\Query\QueryBuilder:private] => 1
+    [firstResult:Doctrine\DBAL\Query\QueryBuilder:private] => 
+    [maxResults:Doctrine\DBAL\Query\QueryBuilder:private] => 
+    [boundCounter:Doctrine\DBAL\Query\QueryBuilder:private] => 0
+)
+";}}
