@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace App\Service\Api;
 
 use App\Service\Api\Client\ClientInterface;
-use App\Service\Api\OAuth1\Consumer;
 use App\Service\Api\OAuth1\Auth;
+use App\Service\Api\OAuth1\Consumer;
 use App\Service\Api\OAuth1\QueryBuilder;
 use App\Service\Api\OAuth1\Token;
 
 use Psr\SimpleCache\CacheInterface;
 
-class TwitterApi
+class TwitterApi implements NetworkInterface
 {
     /** @var ClientInterface */
     private $client;

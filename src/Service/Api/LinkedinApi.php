@@ -10,7 +10,7 @@ use App\Service\Api\OAuth1\QueryBuilder;
 
 use Psr\SimpleCache\CacheInterface;
 
-class LinkedinApi
+class LinkedinApi implements NetworkInterface
 {
     /** @var ClientInterface */
     private $client;
