@@ -60,7 +60,7 @@ class AuthTest extends UnitTestCase
     public function testGetCachedLongTimeToken()
     {
         $this->generateLongTimeToken();
-        $token = $this->oAuth->getCachedLongtimeToken();
+        $token = $this->oAuth->getCachedLongtimeToken($this->uid);
 
         $this->assertEquals('dummyAccessToken', $token->getKey());
         $this->assertEquals(60, $token->getTtl());
@@ -79,6 +79,6 @@ class AuthTest extends UnitTestCase
         ];
 
         $this->oAuth = new Auth($this->cache, new FakeClient($responseBody, 'json'), $this->consumer, 'dummyApi');
-        $this->oAuth->getLongTimeToken('http://dummyUrl', 'dummyToken');
+        $this->oAuth->getLongTimeToken('http://dummyUrl', 'dummyToken', $this->uid, 'http://dummyredirect');
     }
 }

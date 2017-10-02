@@ -52,8 +52,8 @@ class TwitterApi implements NetworkInterface
     public function getLongTimeToken(string $authVerifier, int $uid): Token
     {
         $url = self::API_HOST . self::API_TOKEN_FETCH_LONGTIME_METHOD;
-
         $token = $this->auth->getLongTimeToken($url, $authVerifier, $uid);
+
         return $token;
     }
 

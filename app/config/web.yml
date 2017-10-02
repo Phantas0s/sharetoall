@@ -48,4 +48,9 @@ services:
 
     controller.web.redirect:
         class: App\Controller\Web\RedirectController
-        arguments: [ "@service.session", "@model.factory", "@service.twitter"]
+        arguments:
+            - "@service.session"
+            - "@model.factory"
+            - "%app.redirect_uri%"
+            - "@service.twitter"
+            - "@service.linkedin"

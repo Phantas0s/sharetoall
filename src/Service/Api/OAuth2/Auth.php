@@ -44,12 +44,14 @@ class Auth
 
     public function getAuthUrl(string $url, int $uid, string $redirectUri = '/', array $params = []): string
     {
-        $params = array_merge([
+        $defaultParams = [
             'response_type' => 'code',
-            'client_id' => rawurlencode($this->consumer->getKey()),
+            'client_id' => $this->consumer->getKey(),
             'redirect_uri' => $redirectUri,
-            'state' => rawurlencode($this->generateNonce())
-        ], $params);
+            'state' => $this->generateNonce()
+        ];
+
+        $params = array_merge($defaultParams, $params);
 
         $this->cacheOnetimeToken($params['state'], $uid);
 
@@ -66,22 +68,24 @@ class Auth
         }
     }
 
-    private function getCachedOnetimeToken(int $uid): Token
-    {
-        $tokenKey = $uid . '-' . $this->apiName . '_oauth2_onetime_token';
-        if ($this->cache->has($tokenKey)) {
-            return new Token($tokenKey);
-        }
-
-        throw new NotFoundException('one time token doesn\'t exists');
-    }
-
     private function cacheOnetimeToken(string $token, int $uid)
     {
         $this->cache->set($uid . '-' . $this->apiName. '_oauth2_onetime_token', $token);
     }
 
-    public function getLongTimeToken(string $url, string $oneTimeToken)
+    private function getCachedOnetimeToken(int $uid): Token
+    {
+        $tokenKey = $uid . '-' . $this->apiName . '_oauth2_onetime_token';
+
+        if ($this->cache->has($tokenKey)) {
+            $key = $this->cache->get($tokenKey);
+            return new Token($key);
+        }
+
+        throw new NotFoundException('one time token doesn\'t exists');
+    }
+
+    public function getLongTimeToken(string $url, string $oneTimeToken, int $uid, string $redirectUri)
     {
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded'
@@ -90,7 +94,7 @@ class Auth
         $parameters = [
             'grant_type' => 'authorization_code',
             'code' => $oneTimeToken,
-            'redirect_uri' => 'http://sharetoall.loc',
+            'redirect_uri' => $redirectUri,
             'client_id' => $this->consumer->getKey(),
             'client_secret' => $this->consumer->getSecret()
         ];
@@ -102,25 +106,27 @@ class Auth
         }
 
         $response = $response->getBodyAsArray();
-
         $response = json_decode(array_keys($response)[0], true);
 
         $token = new Token($response['access_token'], $response['expires_in']);
-        $this->cacheLongTimeToken($token);
+        $this->cacheLongTimeToken($token, $uid);
+
+        return $token;
     }
 
-    private function cacheLongTimeToken(Token $token)
+    private function cacheLongTimeToken(Token $token, int $uid)
     {
-        $tokenKeyName = $this->apiName . '_oauth2_longtime_token_key';
-        $tokenKeyTtl = $this->apiName . '_oauth2_longtime_token_ttl';
+        $tokenKeyName = $uid . '-' . $this->apiName . '_oauth2_longtime_token_key';
+        $tokenKeyTtl = $uid . '-' . $this->apiName . '_oauth2_longtime_token_ttl';
+
         $this->cache->set($tokenKeyName, $token->getKey());
         $this->cache->set($tokenKeyTtl, $token->getTtl());
     }
 
-    public function getCachedLongtimeToken(): Token
+    public function getCachedLongtimeToken(int $uid): Token
     {
-        $tokenKeyName = $this->apiName . '_oauth2_longtime_token_key';
-        $tokenKeyTtl = $this->apiName . '_oauth2_longtime_token_ttl';
+        $tokenKeyName = $uid . '-' . $this->apiName . '_oauth2_longtime_token_key';
+        $tokenKeyTtl = $uid . '-' . $this->apiName . '_oauth2_longtime_token_ttl';
 
         if ($this->cache->has($tokenKeyName) && $this->cache->has($tokenKeyTtl)) {
             return new Token($this->cache->get($tokenKeyName), (int)$this->cache->get($tokenKeyTtl));

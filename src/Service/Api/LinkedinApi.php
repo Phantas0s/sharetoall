@@ -49,15 +49,17 @@ class LinkedinApi implements NetworkInterface
         return $this->auth->getAuthUrl($url, $uid, $redirectUri);
     }
 
-    public function getLongTimeToken(string $oneTimeToken, int $uid)
+    public function getLongTimeToken(string $oneTimeToken, int $uid, string $redirectUri)
     {
         $url = $this->createAuthBaseUrl() . self::API_TOKEN_FETCH_LONGTIME_METHOD;
-        $this->auth->getLongTimeToken($url, $oneTimeToken, $uid);
+        $token = $this->auth->getLongTimeToken($url, $oneTimeToken, $uid, $redirectUri);
+
+        return $token;
     }
 
-    public function verifyCallbackToken(string $callbackToken)
+    public function verifyCallbackToken(string $callbackToken, int $uid)
     {
-        $this->auth->verifyCallbackToken($callbackToken);
+        $this->auth->verifyCallbackToken($callbackToken, $uid);
     }
 
     public function postUpdate(string $content)
