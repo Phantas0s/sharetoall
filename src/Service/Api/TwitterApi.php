@@ -29,6 +29,8 @@ class TwitterApi implements NetworkInterface
 
     const API_POST_TWEET_METHOD = 'statuses/update.json';
 
+    const NETWORK_SLUG = 'twitter';
+
     public function __construct(
         CacheInterface $cache,
         ClientInterface $client,
@@ -40,7 +42,12 @@ class TwitterApi implements NetworkInterface
         $this->auth = new Auth($cache, $client, $consumer, 'twitter');
     }
 
-    public function getAuthUrl(int $uid, string $redirectUri = '/')
+    public function getNetworkSlug(): string
+    {
+        return self::NETWORK_SLUG;
+    }
+
+    public function getAuthUrl(int $uid, string $redirectUri = '/'): string
     {
         $tokenUrl = self::API_HOST . self::API_TOKEN_REQUEST_METHOD;
         $authUrl = self::API_HOST . self::API_TOKEN_AUTHORISE_APP_METHOD;

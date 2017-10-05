@@ -1,0 +1,27 @@
+services:
+    network.twitter:
+        class: App\Service\Api\TwitterApi
+        shared: false
+        arguments:
+            - "@cache"
+            - "@guzzleClient"
+            - %fake.consumer_key%
+            - %fake.consumer_secret%
+
+    network.linkedin:
+        class: App\Service\Api\LinkedinApi
+        shared: false
+        arguments:
+            - "@cache"
+            - "@guzzleClient"
+            - %fake.consumer_key%
+            - %fake.consumer_secret%
+
+    network.fake:
+        class: App\Tests\Service\Api\FakeApi
+        shared: false
+        arguments:
+            - "@cache"
+            - "@guzzleClient"
+            - %fake.consumer_key%
+            - %fake.consumer_secret%

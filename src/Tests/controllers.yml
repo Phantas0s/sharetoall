@@ -38,5 +38,4 @@ services:
             - "@service.session"
             - "@model.factory"
             - "%app.redirect_uri%"
-            - "@service.twitter"
-            - "@service.linkedin"
+            - "@service.network-factory-fake"

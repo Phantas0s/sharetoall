@@ -3,28 +3,30 @@ declare(strict_types=1);
 
 namespace App\Service\Api;
 
-use App\Exception\NotFoundException;
-use App\Service\Api\LinkedinApi;
-use App\Service\Api\TwitterApi;
+use App\Exception\InvalidArgumentException;
+use App\Service\Api\NetworkFactoryInterface;
+use App\Service\Api\NetworkInterface;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-class NetworkFactory
+class NetworkFactory implements NetworkFactoryInterface
 {
-    public function __construct(
-        TwitterApi $twitterApi,
-        LinkedinApi $linkedinApi
-    ) {
-        $this->twitterApi = $twitterApi;
-        $this->linkedinApi = $linkedinApi;
+    /** @var Container */
+    private $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
     }
 
-    public function create(string $networkSlug)
+    public function create(string $networkSlug): NetworkInterface
     {
-        $propertyName = $networkSlug . 'Api';
-
-        if (!property_exists($this, $propertyName)) {
-            throw new NotFoundException(sprintf('The class %s doesn\'t exists', $propertyName));
+        try {
+            $class = $this->container->get('network.' . $networkSlug);
+        } catch (ServiceNotFoundException $e) {
+            throw new InvalidArgumentException(sprintf('Impossible to find the network %s', $networkSlug));
         }
 
-        return $this->$propertyName;
+        return $class;
     }
 }

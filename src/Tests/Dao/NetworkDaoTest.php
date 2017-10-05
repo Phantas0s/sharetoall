@@ -3,6 +3,7 @@
 namespace Tests\Dao;
 
 use App\Dao\NetworkDao;
+use App\Model\Network;
 use TestTools\TestCase\UnitTestCase;
 
 class NetworkDaoTest extends UnitTestCase
@@ -25,7 +26,6 @@ class NetworkDaoTest extends UnitTestCase
     {
         $result = $this->dao->searchWithNetworkUser(['cond' => ['un.userId' => 1]]);
 
-        $this->assertEquals('supernetwork', $result->getFirstResult()->networkSlug);
-        $this->assertEquals('1234', $result->getFirstResult()->userNetworkToken);
+        $this->assertInstanceOf(NetworkDao::class, $result->getFirstResult());
     }
 }

@@ -32,6 +32,8 @@ class LinkedinApi implements NetworkInterface
     const API_VERSION = 'v2';
     const API_TIMEOUT = '1000';
 
+    const NETWORK_SLUG = 'linkedin';
+
     public function __construct(
         CacheInterface $cache,
         ClientInterface $client,
@@ -43,7 +45,12 @@ class LinkedinApi implements NetworkInterface
         $this->auth = new Auth($cache, $client, $consumer, 'linkedin');
     }
 
-    public function getAuthUrl(int $uid, string $redirectUri = '/')
+    public function getNetworkSlug(): string
+    {
+        return self::NETWORK_SLUG;
+    }
+
+    public function getAuthUrl(int $uid, string $redirectUri = '/'): string
     {
         $url = $this->createAuthBaseUrl() . self::API_TOKEN_AUTHORISE_APP_METHOD;
         return $this->auth->getAuthUrl($url, $uid, $redirectUri);

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller\Rest;
 
+use App\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use TestTools\TestCase\UnitTestCase;
 
@@ -17,8 +18,15 @@ class ConnectControllerTest extends UnitTestCase
 
     public function testGetAction()
     {
-        $this->markTestSkipped('find a way to inject the dummy client?');
         $request = Request::create('https://dummyurl');
-        $result = $this->controller->getAction('twitter', $request);
+        $result = $this->controller->getAction('fake', $request);
+        $this->assertEquals($result, 'http://dummyAuthUrl');
+    }
+
+    public function testGetActionTokenAlreadyThere()
+    {
+        $request = Request::create('https://dummyurl');
+        $this->expectException(InvalidArgumentException::class);
+        $result = $this->controller->getAction('supernetwork', $request);
     }
 }

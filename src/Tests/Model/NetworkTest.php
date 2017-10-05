@@ -2,6 +2,7 @@
 
 namespace App\Tests\Model;
 
+use App\Model\Network;
 use TestTools\TestCase\UnitTestCase;
 
 class NetworkTest extends UnitTestCase
@@ -27,17 +28,14 @@ class NetworkTest extends UnitTestCase
     public function testFindByNetworkUser()
     {
         $results = $this->model->findByNetworkUser(1);
-        $results = $results->getAllResultsAsArray();
 
-        $this->assertEquals('Super Network', $results[0]['networkName']);
-        $this->assertEquals('1234', $results[0]['userNetworkToken']);
+        $this->assertInstanceOf(Network::class, $results->getFirstResult());
     }
 
     public function testFindWithNetworkUser()
     {
         $results = $this->model->findWithNetworkUser(['un.userId' => 1]);
 
-        $this->assertEquals('Super Network', $results[0]->networkName);
-        $this->assertEquals('1234', $results[0]->userNetworkToken);
+        $this->assertInstanceOf(Network::class, $results->getFirstResult());
     }
 }

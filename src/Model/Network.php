@@ -16,14 +16,15 @@ class Network extends ModelAbstract
     {
         $params[] = 'un.userId = ' . $userId . ' OR un.userId IS NULL';
         $results = $this->getDao()->searchWithNetworkUser(['cond' => $params]);
+        $results['rows'] = $this->wrapAll($results->getAllResults());
 
         return $results;
     }
 
-    public function findWithNetworkUser(array $params): array
+    public function findWithNetworkUser(array $params): SearchResult
     {
         $results = $this->getDao()->searchWithNetworkUser(['cond' => $params]);
-        $results = $this->wrapAll($results['rows']);
+        $results['rows'] = $this->wrapAll($results->getAllResults());
 
         return $results;
     }

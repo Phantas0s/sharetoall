@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller\Web;
 
@@ -10,6 +11,7 @@ use App\Model\Network;
 use App\Service\Api\LinkedinApi;
 use App\Service\Api\TwitterApi;
 use App\Service\Session;
+use App\Service\Api\NetworkFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,49 +38,14 @@ class RedirectController extends EntityControllerAbstract
         Session $session,
         ModelFactory $modelFactory,
         string $redirectUri,
-        TwitterApi $twitterApi,
-        LinkedinApi $linkedinApi
+        NetworkFactoryInterface $networkFactory
     ) {
         $this->session = $session;
         $this->model = $modelFactory->create('Network');
         $this->redirectUri = $redirectUri;
 
-        $this->twitterApi = $twitterApi;
-        $this->linkedinApi = $linkedinApi;
-    }
-
-    public function linkedinAction(Request $request)
-    {
-        if (!$request->get('state') || !$request->get('code')) {
-            throw new NotFoundException('The linkedin redirect uri doesn\'t have the mandatory state parameter');
-        }
-
-        $state = $request->get('state');
-        $code = $request->get('code');
-
-        // @todo see https://developer.linkedin.com/docs/oauth2 to manage better the error
-        $networkError = $request->get('error');
-        if ($networkError) {
-            throw new NetworkErrorException($networkError);
-        }
-
-        $cachedTokenUid = $this->session->getUserId();
-
-        // prevent csrf attacks
-        $this->linkedinApi->verifyCallbackToken(
-            $state,
-            $cachedTokenUid
-        );
-
-        $token = $this->linkedinApi->getLongTimeToken($code, $cachedTokenUid, 'http://sharetoall.loc/redirect/linkedin?t='.$request->get('t'));
-
-        $this->model->saveUserNetwork([
-            'userId' => $this->session->getUserId(),
-            'networkSlug' => 'linkedin',
-            'userNetworkToken' => $token->getKey()
-        ]);
-
-        return $this->dashboardUri;
+        $this->twitterApi = $networkFactory->create(TwitterApi::NETWORK_SLUG);
+        $this->linkedinApi = $networkFactory->create(LinkedinApi::NETWORK_SLUG);
     }
 
     public function twitterAction(Request $request)
@@ -101,10 +68,45 @@ class RedirectController extends EntityControllerAbstract
 
         $this->model->saveUserNetwork([
             'userId' => $this->session->getUserId(),
-            'networkSlug' => 'twitter',
+            'networkSlug' => $this->twitterApi->getNetworkSlug(),
             'userNetworkToken' => $token->getKey()
         ]);
 
         return $this->dashboardUri;
     }
+
+    public function linkedinAction(Request $request)
+    {
+        if (!$request->get('state') || !$request->get('code')) {
+            throw new NotFoundException('The linkedin redirect uri doesn\'t have the mandatory state parameter');
+        }
+
+        $state = $request->get('state');
+        $code = $request->get('code');
+
+        // @todo see https://developer.linkedin.com/docs/oauth2 to manage better the error
+        $networkError = $request->get('error');
+        if ($networkError) {
+            throw new NetworkErrorException($networkError);
+        }
+
+        $cachedTokenUid = $this->session->getUserId();
+
+        $this->linkedinApi->verifyCallbackToken(
+            $state,
+            $cachedTokenUid
+        );
+
+        $redirectUri = 'http://sharetoall.loc/redirect/linkedin?t='.$request->get('t');
+        $token = $this->linkedinApi->getLongTimeToken($code, $cachedTokenUid, $redirectUri);
+
+        $this->model->saveUserNetwork([
+            'userId' => $this->session->getUserId(),
+            'networkSlug' => $this->linkedinApi->getNetworkSlug(),
+            'userNetworkToken' => $token->getKey()
+        ]);
+
+        return $this->dashboardUri;
+    }
+
 }

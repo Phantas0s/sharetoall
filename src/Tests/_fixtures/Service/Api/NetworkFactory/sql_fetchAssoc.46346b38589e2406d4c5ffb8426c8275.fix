@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:3:{i:0;a:2:{s:11:"networkSlug";s:8:"linkedin";s:11:"networkName";s:8:"Linkedin";}i:1;a:2:{s:11:"networkSlug";s:12:"supernetwork";s:11:"networkName";s:13:"Super Network";}i:2;a:2:{s:11:"networkSlug";s:7:"twitter";s:11:"networkName";s:7:"Twitter";}}s:4:"args";a:1:{i:0;s:3826:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:2:{s:11:"networkSlug";s:7:"twitter";s:11:"networkName";s:7:"Twitter";}s:4:"args";a:1:{i:0;s:4789:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (
@@ -43,7 +43,21 @@ a:2:{s:6:"result";a:3:{i:0;a:2:{s:11:"networkSlug";s:8:"linkedin";s:11:"networkN
                     [password] => sharetoall
                 )
 
-            [platform:Doctrine\DBAL\Connection:private] => 
+            [platform:Doctrine\DBAL\Connection:private] => Doctrine\DBAL\Platforms\MySqlPlatform Object
+                (
+                    [doctrineTypeMapping:protected] => 
+                    [doctrineTypeComments:protected] => 
+                    [_eventManager:protected] => Doctrine\Common\EventManager Object
+                        (
+                            [_listeners:Doctrine\Common\EventManager:private] => Array
+                                (
+                                )
+
+                        )
+
+                    [_keywords:protected] => 
+                )
+
             [_schemaManager:protected] => 
             [_driver:protected] => Doctrine\DBAL\Driver\PDOMySql\Driver Object
                 (
@@ -82,7 +96,16 @@ a:2:{s:6:"result";a:3:{i:0;a:2:{s:11:"networkSlug";s:8:"linkedin";s:11:"networkN
                 (
                 )
 
-            [where] => 
+            [where] => Doctrine\DBAL\Query\Expression\CompositeExpression Object
+                (
+                    [type:Doctrine\DBAL\Query\Expression\CompositeExpression:private] => AND
+                    [parts:Doctrine\DBAL\Query\Expression\CompositeExpression:private] => Array
+                        (
+                            [0] => `networkSlug` = 'twitter'
+                        )
+
+                )
+
             [groupBy] => Array
                 (
                 )
@@ -98,7 +121,7 @@ a:2:{s:6:"result";a:3:{i:0;a:2:{s:11:"networkSlug";s:8:"linkedin";s:11:"networkN
 
         )
 
-    [sql:Doctrine\DBAL\Query\QueryBuilder:private] => SELECT * FROM Network N
+    [sql:Doctrine\DBAL\Query\QueryBuilder:private] => SELECT * FROM Network N WHERE `networkSlug` = 'twitter'
     [params:Doctrine\DBAL\Query\QueryBuilder:private] => Array
         (
         )

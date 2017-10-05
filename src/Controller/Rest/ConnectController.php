@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Rest;
 
 use App\Exception\Exception;
+use App\Exception\InvalidArgumentException;
 use App\Form\FormFactory;
 use App\Model\ModelFactory;
 use App\Service\Api\NetworkFactory;
@@ -35,8 +36,8 @@ class ConnectController extends EntityControllerAbstract
             'n.networkSlug' => $networkSlug, 'un.userId' => $this->session->getUserId()
         ]);
 
-        if (!empty($networks)) {
-            throw new Exception('This network has already a token');
+        if (count($networks->getAllResults()) > 0) {
+            throw new InvalidArgumentException('This network has already a token');
         }
 
         $network = $this->networkFactory->create($networkSlug);

@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Service\Api;
 
+use App\Exception\InvalidArgumentException;
 use App\Exception\NotFoundException;
 use App\Service\Api\NetworkFactory;
 use TestTools\TestCase\UnitTestCase;
 
-class ApiFactoryTest extends UnitTestCase
+class NetworkFactoryTest extends UnitTestCase
 {
     /** @var NetworkFactory */
     private $networkFactory;
@@ -19,15 +20,13 @@ class ApiFactoryTest extends UnitTestCase
 
     public function testCreate()
     {
-        $networks = $this->get('model.network')->findAll();
+        $modelNetwork = $this->get('model.network');
+
+        $networks[] = $modelNetwork->find('twitter');
+        $networks[] = $modelNetwork->find('linkedin');
+
         $results = [];
-
         foreach ($networks as $network) {
-            //dummy network for test purposes
-            if ($network->networkSlug == 'supernetwork') {
-                continue;
-            }
-
             $results[] = $this->networkFactory->create($network->networkSlug);
         }
 
@@ -38,7 +37,7 @@ class ApiFactoryTest extends UnitTestCase
     {
         $network = $this->get('model.network')->find(['networkSlug' => 'supernetwork']);
 
-        $this->expectException(NotFoundException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->networkFactory->create($network->networkSlug);
     }
 }
