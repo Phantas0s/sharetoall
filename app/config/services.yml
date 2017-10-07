@@ -7,30 +7,10 @@ services:
             - "@twig.mailer"
             - { %app.email%: %app.name%}
 
-    service.twitter:
-        class: App\Service\Api\TwitterApi
-        shared: false
-        arguments:
-            - "@cache"
-            - "@guzzleClient"
-            - %twitter.consumer_key%
-            - %twitter.consumer_secret%
-
-    service.linkedin:
-        class: App\Service\Api\LinkedinApi
-        shared: false
-        arguments:
-            - "@cache"
-            - "@guzzleClient"
-            - %linkedin.consumer_key%
-            - %linkedin.consumer_secret%
-
     guzzleclient:
         class: App\Service\Api\Client\GuzzleClient
 
     service.network-factory:
         class: App\Service\Api\NetworkFactory
-        arguments:
-            - "@service.twitter"
-            - "@service.linkedin"
+        arguments: ['@service_container']
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model;
 
@@ -116,7 +117,8 @@ class User extends ModelAbstract
         return !empty($this->userVerified);
     }
 
-    public function getId(){
-        return $this->userId;
+    public function getId(): int
+    {
+        return (int)$this->userId;
     }
 }

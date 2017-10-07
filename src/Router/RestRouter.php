@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Router;
 
@@ -21,7 +22,8 @@ class RestRouter extends Router
         $container = $this->container;
 
         $handler = function ($path, Request $request) use ($container, $servicePrefix, $servicePostfix) {
-            if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $contentType = $request->headers->get('Content-Type');
+            if ($contentType == null || 0 === strpos($contentType, 'application/json')) {
                 $data = json_decode($request->getContent(), true);
                 $request->request->replace(is_array($data) ? $data : array());
             }

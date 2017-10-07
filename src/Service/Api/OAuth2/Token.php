@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Service\Api\OAuth2;
 
@@ -19,7 +20,7 @@ class Token
         return $this->key;
     }
 
-    public function getTtl(): string
+    public function getTtl(): int
     {
         return $this->ttl;
     }

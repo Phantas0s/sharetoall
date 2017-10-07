@@ -3,6 +3,7 @@ imports:
     - { resource: twig.yml }
     - { resource: mailer.yml }
     - { resource: services.yml }
+    - { resource: networks.yml }
     - { resource: forms.yml }
     - { resource: models.yml }
 
