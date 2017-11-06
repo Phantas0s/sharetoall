@@ -3,25 +3,45 @@ declare(strict_types=1);
 
 namespace App\Controller\Rest;
 
+use App\Exception\Exception;
+use App\Form\FormFactory;
+use App\Model\ModelFactory;
+use App\Service\Api\NetworkFactory;
+use App\Service\Session;
+use Symfony\Component\HttpFoundation\Request;
+
 class MessageController extends EntityControllerAbstract
 {
     protected $modelName = 'Message';
     protected $createFormName = 'Message/CreateForm';
 
+    /** @var NetworkFactory */
+    private $NetworkFactory;
+
+    public function __construct(
+        Session $session,
+        ModelFactory $modelFactory,
+        FormFactory $formFactory,
+        NetworkFactory $networkFactory
+    ) {
+        parent::__construct($session, $modelFactory, $formFactory);
+        $this->networkFactory = $networkFactory;
+    }
+
     public function postAction(Request $request)
     {
-        $form = $this->createForm($this->createFormName);
+        $message = $request->get('message');
 
-        $form->setDefinedWritableValues($request->request->all())->validate();
+        $networkSlugs = $request->get('networkSlugs');
+        $networkSlugs = explode(',', $networkSlugs[0]);
 
-        if ($form->hasErrors()) {
-            throw new FormInvalidException($form->getFirstError());
+        foreach ($networkSlugs as $networkSlug) {
+            try {
+                $network = $this->networkFactory->create($networkSlug);
+                $network->postUpdate($message);
+            } catch (\Exception $e) {
+                continue;
+            }
         }
-
-        $this->model->save($form->getValues());
-
-        $message = $request->request->get('messageContent');
-
-        $this->sendMessageToActivatedAccounts();
     }
 }

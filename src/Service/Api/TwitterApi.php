@@ -69,7 +69,7 @@ class TwitterApi implements NetworkInterface
         $this->auth->verifyCallbackToken($callbackToken, $uid);
     }
 
-    public function postTweet(string $content)
+    public function postUpdate(string $content)
     {
         $token = $this->auth->getCachedLongTimeToken();
 

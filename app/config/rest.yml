@@ -19,3 +19,11 @@ services:
             - "@form.factory"
             - "@service.network-factory"
             - "%app.redirect_uri%"
+
+    controller.rest.message:
+        class: App\Controller\Rest\MessageController
+        arguments: 
+            - "@service.session"
+            - "@model.factory"
+            - "@form.factory"
+            - "@service.network-factory"

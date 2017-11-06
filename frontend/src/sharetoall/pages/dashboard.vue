@@ -4,7 +4,7 @@
         <ul id="networks">
             <li v-for="network in networks">
                 <button
-                    v-bind:data-network-slug="network.networkSlug"
+                    v-bind:data-slug="network.networkSlug"
                     v-bind:class="[
                         {'connected': networkHasToken(network),
                         'active': isNetworkRegistered(network)}
@@ -14,10 +14,10 @@
                 </button>
             </li>
         </ul>
-        <form>
+        <form id="form-message">
             <label for="message">Message</label>
             <textarea id="message" name="message"></textarea>
-            <button>Send</button>
+            <button @click="sendMessage">Send</button>
         </form>
         <md-button @click.native="showNotification()" class="md-primary md-raised">Show notification</md-button>
         <md-button @click.native="logout()" class="md-primary md-raised">Logout {{ username }}</md-button>
@@ -38,8 +38,6 @@
                 msg: 'Welcome to Sharetoall',
                 userId: this.$session.getUser().userId,
                 username: this.$session.getFullName(),
-                //For later: get list of network + networks the user already subscribed to
-                //networks: $network.getNetworkList(this.$session.getUserId());
                 networks: '',
             };
         },
@@ -63,12 +61,28 @@
                 if(!event.target.classList.contains('connected') && event.target.classList.contains('active')) {
                     const networkSlug = el.dataset.networkSlug;
 
-                    this.$api.get('connect/' + networkSlug).then(response => {
+                    this.$api.get(`connect/${networkSlug}`).then(response => {
                         window.location = response.data;
-                    }, error => {event.target.classList.toggle('active');
+                    }, error => {
+                        event.target.classList.toggle('active');
                     });
                 }
-            }
+            },
+            sendMessage(event) {
+                event.preventDefault();
+
+                const networks = document.getElementById('networks');
+                const connectedNetworks = networks.getElementsByClassName('connected active');
+                const message = document.getElementById('message').value;
+
+                const networkSlugs = Array.from(connectedNetworks, network => network.dataset.slug);
+
+                this.$api.post(`message`, {networkSlugs: networkSlugs, message: message}).then(response => {
+                    console.log(response.data);
+                }, error => {
+                    console.log(error);
+                });
+            },
         }
     };
 </script>
