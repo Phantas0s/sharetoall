@@ -46,7 +46,7 @@
                 this.$alert.warning('hello this is a warning');
             },
             networkHasToken(network) {
-                return network.userNetworkToken != null;
+                return network.userNetworkTokenKey != null;
             },
             logout() {
                 this.$session.logout();
@@ -59,7 +59,7 @@
                 el.classList.toggle('active');
 
                 if(!event.target.classList.contains('connected') && event.target.classList.contains('active')) {
-                    const networkSlug = el.dataset.networkSlug;
+                    const networkSlug = el.dataset.slug;
 
                     this.$api.get(`connect/${networkSlug}`).then(response => {
                         window.location = response.data;
@@ -76,7 +76,6 @@
                 const message = document.getElementById('message').value;
 
                 const networkSlugs = Array.from(connectedNetworks, network => network.dataset.slug);
-
                 this.$api.post(`message`, {networkSlugs: networkSlugs, message: message}).then(response => {
                     console.log(response.data);
                 }, error => {

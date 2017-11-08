@@ -26,7 +26,8 @@ class Version20170904174720 extends AbstractMigration
             CREATE TABLE `sharetoall`.`UserNetwork` (
             `userId` INT(11) NOT NULL,
             `networkSlug` VARCHAR(100) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
-            `userNetworkToken` VARCHAR(255) NOT NULL,
+            `userNetworkTokenKey` TEXT NOT NULL,
+            `userNetworkTokenSecret` TEXT NOT NULL,
             `created` DATETIME NULL,
             `updated` DATETIME NULL,
             `deleted` DATETIME NULL,

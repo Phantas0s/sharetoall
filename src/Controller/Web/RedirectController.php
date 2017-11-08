@@ -69,7 +69,8 @@ class RedirectController extends EntityControllerAbstract
         $this->model->saveUserNetwork([
             'userId' => $this->session->getUserId(),
             'networkSlug' => $this->twitterApi->getNetworkSlug(),
-            'userNetworkToken' => $token->getKey()
+            'userNetworkTokenKey' => $token->getKey(),
+            'userNetworkTokenSecret' => $token->getSecret(),
         ]);
 
         return $this->dashboardUri;
@@ -103,7 +104,8 @@ class RedirectController extends EntityControllerAbstract
         $this->model->saveUserNetwork([
             'userId' => $this->session->getUserId(),
             'networkSlug' => $this->linkedinApi->getNetworkSlug(),
-            'userNetworkToken' => $token->getKey()
+            'userNetworkTokenKey' => $token->getKey(),
+            'userNetworkTokenSecret' => '',
         ]);
 
         return $this->dashboardUri;

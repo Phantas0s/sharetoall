@@ -6,6 +6,7 @@ namespace App\Service\Api\OAuth1;
 use App\Exception\Exception;
 use App\Exception\OAuthException;
 use App\Service\Api\Client\ClientInterface;
+use App\Service\Api\OAuth1\Token;
 use App\Service\Api\TwitterApi;
 use Psr\SimpleCache\CacheInterface;
 
@@ -32,11 +33,13 @@ class Auth
     public function __construct(
         CacheInterface $cache,
         ClientInterface $client,
-        Consumer $consumer
+        Consumer $consumer,
+        string $apiName
     ) {
         $this->cache = $cache;
         $this->consumer = $consumer;
         $this->client = $client;
+        $this->apiName = $apiName;
 
         $this->queryBuilder = new QueryBuilder();
     }
@@ -105,9 +108,12 @@ class Auth
     public function verifyCallbackToken(string $callbackToken, int $uid)
     {
         $token = $this->getCachedOnetimeToken($uid);
+
         if ($callbackToken != $token->getKey()) {
             throw new OAuthException('The token from the callback url is different than the one time token.');
         }
+
+        return $token;
     }
 
     private function getOauthParameters(): array

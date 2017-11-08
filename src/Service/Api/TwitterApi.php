@@ -66,18 +66,16 @@ class TwitterApi implements NetworkInterface
 
     public function verifyCallbackToken(string $callbackToken, int $uid)
     {
-        $this->auth->verifyCallbackToken($callbackToken, $uid);
+        return $this->auth->verifyCallbackToken($callbackToken, $uid);
     }
 
-    public function postUpdate(string $content)
+    public function postUpdate(string $content, Token $token)
     {
-        $token = $this->auth->getCachedLongTimeToken();
-
         if (empty($content)) {
             throw new InvalidArgumentException('You can\'t tweet an empty content!');
         }
 
-        if (empty($token->getKey())) {
+        if (empty($token->getKey()) || empty($token->getSecret())) {
             throw new InvalidArgumentException('The token is impossible to find');
         }
 
@@ -88,6 +86,6 @@ class TwitterApi implements NetworkInterface
             'Authorization' =>  $this->auth->buildOauthHeaders($url, 'POST', $token, $parameters)
         ];
 
-        $this->client->post($url, $headers, $parameters);
+        return $this->client->post($url, $headers, $parameters);
     }
 }

@@ -1,0 +1,1 @@
+a:2:{s:6:"result";a:0:{}s:4:"args";a:3:{i:0;s:225:"SELECT n.*, un.userId, un.userNetworkTokenKey, un.userNetworkTokenSecret FROM Network n LEFT JOIN UserNetwork un ON un.networkSlug = n.networkSlug WHERE (`n`.`networkSlug` = 'fake') AND (`un`.`userId` = '1') LIMIT 20 OFFSET 0";i:1;a:0:{}i:2;a:0:{}}}

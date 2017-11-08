@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace App\Service\Api\OAuth2;
 
+/**
+ * Class: Token
+ * @todo this Token class shouldn't exists / the other Token class should be used
+ */
 class Token
 {
     private $key;

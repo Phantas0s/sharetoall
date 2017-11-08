@@ -17,7 +17,7 @@ class NetworkController extends EntityControllerAbstract
 
     public function getAction(string $userId, Request $request)
     {
-        $networks = $this->model->findByNetworkUser($userId);
+        $networks = $this->model->findByNetworkUser((int)$userId);
         return $networks->getAllResultsAsArray();
     }
 }

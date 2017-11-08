@@ -5,10 +5,11 @@ namespace App\Service\Api;
 
 use App\Service\Api\Client\ClientInterface;
 use App\Service\Api\OAuth1\Consumer;
-use App\Service\Api\OAuth2\Auth;
 use App\Service\Api\OAuth1\QueryBuilder;
+use App\Service\Api\OAuth2\Auth;
 
 use Psr\SimpleCache\CacheInterface;
+use App\Service\Api\OAuth1\Token;
 
 class LinkedinApi implements NetworkInterface
 {
@@ -69,7 +70,7 @@ class LinkedinApi implements NetworkInterface
         $this->auth->verifyCallbackToken($callbackToken, $uid);
     }
 
-    public function postUpdate(string $content)
+    public function postUpdate(string $content, Token $token)
     {
         $url = self::API_HOST . '/v1/' . self::API_SHARE_METHOD;
 
@@ -83,10 +84,10 @@ class LinkedinApi implements NetworkInterface
         $headers = [
             'Content-type' => 'application/json',
             'x-li-format' => 'json',
-            'Authorization' => 'Bearer ' . $this->auth->getCachedLongTimeToken()->getKey(),
+            'Authorization' => 'Bearer ' . $token->getKey(),
         ];
 
-        $this->client->post($url, $headers, $parameters, 'json');
+        return $this->client->post($url, $headers, $parameters, 'json');
     }
 
     private function createAuthBaseUrl(): string
