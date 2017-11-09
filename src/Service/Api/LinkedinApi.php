@@ -67,7 +67,7 @@ class LinkedinApi implements NetworkInterface
 
     public function verifyCallbackToken(string $callbackToken, int $uid)
     {
-        $this->auth->verifyCallbackToken($callbackToken, $uid);
+        return $this->auth->verifyCallbackToken($callbackToken, $uid);
     }
 
     public function postUpdate(string $content, Token $token)

@@ -38,6 +38,7 @@ class Auth
         $this->cache = $cache;
         $this->consumer = $consumer;
         $this->client = $client;
+        $this->apiName = $apiName;
 
         $this->queryBuilder = new QueryBuilder();
     }
@@ -66,6 +67,8 @@ class Auth
             // should be 401?
             throw new OAuthException('The token from the callback url is different than the token sent');
         }
+
+        return $token;
     }
 
     private function cacheOnetimeToken(string $token, int $uid)

@@ -11,6 +11,7 @@ use TestTools\TestCase\UnitTestCase;
 
 class TwitterApiTest extends UnitTestCase
 {
+    /** @var int */
     private $uid = 1234;
 
     /** @var ArrayCache */
@@ -88,6 +89,21 @@ class TwitterApiTest extends UnitTestCase
         $twitterApi = $this->getTwitterApi($response);
         $this->expectException(OAuthException::class);
         $token = $twitterApi->verifyCallbackToken('wrong', $this->uid);
+    }
+
+    public function testPostUpdate()
+    {
+        $response = [
+            'oauth_token=token',
+            'oauth_token_secret=secret'
+        ];
+
+        $token = new Token('dummyKey', 'dummySecret');
+
+        $twitterApi = $this->getTwitterApi($response);
+        $result = $twitterApi->postUpdate('nice message', $token);
+
+        $this->assertEquals(200, $result->getStatusCode());
     }
 
     private function getTwitterApi(array $fakeClientResponse): TwitterApi
