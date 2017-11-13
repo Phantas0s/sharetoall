@@ -23,6 +23,14 @@ services:
         class: App\Controller\Rest\NetworkController
         arguments: [ "@service.session", "@model.factory", "@form.factory" ]
 
+    controller.rest.message:
+        class: App\Controller\Rest\MessageController
+        arguments:
+            - "@service.session"
+            - "@model.factory"
+            - "@form.factory" 
+            - "@service.network-factory-fake"
+
     controller.rest.connect:
         class: App\Controller\Rest\ConnectController
         arguments: 
@@ -39,3 +47,10 @@ services:
             - "@model.factory"
             - "%app.redirect_uri%"
             - "@service.network-factory-fake"
+
+    controller.web.sharetoall:
+        class: App\Controller\Web\SharetoallController
+        arguments:
+            - "@service.session"
+            - "@model.factory"
+

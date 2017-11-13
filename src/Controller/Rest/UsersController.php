@@ -9,8 +9,7 @@ use App\Exception\UnauthorizedException;
 use App\Exception\InvalidArgumentException;
 use App\Service\Mail;
 use App\Service\Session;
-use App\Model\User;
-use App\Form\FormFactory;
+use App\Model\User; use App\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

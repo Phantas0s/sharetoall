@@ -60,4 +60,9 @@ class FakeApi implements NetworkInterface
         $this->networkSlug = $networkSlug;
         return $this;
     }
+
+    public function postUpdate(string $content, Token $token)
+    {
+        return 'posted!';
+    }
 }

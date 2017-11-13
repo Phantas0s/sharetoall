@@ -8,6 +8,7 @@ use App\Exception\NotFoundException;
 use App\Form\FormFactory;
 use App\Model\ModelFactory;
 use App\Service\Api\NetworkFactory;
+use App\Service\Api\NetworkFactoryInterface;
 use App\Service\Api\OAuth1\Token;
 use App\Service\Session;
 use Doctrine\ActiveRecord\Search\SearchResult;
@@ -31,7 +32,7 @@ class MessageController extends EntityControllerAbstract
         Session $session,
         ModelFactory $modelFactory,
         FormFactory $formFactory,
-        NetworkFactory $networkFactory
+        NetworkFactoryInterface $networkFactory
     ) {
         parent::__construct($session, $modelFactory, $formFactory);
         $this->networkFactory = $networkFactory;
