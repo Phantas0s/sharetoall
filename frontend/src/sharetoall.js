@@ -5,11 +5,13 @@ import App from 'sharetoall/app.vue';
 import routes from 'sharetoall/routes';
 import Api from 'common/api';
 import Network from 'common/network';
-import VueMaterial from 'vue-material';
+
 // import PantaComponents from 'component/panta-components';
 import Alert from 'common/alert';
 import Session from 'common/session';
 import Event from 'pubsub-js';
+
+import { MdButton } from 'vue-material/dist/components';
 
 const session = new Session(window.localStorage);
 
@@ -25,8 +27,8 @@ Vue.prototype.$session = session;
 Vue.prototype.$api = Api;
 Vue.prototype.$network = new Network();
 
-Vue.use(VueMaterial);
 Vue.use(Router);
+Vue.use(MdButton);
 
 const router = new Router({
     routes,

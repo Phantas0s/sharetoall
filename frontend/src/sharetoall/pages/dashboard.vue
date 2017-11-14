@@ -4,6 +4,7 @@
         <ul id="networks">
             <li v-for="network in networks">
                 <button
+                    class="md-icon-button"
                     v-bind:data-slug="network.networkSlug"
                     v-bind:class="[
                         {'connected': networkHasToken(network),
@@ -15,8 +16,9 @@
             </li>
         </ul>
         <form id="form-message">
-            <label for="message">Message</label>
-            <textarea id="message" name="message"></textarea>
+            <label for="message">Message(maximum 140 characters)</label>
+            <textarea id="message" class="form-control" v-on:keyup="countdown" v-model="message" placeholder="" name="message"></textarea>
+            <p class='text-right text-small' v-bind:class="{'text-danger': hasError }">{{remainingCount}}</p>
             <button @click="sendMessage">Send</button>
         </form>
         <md-button @click.native="showNotification()" class="md-primary md-raised">Show notification</md-button>
@@ -39,6 +41,11 @@
                 userId: this.$session.getUser().userId,
                 username: this.$session.getFullName(),
                 networks: '',
+
+                maxCount: 140,
+                remainingCount: 140,
+                message: '',
+                messageError: false
             };
         },
         methods: {
@@ -77,11 +84,15 @@
 
                 const networkSlugs = Array.from(connectedNetworks, network => network.dataset.slug);
                 this.$api.post(`message`, {networkSlugs: networkSlugs, message: message}).then(response => {
-                    console.log(response.data);
+                    this.$alert.success('The message have been sent!');
                 }, error => {
-                    console.log(error);
+                    this.$alert.error('Error: ' + error);
                 });
             },
+            countdown(even) {
+                this.remainingCount = this.maxCount - this.message.length;
+                this.messageError = this.remainingCount < 0;
+            }
         }
     };
 </script>
@@ -104,12 +115,10 @@
     #networks {
         width: 10%;
         background: white;
+        display: flex;
     }
 
     #networks > li {
-        width: 100%;
-        display: block;
-        float:clear;
     }
 
     button {
@@ -117,5 +126,21 @@
     }
     .active {
         background: green;
+    }
+    .dashboard {
+        margin: 0 auto;
+        width: 50%;
+    }
+    #message {
+        width: 50%;
+    }
+    label{
+        display:block;
+    }
+    .text-small {
+        font-size: 0.9em;
+    }
+    .text-alert {
+        color: red;
     }
 </style>
