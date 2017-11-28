@@ -14,8 +14,9 @@
     "axios": "^0.16.1",
     "axios-mock-adapter": "^1.8.1",
     "material-design-icons": "^3.0.1",
-    "vue": "^2.2.2",
-    "vue-router": "^2.3.0"
+    "vue": "^2.5.8",
+    "vue-router": "^3.0.1",
+    "vuetify": "^0.17.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
@@ -70,11 +71,10 @@
     "style-loader": "^0.16.1",
     "svg-url-loader": "^2.0.2",
     "url-loader": "^0.5.8",
-    "vue-loader": "^11.1.4",
-    "vue-material": "beta",
-    "vue-style-loader": "^2.0.0",
-    "vue-template-compiler": "^2.2.4",
-    "vuelidate": "^0.4.3",
+    "vue-loader": "^13.5.0",
+    "vue-style-loader": "^3.0.3",
+    "vue-template-compiler": "^2.5.8",
+    "vuelidate": "^0.6.1",
     "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",

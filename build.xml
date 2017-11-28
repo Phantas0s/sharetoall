@@ -45,6 +45,12 @@
         <exec command="./app/console database:insert-fixtures" checkreturn="true" passthru="true" />
     </target>
 
+    <target name="build-database-prod">
+        <exec command="./app/console database:drop" checkreturn="true" passthru="true" />
+        <exec command="./app/console database:create" checkreturn="true" passthru="true" />
+        <exec command="./app/console migrations:migrate -n" checkreturn="true" passthru="true" />
+    </target>
+
     <target name="upgrade-database">
         <exec command="./app/console migrations:migrate -n" checkreturn="true" passthru="true" />
     </target>

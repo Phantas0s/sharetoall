@@ -13,5 +13,6 @@ class IndexController
 
     public function indexAction(Request $request)
     {
+        return ['realm' => 'web'];
     }
 }

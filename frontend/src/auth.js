@@ -1,18 +1,17 @@
 import Vue from 'vue';
-import '../styles/sass/pages/web/_login.scss';
+import '../styles/sass/web.scss';
 import Api from 'common/api';
-import VueMaterial from 'vue-material';
 import Session from 'common/session';
-// import SharetoallComponents from 'component/sharetoall-components';
 import Alert from 'common/alert';
 import Event from 'pubsub-js';
+import Vuetify from 'vuetify';
 
 Vue.prototype.$alert = Alert;
 Vue.prototype.$event = Event;
 Vue.prototype.$session = new Session(window.localStorage);
 Vue.prototype.$api = Api;
 
-Vue.use(VueMaterial);
+Vue.use(Vuetify);
 
 /* eslint-disable no-unused-vars */
 const app = new Vue({
@@ -21,6 +20,7 @@ const app = new Vue({
         email: '',
         password: '',
         session_token: '',
+        passwordVisible: false,
     },
     created() {
         this.email = this.$session.getEmail();

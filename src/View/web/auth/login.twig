@@ -1,11 +1,12 @@
 {% extends 'root.twig' %}
-
 {% block content %}
-    <div class="login-page__form-container">
-        <div class="auth-manager__container">
-            <div id="login-form">
-                <h1 class="form-title">Sharetoall</h1>
-                {% if user_id %}
+<div id="login">
+    <v-app light>
+        <v-layout app>
+            <v-flex xs12 sm4 offset-sm4>
+                <v-card class="pa-5">
+                    <h1 class="form-title">Sharetoall</h1>
+                    {% if user_id %}
 
                     <form id="login" class="form-signin" role="form" method="post" ref="form" action="/auth/logout">
                         <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="session_token" />
@@ -13,36 +14,43 @@
                         <button type="button" @click="logout" class="btn btn-lg btn-primary btn-block">Logout</button>
                     </form>
 
-                {% else %}
+                    {% else %}
 
-                <div class="form-wrapper form-500">
-                    <form class="form-signin" role="form" id="login" method="post" name="login_form" action="/auth/login" ref="form" @keyup.enter="login">
-                        <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="session_token" />
-                        {% if error %}
+                    <div class="form-wrapper form-500">
+                        <form class="form-signin" role="form" id="login" method="post" name="login_form" action="/auth/login" ref="form" @keyup.enter="login">
+                            <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="session_token" />
+                            {% if error %}
                             <div class="alert alert-danger">
                                 <strong>{{ error }}</strong>
                             </div>
-                        {% endif %}
-                        <div class="field-block ">
-                            <label class="field-block__label" for="email">Your email</label>
-                            <input type="text" name="email" id="email" value="" class="text-input" v-model="email">
-                        </div>
-                        <div class="field-block ">
-                            <label class="field-block__label" for="email">Your password</label>
-                            <input type="password" name="password" id="password" value="" class="password-input__input " v-model="password">
-                        </div>
-                        <span class="password-input__icon-wrapper">
-                            <p class="login-form__paragraph">
-                                <span>Forgot your password?</span>
-                                <a href="/auth/reset" class="login-form__link">Click here.</a></p>
-                            </p>
-                        </span>
+                            {% endif %}
+                            <v-text-field
+                                 label="Your email"
+                                 name="email"
+                                 id="email"
+                                 value=""
+                                 class="text-input"
+                                 v-model="email"
+                                 >
+                            </v-text-field>
+                                <v-text-field
+                                 label="Your password"
+                                 name="password"
+                                 id="password"
+                                 :append-icon="passwordVisible ? 'visibility' : 'visibility_off'"
+                                 :append-icon-cb="() => (passwordVisible = !passwordVisible)"
+                                 :type="passwordVisible ? 'text' : 'password'"
+                                 v-model="password"
+                            >
+                            </v-text-field>
 
-                        <button type="button" class="form-submit button button--primary button--normal" @click="login">Sign In</button>
-                    </form>
-                {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
+                             <v-btn @click="login">Sign In</v-btn>
+                        </form>
+                        {% endif %}
+                    </div>
+                </v-card>
+            </v-flex>
+        </v-layout>
+    </v-app>
+</div>
 {% endblock %}
