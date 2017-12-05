@@ -61,5 +61,6 @@ docker-compose.override.yml
 # docker related configs #
 ##########################
 configuration.env
+.htpasswd
 
 storage/profiler/*
