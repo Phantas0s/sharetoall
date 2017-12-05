@@ -1,3 +1,5 @@
+'use strict';
+
 import Vue from 'vue';
 import Api from 'common/api';
 import Session from 'common/session';

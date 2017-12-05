@@ -1,3 +1,5 @@
+'use strict';
+
 import Dashboard from 'sharetoall/pages/dashboard.vue';
 
 export default [

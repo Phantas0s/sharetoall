@@ -49,7 +49,7 @@
                 </v-card>
             </v-flex>
             <v-toolbar dense app clipped-left fixed>
-                <h1>Sharetoall</h1>
+                <h1><a href="/" title="home">Sharetoall</a></h1>
                 <v-spacer></v-spacer>
                 <v-btn clipped-right @click.native="logout()">Logout</v-btn>
                 <v-btn @click.native="showNotification()">Show notification</v-btn>
@@ -81,6 +81,8 @@
 </template>
 
 <script>
+'use strict';
+
 export default {
     name: 'dashboard',
     created () {
@@ -182,5 +184,10 @@ label{
 }
 .selected {
     background-color: green;
+}
+
+h1  a {
+    text-decoration: none;
+    color: inherit;
 }
 </style>

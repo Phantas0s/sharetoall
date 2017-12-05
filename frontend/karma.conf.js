@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 
 // See https://github.com/webpack/loader-utils/issues/56

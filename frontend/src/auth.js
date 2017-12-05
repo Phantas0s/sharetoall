@@ -1,3 +1,5 @@
+'use strict';
+
 import Vue from 'vue';
 import '../styles/sass/web.scss';
 import Api from 'common/api';
