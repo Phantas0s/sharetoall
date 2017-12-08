@@ -37,7 +37,7 @@ RUN mkdir -p \
 
 COPY ./composer.* /sharetoall/
 COPY ./app /sharetoall/app
-COPY ./docker/php/php-custom.ini /usr/local/etc/php/
+COPY ./docker/php/php-custom.ini /usr/local/etc/php/conf.d/
 
 WORKDIR /sharetoall
 
