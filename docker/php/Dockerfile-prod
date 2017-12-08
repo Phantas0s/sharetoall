@@ -13,7 +13,7 @@ RUN set -xe \
 RUN set -xe \
    && apt-get install -y gnupg2 \
    && apt-get install -y vim \
-   && apt-get install -y mysql \
+   && apt-get install -y mysql-server \
    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
    && apt-get install -y nodejs
 
