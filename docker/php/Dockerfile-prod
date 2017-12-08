@@ -1,0 +1,53 @@
+FROM php:7.2-fpm
+
+RUN set -xe \
+    && apt-get update \
+    && apt-get install -y libxml2-dev curl libcurl4-gnutls-dev libmcrypt-dev zlib1g-dev \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-install mbstring \
+    && docker-php-ext-install dom \
+    && docker-php-ext-install curl \
+    && docker-php-ext-install zip
+
+RUN set -xe \
+   && apt-get install -y gnupg2 \
+   && apt-get install -y vim \
+   && apt-get install -y mysql \
+   && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+   && apt-get install -y nodejs
+
+RUN npm install -g yarn
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+
+RUN set -xe \
+    && docker-php-ext-install sockets
+
+RUN pecl install redis-3.1.2 \
+    && docker-php-ext-enable redis
+
+RUN usermod -u 1000 www-data
+
+RUN mkdir -p \
+        /sharetoall/ \
+        /sharetoall/bin \
+        /sharetoall/vendor \
+        /sharetoall/storage
+
+COPY ./composer.* /sharetoall/
+COPY ./app /sharetoall/app
+COPY ./docker/php/php-custom.ini /usr/local/etc/php/
+
+WORKDIR /sharetoall
+
+RUN composer install --no-scripts --no-autoloader
+
+COPY ./ /sharetoall/
+
+RUN composer dump-autoload --optimize && \
+    composer run-script post-install-cmd
+
+RUN bin/phing build \
+    && chown -R www-data:www-data /sharetoall/storage \
+    && rm -r /sharetoall/docker
