@@ -47,7 +47,3 @@ COPY ./ /sharetoall/
 
 RUN composer dump-autoload --optimize && \
     composer run-script post-install-cmd
-
-RUN bin/phing build \
-    && chown -R www-data:www-data /sharetoall/storage \
-    && rm -r /sharetoall/docker
