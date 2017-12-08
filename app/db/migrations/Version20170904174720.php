@@ -16,14 +16,14 @@ class Version20170904174720 extends AbstractMigration
     public function up(Schema $schema)
     {
         $this->addSql("
-            CREATE TABLE `sharetoall`.`Network` (
+            CREATE TABLE `Network` (
             `networkSlug` VARCHAR(100) NOT NULL,
             `networkName` VARCHAR(100) NOT NULL,
             PRIMARY KEY (`networkSlug`));
         ");
 
         $this->addSql("
-            CREATE TABLE `sharetoall`.`UserNetwork` (
+            CREATE TABLE `UserNetwork` (
             `userId` INT(11) NOT NULL,
             `networkSlug` VARCHAR(100) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
             `userNetworkTokenKey` TEXT NOT NULL,
@@ -35,19 +35,19 @@ class Version20170904174720 extends AbstractMigration
             INDEX `fk_UserNetwork_2_idx` (`networkSlug` ASC),
             CONSTRAINT `fk_UserNetwork_1`
                 FOREIGN KEY (`userId`)
-                REFERENCES `sharetoall`.`User` (`userId`)
+                REFERENCES `User` (`userId`)
                 ON DELETE NO ACTION
                 ON UPDATE NO ACTION,
             CONSTRAINT `fk_UserNetwork_2`
                 FOREIGN KEY (`networkSlug`)
-                REFERENCES `sharetoall`.`Network` (`networkSlug`)
+                REFERENCES `Network` (`networkSlug`)
                 ON DELETE NO ACTION
                 ON UPDATE NO ACTION);
         ");
 
         $this->addSql("
-            INSERT INTO `sharetoall`.`Network` (`networkSlug`, `networkName`) VALUES ('twitter', 'Twitter');
-            INSERT INTO `sharetoall`.`Network` (`networkSlug`, `networkName`) VALUES ('linkedin', 'Linkedin');
+            INSERT INTO `Network` (`networkSlug`, `networkName`) VALUES ('twitter', 'Twitter');
+            INSERT INTO `Network` (`networkSlug`, `networkName`) VALUES ('linkedin', 'Linkedin');
         ");
     }
 
