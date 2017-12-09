@@ -52,5 +52,5 @@ RUN composer dump-autoload --optimize && \
 
 RUN chown -R www-data:www-data /sharetoall/storage \
     && rm -r /sharetoall/docker \
-    && app/console clearcache
+    && app/clearcache
 
