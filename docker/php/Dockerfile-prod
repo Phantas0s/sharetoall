@@ -45,6 +45,8 @@ RUN composer install --no-scripts --no-autoloader
 
 COPY ./ /sharetoall/
 
+RUN usermod -u 1000 www-data
+
 RUN composer dump-autoload --optimize && \
     composer run-script post-install-cmd
 
