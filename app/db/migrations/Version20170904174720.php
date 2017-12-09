@@ -25,7 +25,7 @@ class Version20170904174720 extends AbstractMigration
         $this->addSql("
             CREATE TABLE `UserNetwork` (
             `userId` INT(11) NOT NULL,
-            `networkSlug` VARCHAR(100) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
+            `networkSlug` VARCHAR(100) NOT NULL,
             `userNetworkTokenKey` TEXT NOT NULL,
             `userNetworkTokenSecret` TEXT NOT NULL,
             `created` DATETIME NULL,
