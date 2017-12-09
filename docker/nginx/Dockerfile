@@ -1,4 +1,5 @@
 FROM nginx:stable-alpine
 
-COPY .htpasswd /etc/nginx/conf.d/.htpasswd
-COPY site.conf /etc/nginx/conf.d/default.conf
+COPY ./web /sharetoall/web/
+COPY ./docker/nginx/.htpasswd /etc/nginx/conf.d/.htpasswd
+COPY ./docker/nginx/site.conf /etc/nginx/conf.d/default.conf
