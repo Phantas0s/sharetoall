@@ -21,6 +21,7 @@ services:
             dockerfile: ./docker/php/Dockerfile-prod
         volumes:
             - /var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock
+            - ./web:/sharetoall/web
         depends_on:
             - redis
 
