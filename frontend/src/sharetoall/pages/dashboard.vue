@@ -115,7 +115,6 @@ export default {
             return network.userId == this.userId;
         },
         toggleNetwork(event) {
-
             const el = event.target;
             const listItem = el.closest("li");
             const button = listItem.querySelector('button');
@@ -125,7 +124,7 @@ export default {
             button.classList.toggle('selected');
 
             if(!listItem.classList.contains('connected') && button.classList.contains(this.selectClass)) {
-                const networkSlug = listTile.dataset.slug;
+                const networkSlug = button.dataset.slug;
 
                 this.$api.get(`connect/${networkSlug}`).then(response => {
                     window.location = response.data;

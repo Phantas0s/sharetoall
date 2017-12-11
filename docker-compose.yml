@@ -7,7 +7,11 @@ version: '3'
 
 services:
     web:
-        build: ./docker/nginx/
+        build:
+            context: ./
+            dockerfile: ./docker/nginx/Dockerfile
+        ports:
+            - 9090:80
         depends_on:
             - php
         volumes:
