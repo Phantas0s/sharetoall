@@ -7,6 +7,8 @@ services:
             dockerfile: ./docker/nginx/Dockerfile
         ports:
             - 9090:80
+        volumes:
+            - ./web:/sharetoall/web
         depends_on:
             - php
         environment:
