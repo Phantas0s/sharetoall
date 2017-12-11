@@ -98,7 +98,7 @@ class RedirectController extends EntityControllerAbstract
             $cachedTokenUid
         );
 
-        $redirectUri = $this->redirectUri.'/linkedin?t='.$request->get('t');
+        $redirectUri = $this->redirectUri.'linkedin?t='.$request->get('t');
         $token = $this->linkedinApi->getLongTimeToken($code, $cachedTokenUid, $redirectUri);
 
         $this->model->saveUserNetwork([
