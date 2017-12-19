@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Rest;
 
+use App\Traits\LoggerTrait;
+
 use App\Exception\Exception;
 use App\Exception\NotFoundException;
 use App\Form\FormFactory;
@@ -16,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MessageController extends EntityControllerAbstract
 {
+    use LoggerTrait;
+
     protected $modelName = 'Message';
     protected $createFormName = 'Message/CreateForm';
 
@@ -65,6 +69,7 @@ class MessageController extends EntityControllerAbstract
 
                 $results[] = $networkApi->postUpdate($message, $token);
             } catch (\Exception $e) {
+                $this->log('error', $e->getMessage());
                 return $e->getMessage();
                 continue;
             }

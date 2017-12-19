@@ -27,3 +27,6 @@ services:
             - "@model.factory"
             - "@form.factory"
             - "@service.network-factory"
+        calls:
+            - [ setLogger, ["@log"]]
+

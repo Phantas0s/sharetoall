@@ -10,6 +10,7 @@ use App\Service\Api\OAuth1\QueryBuilder;
 use App\Service\Api\OAuth1\Token;
 
 use Psr\SimpleCache\CacheInterface;
+use App\Exception\ApiWrongStatusCodeException;
 
 class TwitterApi implements NetworkInterface
 {
@@ -80,12 +81,24 @@ class TwitterApi implements NetworkInterface
         }
 
         $parameters = ['status' => $content];
-        $url = self::API_HOST . '/' . self::API_VERSION . '/' . self::API_POST_TWEET_METHOD;
+        $url = self::API_HOST . self::API_VERSION . '/' . self::API_POST_TWEET_METHOD;
 
         $headers = [
             'Authorization' =>  $this->auth->buildOauthHeaders($url, 'POST', $token, $parameters)
         ];
 
-        return $this->client->post($url, $headers, $parameters);
+        $response = $this->client->post($url, $headers, $parameters);
+
+        if ($response->getStatusCode() != 200) {
+            throw new ApiWrongStatusCodeException(
+                sprintf(
+                    'Wrong status code: %d with body %s',
+                    $response->getStatusCode(),
+                    (string)$response->getBody()
+                )
+            );
+        }
+
+        return $response;
     }
 }
