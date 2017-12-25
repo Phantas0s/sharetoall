@@ -2,12 +2,15 @@
 
 namespace App\Tests\Service\Api\OAuth1;
 
+use App\Exception\ApiException;
 use App\Exception\OAuthException;
 use App\Service\Api\OAuth1\Auth;
 use App\Service\Api\OAuth1\Consumer;
 use App\Service\Api\OAuth1\QueryBuilder;
 use App\Service\Api\OAuth1\Token;
 use App\Tests\Service\Api\Client\FakeClient;
+use App\Tests\Service\Api\Client\FakeClientException;
+use App\Tests\Service\Api\Client\FakeExceptionClient;
 use TestTools\TestCase\UnitTestCase;
 
 class AuthTest extends UnitTestCase
@@ -27,16 +30,21 @@ class AuthTest extends UnitTestCase
     /** @var int */
     private $uid;
 
+    /** @var Auth */
+    private $oAuthException;
+
     public function setUp()
     {
+        //Unique id in order to cache the tokens in different keys (if multiple tokens)
+        $this->uid = 1234;
+
         $container = $this->getContainer();
         $this->cache = $container->get('cache');
         $this->consumer = new Consumer('dummy', 'dummysecret');
         $this->queryBuilder = new QueryBuilder();
-        //Unique id in order to cache the tokens in different keys (if multiple tokens)
-        $this->uid = 1234;
 
         $this->oAuth = new Auth($this->cache, new FakeClient(), $this->consumer, 'dummyApi');
+        $this->oAuthException = new Auth($this->cache, new FakeClientException(), $this->consumer, 'dummyApi');
     }
 
     public function testBuildSignature()
@@ -68,6 +76,38 @@ class AuthTest extends UnitTestCase
         $this->assertEquals('secret', $token->getSecret());
     }
 
+    public function testGetCachedLongTimeToken()
+    {
+        $this->createAndCacheLongTimeToken();
+        $token = $this->oAuth->getCachedLongTimeToken();
+
+        $this->assertEquals('longtoken', $token->getKey());
+        $this->assertEquals('longsecret', $token->getSecret());
+    }
+
+    public function testGetCachedLongTimeTokenWithApiException()
+    {
+        $this->createAndCacheOneTimeToken();
+
+        $this->oAuth = new Auth($this->cache, new FakeClientException(), $this->consumer, 'dummyApi');
+
+        $this->expectException(ApiException::class);
+        $this->oAuth->getLongTimeToken('http://dummyUrl', 'oauthVerifier', $this->uid);
+    }
+
+    public function testGetCachedTokenWithException()
+    {
+        $response = [
+            'oauth_token=token',
+            'oauth_token_secret=secret'
+        ];
+
+        $this->oAuth = new Auth($this->cache, new FakeClientException($response), $this->consumer, 'dummyApi');
+
+        $this->expectException(ApiException::class);
+        return $this->oAuth->fetchOnetimeToken('http://dummyUrl', $this->uid);
+    }
+
     public function testGetAuthUrl()
     {
         $this->createAndCacheOneTimeToken();
@@ -81,15 +121,6 @@ class AuthTest extends UnitTestCase
         $this->createAndCacheOneTimeToken();
         $this->expectException(OAuthException::class);
         $this->oAuth->verifyCallbackToken('wrongToken', $this->uid);
-    }
-
-    public function testGetCachedLongTimeToken()
-    {
-        $this->createAndCacheLongTimeToken();
-        $token = $this->oAuth->getCachedLongTimeToken();
-
-        $this->assertEquals('longtoken', $token->getKey());
-        $this->assertEquals('longsecret', $token->getSecret());
     }
 
     private function createAndCacheOneTimeToken()
