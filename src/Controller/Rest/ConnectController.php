@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Rest;
 
+use App\Traits\LoggerTrait;
+
+use App\Exception\ApiException;
 use App\Exception\Exception;
 use App\Exception\InvalidArgumentException;
 use App\Form\FormFactory;
@@ -13,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ConnectController extends EntityControllerAbstract
 {
+    use LoggerTrait;
+
     protected $modelName = 'Network';
 
     /** @var string */
@@ -45,6 +50,10 @@ class ConnectController extends EntityControllerAbstract
         $oneTimeToken = $this->session->createOneTimeToken();
         $redirectUri = $this->redirectUri . $networkSlug . '?t=' . $oneTimeToken;
 
-        return $network->getAuthUrl($this->session->getUserId(), $redirectUri);
+        try {
+            return $network->getAuthUrl($this->session->getUserId(), $redirectUri);
+        } catch (ApiException $e) {
+            $this->log('error', $e->getMessage());
+        }
     }
 }

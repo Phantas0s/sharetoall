@@ -5,6 +5,7 @@ namespace App\Controller\Rest;
 
 use App\Traits\LoggerTrait;
 
+use App\Exception\ApiException;
 use App\Exception\Exception;
 use App\Exception\NotFoundException;
 use App\Form\FormFactory;
@@ -49,28 +50,26 @@ class MessageController extends EntityControllerAbstract
         $message = $request->get('message');
 
         $networkSlugs = $request->get('networkSlugs');
-
         $networks = $this->networkModel->findByNetworkUser($this->session->getUserId());
         $networks = $this->sortNetworks($networks->getAllResults());
 
         $results = [];
         foreach ($networkSlugs as $networkSlug) {
+            $networkApi = $this->networkFactory->create($networkSlug);
+
+            if (!isset($networks[$networkSlug]) || empty($networks[$networkSlug])) {
+                throw new NotFoundException('Impossible to find connect to the API');
+            }
+
+            $token = new Token(
+                $networks[$networkSlug]['key'],
+                $networks[$networkSlug]['secret']
+            );
+
             try {
-                $networkApi = $this->networkFactory->create($networkSlug);
-
-                if (!isset($networks[$networkSlug]) || empty($networks[$networkSlug])) {
-                    throw new NotFoundException('Impossible to find connect to the API');
-                }
-
-                $token = new Token(
-                    $networks[$networkSlug]['key'],
-                    $networks[$networkSlug]['secret']
-                );
-
                 $results[] = $networkApi->postUpdate($message, $token);
-            } catch (\Exception $e) {
+            } catch (ApiException $e) {
                 $this->log('error', $e->getMessage());
-                return $e->getMessage();
                 continue;
             }
         }

@@ -9,8 +9,10 @@ use App\Service\Api\OAuth1\Consumer;
 use App\Service\Api\OAuth1\QueryBuilder;
 use App\Service\Api\OAuth1\Token;
 
+use App\Exception\ApiException;
+use App\Exception\ApiMessageException;
+use App\Exception\ApiStatusCodeException;
 use Psr\SimpleCache\CacheInterface;
-use App\Exception\ApiWrongStatusCodeException;
 
 class TwitterApi implements NetworkInterface
 {
@@ -87,10 +89,14 @@ class TwitterApi implements NetworkInterface
             'Authorization' =>  $this->auth->buildOauthHeaders($url, 'POST', $token, $parameters)
         ];
 
-        $response = $this->client->post($url, $headers, $parameters);
+        try {
+            $response = $this->client->post($url, $headers, $parameters);
+        } catch (\Exception $e) {
+            throw new ApiMessageException($e->getMessage());
+        }
 
         if ($response->getStatusCode() != 200) {
-            throw new ApiWrongStatusCodeException(
+            throw new ApiStatusCodeException(
                 sprintf(
                     'Wrong status code: %d with body %s',
                     $response->getStatusCode(),

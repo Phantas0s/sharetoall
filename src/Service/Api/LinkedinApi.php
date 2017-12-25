@@ -8,7 +8,9 @@ use App\Service\Api\OAuth1\Consumer;
 use App\Service\Api\OAuth1\QueryBuilder;
 use App\Service\Api\OAuth2\Auth;
 
-use App\Exception\ApiWrongStatusCodeException;
+use App\Exception\ApiException;
+use App\Exception\ApiMessageException;
+use App\Exception\ApiStatusCodeException;
 use App\Service\Api\OAuth1\Token;
 use Psr\SimpleCache\CacheInterface;
 
@@ -88,10 +90,14 @@ class LinkedinApi implements NetworkInterface
             'Authorization' => 'Bearer ' . $token->getKey(),
         ];
 
-        $response = $this->client->post($url, $headers, $parameters, 'json');
+        try {
+            $response = $this->client->post($url, $headers, $parameters, 'json');
+        } catch (\Exception $e) {
+            throw new ApiMessageException($e->getMessage());
+        }
 
         if ($response->getStatusCode() != 200) {
-            throw new ApiWrongStatusCodeException(
+            throw new ApiStatusCodeException(
                 sprintf(
                     'Wrong status code: %d with body %s',
                     $response->getStatusCode(),
