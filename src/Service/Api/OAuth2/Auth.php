@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service\Api\OAuth2;
 
+use App\Exception\ApiConnectException;
 use App\Exception\Exception;
 use App\Exception\NotFoundException;
 use App\Exception\OAuthException;
