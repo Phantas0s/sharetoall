@@ -7,7 +7,7 @@ use App\Traits\LoggerTrait;
 
 use App\Controller\Web\EntityControllerAbstract;
 use App\Exception\ApiException;
-use App\Exception\NetworkErrorException;
+use App\Exception\NetworkLogLevel::ERRORException;
 use App\Exception\NotFoundException;
 use App\Model\ModelFactory;
 use App\Model\Network;
@@ -15,6 +15,7 @@ use App\Service\Api\LinkedinApi;
 use App\Service\Api\NetworkFactoryInterface;
 use App\Service\Api\TwitterApi;
 use App\Service\Session;
+use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -90,10 +91,10 @@ class RedirectController extends EntityControllerAbstract
         $state = $request->get('state');
         $code = $request->get('code');
 
-        // @todo see https://developer.linkedin.com/docs/oauth2 to manage better the error
-        $networkError = $request->get('error');
-        if ($networkError) {
-            throw new NetworkErrorException($networkError);
+        // @todo see https://developer.linkedin.com/docs/oauth2 to manage better the LogLevel::ERROR
+        $networkLogLevel::ERROR = $request->get('LogLevel::ERROR');
+        if ($networkLogLevel::ERROR) {
+            throw new NetworkLogLevel::ERRORException($networkLogLevel::ERROR);
         }
 
         $cachedTokenUid = $this->session->getUserId();
@@ -108,7 +109,7 @@ class RedirectController extends EntityControllerAbstract
         try {
             $token = $this->linkedinApi->getLongTimeToken($code, $cachedTokenUid, $redirectUri);
         } catch (ApiException $e) {
-            $this->log('error', $e->getMessage());
+            $this->log(LogLevel::ERROR, $e->getMessage());
         }
 
         $this->model->saveUserNetwork([

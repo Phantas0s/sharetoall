@@ -15,6 +15,7 @@ use App\Service\Api\NetworkFactoryInterface;
 use App\Service\Api\OAuth1\Token;
 use App\Service\Session;
 use Doctrine\ActiveRecord\Search\SearchResult;
+use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 
 class MessageController extends EntityControllerAbstract
@@ -69,7 +70,7 @@ class MessageController extends EntityControllerAbstract
             try {
                 $results[] = $networkApi->postUpdate($message, $token);
             } catch (ApiException $e) {
-                $this->log('error', $e->getMessage());
+                $this->log(LogLevel::ERROR, $e->getMessage());
                 continue;
             }
         }

@@ -12,6 +12,7 @@ use App\Form\FormFactory;
 use App\Model\ModelFactory;
 use App\Service\Api\NetworkFactory;
 use App\Service\Session;
+use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 
 class ConnectController extends EntityControllerAbstract
@@ -53,7 +54,7 @@ class ConnectController extends EntityControllerAbstract
         try {
             return $network->getAuthUrl($this->session->getUserId(), $redirectUri);
         } catch (ApiException $e) {
-            $this->log('error', $e->getMessage());
+            $this->log(LogLevel::ERROR, $e->getMessage());
         }
     }
 }

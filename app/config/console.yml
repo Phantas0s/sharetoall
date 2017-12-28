@@ -20,6 +20,7 @@ services:
             - [ add, [ "@command.database.create" ] ]
             - [ add, [ "@command.database.drop" ] ]
             - [ add, [ "@command.database.insert-fixtures" ]]
+            - [ add, [ "@command.test.logging" ]]
 
     command.user.reset-password:
         class: App\Command\UserResetPasswordCommand
@@ -44,6 +45,12 @@ services:
     command.database.insert-fixtures:
         class: App\Command\DatabaseInsertFixturesCommand
         arguments: [ "database:insert-fixtures", "@db", "%app.path%/db/fixtures" ]
+
+    command.test.logging:
+        class: App\Command\TestLoggingCommand
+        arguments: [ 'test:logging']
+        calls:
+            - [ setLogger, ["@log"]]
 
     console.helper.db:
         class: Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper
@@ -72,3 +79,4 @@ services:
 
     doctrine.migrations.version:
         class: Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand
+

@@ -24,7 +24,7 @@ trait LoggerTrait
         return !empty($this->logger);
     }
 
-    protected function log(string $level, string $message, $params = [], array $context = [])
+    protected function log(string $level, string $message, array $context = [], array $params = [])
     {
         if ($this->hasLogger()) {
             $finalMessage = '[' . get_class($this) . '] ';
