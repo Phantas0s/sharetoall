@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Tests\Service\Api;
-
 use App\Service\Api\Client\ClientInterface;
 use App\Service\Api\NetworkInterface;
 use App\Service\Api\OAuth1\Auth;

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service\Api\OAuth2;
 
+use App\Exception\ApiConnectException;
 use App\Exception\Exception;
 use App\Exception\NotFoundException;
 use App\Exception\OAuthException;
@@ -105,7 +106,7 @@ class Auth
         try {
             $response = $this->client->post($url, $headers, $parameters);
         } catch (\Exception $e) {
-            $this->handleOauthException($e);
+            throw new ApiConnectException('Impossible to request long time token: '.$e->getMessage());
         }
 
         $response = $response->getBodyAsArray();
@@ -141,13 +142,5 @@ class Auth
     private function generateNonce(): string
     {
         return md5(microtime().mt_rand());
-    }
-
-    /**
-     * @todo \Exception $e log the error
-     */
-    private function handleOauthException(\Exception $e)
-    {
-        throw $e;
     }
 }

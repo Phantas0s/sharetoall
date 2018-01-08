@@ -2,11 +2,13 @@
 
 namespace App\Tests\Service\Api\OAuth2;
 
+use App\Exception\ApiException;
 use App\Exception\NotFoundException;
 use App\Exception\OAuthException;
 use App\Service\Api\OAuth1\Consumer;
 use App\Service\Api\OAuth2\Auth;
 use App\Tests\Service\Api\Client\FakeClient;
+use App\Tests\Service\Api\Client\FakeClientException;
 use TestTools\TestCase\UnitTestCase;
 
 class AuthTest extends UnitTestCase
@@ -57,6 +59,28 @@ class AuthTest extends UnitTestCase
         $this->oAuth->verifyCallbackToken('wrongToken', 999999999);
     }
 
+    public function testGetLongTimeToken()
+    {
+        $token = $this->generateLongTimeToken();
+
+        $this->assertEquals('dummyAccessToken', $token->getKey());
+        $this->assertEquals(60, $token->getTtl());
+    }
+
+    public function testGetLongTimeTokenWithException()
+    {
+        $responseBody = [
+            'access_token' => 'dummyAccessToken',
+            'expires_in' => 60,
+        ];
+
+        $this->oAuth = new Auth($this->cache, new FakeClientException($responseBody, 'json'), $this->consumer, 'dummyApi');
+
+        $this->expectException(ApiException::class);
+        $this->oAuth->getLongTimeToken('http://dummyUrl', 'dummyToken', $this->uid, 'http://dummyredirect');
+    }
+
+
     public function testGetCachedLongTimeToken()
     {
         $this->generateLongTimeToken();
@@ -79,6 +103,6 @@ class AuthTest extends UnitTestCase
         ];
 
         $this->oAuth = new Auth($this->cache, new FakeClient($responseBody, 'json'), $this->consumer, 'dummyApi');
-        $this->oAuth->getLongTimeToken('http://dummyUrl', 'dummyToken', $this->uid, 'http://dummyredirect');
+        return $this->oAuth->getLongTimeToken('http://dummyUrl', 'dummyToken', $this->uid, 'http://dummyredirect');
     }
 }

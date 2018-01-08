@@ -19,6 +19,8 @@ services:
             - "@form.factory"
             - "@service.network-factory"
             - "%app.redirect_uri%"
+        calls:
+            - [ setLogger, ["@log"]]
 
     controller.rest.message:
         class: App\Controller\Rest\MessageController

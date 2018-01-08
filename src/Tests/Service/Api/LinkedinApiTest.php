@@ -102,7 +102,6 @@ class LinkedinApiTest extends UnitTestCase
         $this->assertEquals('200', $response->getStatusCode());
     }
 
-
     private function getLinkedinApi(array $fakeClientResponse): LinkedinApi
     {
         return new LinkedinApi(

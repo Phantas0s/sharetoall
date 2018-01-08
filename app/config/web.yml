@@ -53,3 +53,7 @@ services:
             - "@model.factory"
             - "%app.redirect_uri%"
             - "@service.network-factory"
+        calls:
+            - [ setLogger, ["@log"]]
+
+
