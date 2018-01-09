@@ -7,7 +7,7 @@ use App\Traits\LoggerTrait;
 
 use App\Controller\Web\EntityControllerAbstract;
 use App\Exception\ApiException;
-use App\Exception\NetworkLogLevel::ERRORException;
+use App\Exception\NetworkErrorException;
 use App\Exception\NotFoundException;
 use App\Model\ModelFactory;
 use App\Model\Network;
@@ -92,9 +92,9 @@ class RedirectController extends EntityControllerAbstract
         $code = $request->get('code');
 
         // @todo see https://developer.linkedin.com/docs/oauth2 to manage better the LogLevel::ERROR
-        $networkLogLevel::ERROR = $request->get('LogLevel::ERROR');
-        if ($networkLogLevel::ERROR) {
-            throw new NetworkLogLevel::ERRORException($networkLogLevel::ERROR);
+        $networkError = $request->get('error');
+        if ($networkError) {
+            throw new NetworkErrorException($networkError);
         }
 
         $cachedTokenUid = $this->session->getUserId();

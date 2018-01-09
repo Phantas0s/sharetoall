@@ -1,3 +1,4 @@
+
 <template>
     <v-app light>
         <v-layout app>
@@ -67,12 +68,18 @@
 
                             multi-line
                         ></v-text-field>
-                        <v-btn @click.native="sendMessage">
+                        <v-btn
+                            id="share"
+                            @click.native="sendMessage"
+                            :loading="messageLoading"
+                            :disabled="messageLoading"
+                        >
+                            <span slot="loader">Sharing...</span>
+
                             Share
                             <v-icon right>send</v-icon>
                         </v-btn>
                     </v-form>
-
                 </v-card>
             </v-card>
             </v-flex>
@@ -95,7 +102,8 @@ export default {
             'networks': '',
             'userId': this.$session.getUser().userId,
             'username': this.$session.getFullName(),
-            'selectClass' :'primary'
+            'selectClass' :'primary',
+            'messageLoading': false,
         };
     },
     methods: {
@@ -136,6 +144,7 @@ export default {
         },
         sendMessage(event) {
             event.preventDefault();
+            this.messageLoading = true;
 
             const networks = document.getElementById('networks');
             const connectedNetworks = networks.querySelectorAll('.selected');
@@ -144,9 +153,11 @@ export default {
             const networkSlugs = Array.from(connectedNetworks, network => network.dataset.slug);
 
             this.$api.post(`message`, {networkSlugs: networkSlugs, message: message}).then(response => {
+                this.messageLoading = false;
                 this.$alert.success('The message have been sent!');
             }, error => {
-                this.$alert.error('Error: ' + error);
+                this.messageLoading = false;
+                this.$alert.error('There was a problem sending your message.');
             });
         },
     }
@@ -190,5 +201,4 @@ main {
     margin: 0;
     margin-top: 10px;
 }
-
 </style>
