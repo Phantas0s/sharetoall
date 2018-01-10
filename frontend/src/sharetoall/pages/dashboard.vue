@@ -30,9 +30,15 @@
                                 <v-list-tile-avatar>
                                     <v-btn fab small
                                         :data-slug="network.networkSlug"
-                                        :class="[ isNetworkRegistered(network) ? selectClass + ' selected' : '' ]">
+                                        :class="[ isNetworkRegistered(network) ? selectClass + ' selected' : '' ]"
+                                        :loading="getLoading(network.networkSlug)"
+                                    >
                                         <i :class="getSocialIcon(network.networkSlug)"></i>
-                                    </v-btn> </v-list-tile-avatar>
+                                        <span slot="loader" class="network-loader">
+                                            <v-icon light>cached</v-icon>
+                                        </span>
+                                    </v-btn>
+                                </v-list-tile-avatar>
                                 <v-list-tile-content>
                                     <v-list-tile-title>
                                         {{network.networkSlug}}
@@ -74,10 +80,9 @@
                             :loading="messageLoading"
                             :disabled="messageLoading"
                         >
-                            <span slot="loader">Sharing...</span>
-
                             Share
                             <v-icon right>send</v-icon>
+                            <span slot="loader">Sharing...</span>
                         </v-btn>
                     </v-form>
                 </v-card>
@@ -104,6 +109,9 @@ export default {
             'username': this.$session.getFullName(),
             'selectClass' :'primary',
             'messageLoading': false,
+            'networkLoading': false,
+            'twitterLoading': false,
+            'linkedinLoading': false
         };
     },
     methods: {
@@ -115,6 +123,9 @@ export default {
         },
         getSocialIcon(slug){
             return "pe-so-" + slug;
+        },
+        getLoading(slug){
+            return this[slug + 'Loading'];
         },
         logout() {
             this.$session.logout();
@@ -133,10 +144,13 @@ export default {
 
             if(!listItem.classList.contains('connected') && button.classList.contains(this.selectClass)) {
                 const networkSlug = button.dataset.slug;
+                this[networkSlug + 'Loading'] = true;
 
                 this.$api.get(`connect/${networkSlug}`).then(response => {
+                    this[networkSlug + 'Loading'] = true;
                     window.location = response.data;
                 }, error => {
+                    this.networkLoading = false;
                     button.classList.toggle(this.selectClass);
                     button.classList.toggle('selected');
                 });
@@ -154,7 +168,7 @@ export default {
 
             this.$api.post(`message`, {networkSlugs: networkSlugs, message: message}).then(response => {
                 this.messageLoading = false;
-                this.$alert.success('The message have been sent!');
+                this.$alert.success('Your message have been shared!');
             }, error => {
                 this.messageLoading = false;
                 this.$alert.error('There was a problem sending your message.');
@@ -200,5 +214,45 @@ h1 a {
 main {
     margin: 0;
     margin-top: 10px;
+}
+
+.network-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
