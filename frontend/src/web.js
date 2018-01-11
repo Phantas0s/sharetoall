@@ -25,4 +25,10 @@ Vue.use(Vuetify,{
 /* eslint-disable no-unused-vars */
 const app = new Vue({
     el: '#app',
+    data: {
+        session_token: '',
+    },
+    created() {
+        this.session_token = this.$session.getToken();
+    },
 });
