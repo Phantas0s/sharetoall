@@ -19,13 +19,12 @@ class Version20170605091300 extends AbstractMigration
         $this->addSql("
             CREATE TABLE `User` (
             `userId` INT NOT NULL AUTO_INCREMENT,
-            `userFirstname` VARCHAR(100) NULL,
-            `userLastname` VARCHAR(100) NULL,
             `userEmail` VARCHAR(100) NULL,
             `userPassword` VARCHAR(100) NULL,
             `userVerifEmailToken` VARCHAR(255) NULL,
             `userVerified` DATETIME NULL,
             `userResetPasswordToken` VARCHAR(255) NULL,
+            `userNewsletter` TINYINT(1) NULL,
             `created` DATETIME NULL,
             `updated` DATETIME NULL,
             `deleted` DATETIME NULL,

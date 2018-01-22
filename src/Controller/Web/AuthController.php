@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controller\Web;
 
@@ -47,7 +46,7 @@ class AuthController
             $result['error'] = $e->getMessage();
         }
 
-        return $result;
+        return '/';
     }
 
     public function resetAction()
@@ -106,9 +105,34 @@ class AuthController
         return array('token' => $token, 'error' => $error);
     }
 
-    public function logoutAction()
+    public function logoutAction(): string
     {
         $this->session->logout();
         return '/';
+    }
+
+    public function confirmEmailAction($token): array
+    {
+        try {
+            $user = $this->user->findByVerificationToken($token);
+        } catch (\Exception $e) {
+            return '/';
+        }
+
+        if ($this->session->hasToken()) {
+            $this->session->invalidate();
+        }
+
+        $user->deleteVerificationToken()->verifyEmail();
+        $this->session->generateToken()->setUserId($user->getId());
+
+        $result = [
+            'realm' => 'confirm',
+            'page_name' => 'Email confirmation',
+            'token' => $this->session->getToken(),
+            'user' => json_encode($user->getValues()),
+        ];
+
+        return $result;
     }
 }

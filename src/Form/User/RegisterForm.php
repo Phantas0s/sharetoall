@@ -16,35 +16,12 @@ class RegisterForm extends FormAbstract
     protected function init(array $params = array())
     {
         $definition = [
-            'userFirstname' => [
-                'caption' => $this->_('First Name'),
-                'type' => 'string',
-                'min' => 2,
-                'max' => 64,
-                'required' => true,
-                'tags' => ['user']
-            ],
-            'userLastname' => [
-                'caption' => $this->_('Last Name'),
-                'type' => 'string',
-                'min' => 2,
-                'max' => 64,
-                'required' => true,
-                'tags' => ['user']
-            ],
             'userEmail' => [
                 'caption' => $this->_('Email Address'),
                 'type' => 'email',
                 'max' => 127,
                 'required' => true,
                 'tags' => ['user']
-            ],
-            'userEmailConfirm' => [
-                'caption' => $this->_('Confirm Email'),
-                'type' => 'email',
-                'matches' => 'userEmail',
-                'max' => 127,
-                'required' => true,
             ],
             'userPassword' => [
                 'type' => 'string',
@@ -54,29 +31,13 @@ class RegisterForm extends FormAbstract
                 'max' => 100,
                 'tags' => ['user']
             ],
-            'licensorName' => [
+            'userPasswordConfirm' => [
                 'type' => 'string',
-                'caption' => $this->_('Company Name'),
+                'caption' => $this->_('Password confirm'),
                 'required' => true,
-                'min' => 2,
+                'matches' => 'userPassword',
+                'min' => 6,
                 'max' => 100,
-                'tags' => ['licensor']
-            ],
-            'licensorSlug' => [
-                'type' => 'string',
-                'caption' => $this->_('Sub-Domain Name'),
-                'required' => true,
-                'regex' => '/^[a-z]*$/',
-                'min' => 2,
-                'max' => 32,
-                'tags' => ['licensor']
-            ],
-            'userTermsAccepted' => [
-                'type' => 'bool',
-                'caption' => $this->_('Terms Accepted'),
-                'required' => true,
-                'optional' => true,
-                'tags' => ['user']
             ],
             'userNewsletter' => [
                 'type' => 'bool',
@@ -127,7 +88,7 @@ class RegisterForm extends FormAbstract
 
     public function getVerificationToken()
     {
-        if(!$this->_verificationToken) {
+        if (!$this->_verificationToken) {
             $this->setVerificationToken(bin2hex(random_bytes(16)));
         }
 

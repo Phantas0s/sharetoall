@@ -18,18 +18,10 @@ class RegisterFormTest extends UnitTestCase
 
     public function testValidForm()
     {
-        $this->markTestSkipped(
-            'User Form not implemented'
-        );
         $inputValues = array(
-            'userFirstname' => 'Jens',
-            'userLastname' => 'Mander',
             'userEmail' => 'test@example.com',
-            'userEmailConfirm' => 'test@example.com',
             'userPassword' => 'es58bhst89e5',
-            'licensorName' => 'Foo Bar GmbH',
-            'licensorSlug' => 'foobar',
-            'userTermsAccepted' => 1,
+            'userPasswordConfirm' => 'es58bhst89e5',
             'userNewsletter' => 0
         );
 
@@ -43,19 +35,11 @@ class RegisterFormTest extends UnitTestCase
 
     public function testInvalidForm()
     {
-        $this->markTestSkipped(
-            'User Form not implemented'
-        );
         $inputValues = array(
-            'userFirstname' => '',
-            'userLastname' => '',
-            'userEmail' => 'testexample.com',
-            'userEmailConfirm' => 'test@example.com',
-            'userPassword' => '2423',
-            'licensorName' => '',
-            'licensorSlug' => 'foo bar!',
-            'userTermsAccepted' => 0,
-            'userNewsletter' => array()
+            'userEmail' => '',
+            'userPassword' => '',
+            'userPasswordConfirm' => '',
+            'userNewsletter' => ''
         );
 
         $this->form->setDefinedWritableValues($inputValues);
@@ -64,6 +48,6 @@ class RegisterFormTest extends UnitTestCase
 
         $this->assertTrue($this->form->hasErrors());
 
-        $this->assertCount(8, $this->form->getErrors());
+        $this->assertCount(3, $this->form->getErrors());
     }
 }

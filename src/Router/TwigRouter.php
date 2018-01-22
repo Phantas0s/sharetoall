@@ -131,8 +131,6 @@ class TwigRouter extends Router
         $this->twig->addGlobal('ajax_request', $isXmlHttpRequest);
         $this->twig->addGlobal('user_id', $session->hasUserId() ? $session->getUserId() : '');
         $this->twig->addGlobal('session_token', $session->hasToken() ? $session->getToken() : '');
-        $this->twig->addGlobal('firstname', $this->session->getUserFirstName());
-        $this->twig->addGlobal('lastname', $this->session->getUserLastName());
         $this->twig->addGlobal('is_anonymous', $this->session->isAnonymous());
     }
 

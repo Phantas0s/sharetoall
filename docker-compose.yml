@@ -1,9 +1,9 @@
 version: '3'
 
-# networks:
-#     default:
-#         external:
-#             name: hyproxy
+networks:
+    default:
+        external:
+            name: hypnos-proxy
 
 services:
     web:
@@ -46,7 +46,7 @@ services:
     mailhog:
         image: mailhog/mailhog
         ports:
-            - 8030:8030
+            - 8031:8025
 
     # webdriver:
     #     image: selenium/standalone-chrome

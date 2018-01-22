@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use App\Exception\FormInvalidException;
 use App\Exception\InvalidArgumentException;
 use App\Exception\NotFoundException;
 use App\Form\User\RegisterForm;
@@ -110,6 +111,15 @@ class User extends ModelAbstract
     public function passwordIsValid($password)
     {
         return password_verify($password, $this->userPassword);
+    }
+
+    public function passwordIsConfirmed($password, $confirmPassword)
+    {
+        if($password !== $confirmPassword) {
+            return false;
+        }
+
+        return true;
     }
 
     public function emailVerified()

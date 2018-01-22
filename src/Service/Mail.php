@@ -82,17 +82,14 @@ class Mail
         return $this->mailer->send($message);
     }
 
-    public function confirmEmail(User $user, Licensor $licensor, string $host)
+    public function confirmEmail(User $user)
     {
-        $token = $user->userVerificationToken;
+        $token = $user->userVerifEmailToken;
 
-        $values = array(
-            'firstname' => $user->userFirstname,
-            'lastname' => $user->userLastname,
+        $values = [
             'email' => $user->userEmail,
             'token' => $token,
-            'host' => $host
-        );
+        ];
 
         $message = $this->createNewMessage(
             'Welcome',

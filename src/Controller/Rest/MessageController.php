@@ -51,7 +51,7 @@ class MessageController extends EntityControllerAbstract
         $message = $request->get('message');
 
         $networkSlugs = $request->get('networkSlugs');
-        $networks = $this->networkModel->findByNetworkUser($this->session->getUserId());
+        $networks = $this->networkModel->findAllNetworkByUserId($this->session->getUserId());
         $networks = $this->sortNetworks($networks->getAllResults());
 
         $results = [];

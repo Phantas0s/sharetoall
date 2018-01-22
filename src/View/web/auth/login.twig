@@ -3,7 +3,7 @@
 <div id="login">
     <v-app light>
         <v-layout app>
-            <v-flex xs12 sm4 offset-sm4>
+            <v-flex xs12 sm4 offset-sm43>
                 <v-card class="pa-5">
                     <h1 class="form-title">Sharetoall</h1>
                     {% if user_id %}
@@ -39,10 +39,10 @@
                                  id="password"
                                  :append-icon="passwordVisible ? 'visibility' : 'visibility_off'"
                                  :append-icon-cb="() => (passwordVisible = !passwordVisible)"
-                                 :type="passwordVisible ? 'text' : 'password'"
+                                 :type="passwordVisible ? 'password' : 'text'"
                                  v-model="password"
                             >
-                            </v-text-field>
+                                </v-text-field>
 
                              <v-btn @click="login">Sign In</v-btn>
                         </form>

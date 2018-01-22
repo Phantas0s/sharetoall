@@ -25,6 +25,12 @@ class LinkedinApi implements NetworkInterface
     /** @var CacheInterface */
     private $cache;
 
+    /** @var array */
+    private $acceptedStatusCode = [
+        200,
+        201,
+    ];
+
     const API_HOST = 'https://www.linkedin.com';
     const API_AUTH_HOST = 'https://www.linkedin.com/oauth';
 
@@ -45,6 +51,7 @@ class LinkedinApi implements NetworkInterface
         string $consumerSecret
     ) {
         $consumer = new Consumer($consumerKey, $consumerSecret);
+
         $this->client = $client;
         $this->auth = new Auth($cache, $client, $consumer, 'linkedin');
     }
@@ -96,7 +103,7 @@ class LinkedinApi implements NetworkInterface
             throw new ApiMessageException($e->getMessage());
         }
 
-        if ($response->getStatusCode() != 200) {
+        if (!in_array($response->getStatusCode(), $this->acceptedStatusCode)) {
             throw new ApiStatusCodeException(
                 sprintf(
                     'Wrong status code: %d with body %s',

@@ -32,3 +32,10 @@ services:
         calls:
             - [ setLogger, ["@log"]]
 
+    controller.rest.register:
+        class: App\Controller\Rest\RegisterController
+        arguments:
+            - "@service.session"
+            - "@model.factory"
+            - "@form.factory"
+            - "@service.mail"

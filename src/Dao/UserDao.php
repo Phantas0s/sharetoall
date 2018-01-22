@@ -14,12 +14,11 @@ class UserDao extends DaoAbstract
 
     protected $_formatMap = [
         'userId' => Format::INT,
-        'userRoles' => Format::CSV
     ];
 
     protected $_hiddenFields = [
         'userPassword',
-        'userVerificationToken',
+        'userVerifEmailToken',
         'userVerified',
         'userPasswordToken',
     ];

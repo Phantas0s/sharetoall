@@ -9,7 +9,8 @@
         {% if(user_id) %}
             <v-btn href="/sharetoall">Dashboard</v-btn>
         {% else %}
-            <v-btn href="/auth/login">Login</v-btn>
+            <v-btn @click.native="loginModal = true">Login</v-btn>
+            <v-btn @click.native="registerModal = true">Register</v-btn>
         {% endif %}
         </v-toolbar>
         <v-content>
@@ -188,6 +189,98 @@
             </v-layout>
             </v-footer>
         </v-content>
+
+        <v-dialog v-model="loginModal" max-width="500px">
+            <v-card class="pa-5">
+                <h1 class="form-title">Login</h1>
+                <div class="form-wrapper form-500">
+                    <form class="form-signin" id="login" method="post" name="login_form" action="/auth/login" ref="loginForm" @keyup.enter="login">
+                        <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="login_session_token" />
+                        <v-text-field
+                            label="Your email"
+                            name="loginEmail"
+                            id="loginEmail"
+                            value=""
+                            class="text-input"
+                            v-model="loginEmail"
+                            required
+                        >
+                        </v-text-field>
+                        <v-text-field
+                            label="Your password"
+                            name="loginPass"
+                            id="loginPass"
+                            :append-icon="loginPassVisible ? 'visibility' : 'visibility_off'"
+                            :append-icon-cb="() => (loginPassVisible = !loginPassVisible)"
+                            :type="loginPassVisible ? 'text' : 'password'"
+                            v-model="loginPass"
+                        required
+                        >
+                        </v-text-field>
+
+                        <v-btn @click="login">Sign In</v-btn>
+                        <a href="/auth/reset" title="forgot password">I forgot my password</a>
+                    </form>
+                </div>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="registerModal" max-width="700px">
+
+            <v-card class="pa-5">
+                <h2 class="form-title">Register</h2>
+                <div>Your data are safe here. Nothing will be shared.</div>
+                <div class="form-wrapper form-500">
+                    <form class="form-register" id="registerForm" method="post" name="register_form" action="/auth/register" ref="registerForm" @keyup.enter="register">
+                        <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="register_session_token" />
+                        <v-text-field
+                            label="Your email"
+                            name="userEmail"
+                            id="userEmail"
+                            value=""
+                            class="text-input"
+                            v-model="userEmail"
+                            required
+                        >
+                        </v-text-field>
+                        <v-text-field
+                            label="Your password"
+                            name="userPassword"
+                            id="userPassword"
+                            :append-icon="userPasswordVisible ? 'visibility' : 'visibility_off'"
+                            :append-icon-cb="() => (userPasswordVisible = !userPasswordVisible)"
+                            :type="userPasswordVisible ? 'text' : 'password'"
+                            v-model="userPassword"
+                            required
+                        >
+                        </v-text-field>
+                        <v-text-field
+                            label="Confirm your password"
+                            name="userPasswordConfirm"
+                            id="userPasswordConfirm"
+                            :append-icon="userPasswordConfirm ? 'visibility' : 'visibility_off'"
+                            :append-icon-cb="() => (userPasswordConfirmVisible = !userPasswordConfirmVisible)"
+                            :type="userPasswordConfirmVisible ? 'text' : 'password'"
+                            v-model="userPasswordConfirm"
+                            required
+                        >
+                        </v-text-field>
+                        <v-checkbox
+                            v-model="userNewsletter"
+                            label="I want the nice newsletter (without spam)!"
+                            name="userNewsletter"
+                            type="checkbox"
+                        ></v-checkbox>
+                            <v-btn @click="register">register</v-btn>
+                    </form>
+                </div>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="confirmModal" max-width="400px">
+            <v-card class="pa-5">
+                <p>To complete your subscription please confirm your email address by clicking on the link in the email we just send you.</p>
+            </v-card>
+        </v-dialog>
     </v-app>
 </div>
 {% endblock %}

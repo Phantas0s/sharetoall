@@ -26,9 +26,62 @@ Vue.use(Vuetify,{
 const app = new Vue({
     el: '#app',
     data: {
+        loginModal: false,
+        registerModal: false,
+        confirmModal: false,
+
+        loginEmail: '',
+        loginPass: '',
+
+        userEmail: '',
+        userPassword: '',
+        userPasswordConfirm: '',
+        userNewsletter: false,
+
         session_token: '',
+
+        loginPassVisible: false,
+        userPasswordVisible: false,
+        userPasswordConfirmVisible: false,
+
     },
     created() {
+        this.email = this.$session.getEmail();
         this.session_token = this.$session.getToken();
+    },
+    methods: {
+        logout: function (e) {
+            this.$session.deleteToken();
+            this.$refs.form.submit();
+        },
+
+        login: function (e) {
+            e.preventDefault();
+
+            Api.post('session', {loginEmail: this.loginEmail, loginPass: this.loginPass}).then(response => {
+                this.$refs.login_session_token.value = response.data.token;
+
+                this.$session.setToken(response.data.token);
+                this.$session.setUser(response.data.user);
+
+                this.$refs.loginForm.submit();
+            }, error => {});
+        },
+
+        register: function(e) {
+            e.preventDefault();
+
+            let form = {
+                userEmail: this.userEmail,
+                userPassword: this.userPassword,
+                userPasswordConfirm: this.userPasswordConfirm,
+                userNewsletter: this.userNewsletter,
+            };
+
+            Api.post('register', {form: form}).then(response => {
+                this.registerModal = false;
+                this.confirmModal = true;
+            }, error => {});
+        },
     },
 });

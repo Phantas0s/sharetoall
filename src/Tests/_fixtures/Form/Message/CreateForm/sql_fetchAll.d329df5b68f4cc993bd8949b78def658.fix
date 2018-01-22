@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:1:{i:0;a:11:{s:6:"userId";s:1:"1";s:13:"userFirstname";s:9:"Firstname";s:12:"userLastname";s:8:"Lastname";s:9:"userEmail";s:19:"user@sharetoall.com";s:12:"userPassword";s:60:"$2y$10$lQtIrnC2WGvOdz5crEt3L.WRjg3iHh.HsM8dEToXodfP6gF5kI8Vu";s:19:"userVerifEmailToken";N;s:12:"userVerified";s:19:"2012-12-12 00:00:00";s:22:"userResetPasswordToken";N;s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}}s:4:"args";a:1:{i:0;s:4879:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:1:{i:0;a:10:{s:6:"userId";s:1:"1";s:9:"userEmail";s:19:"user@sharetoall.com";s:12:"userPassword";s:60:"$2y$10$lQtIrnC2WGvOdz5crEt3L.WRjg3iHh.HsM8dEToXodfP6gF5kI8Vu";s:19:"userVerifEmailToken";N;s:12:"userVerified";s:19:"2012-12-12 00:00:00";s:22:"userResetPasswordToken";N;s:14:"userNewsletter";N;s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}}s:4:"args";a:1:{i:0;s:4879:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (

@@ -13,10 +13,10 @@ class Network extends ModelAbstract
 {
     protected $_daoName = 'Network';
 
-    public function findByNetworkUser(int $userId): SearchResult
+    public function findAllNetworkByUserId(int $userId): SearchResult
     {
-        $params[] = 'un.userId = ' . $userId . ' OR un.userId IS NULL';
-        $results = $this->getDao()->searchWithNetworkUser(['cond' => $params]);
+
+        $results = $this->getDao()->searchAllNetworksByUserId($userId);
         $results['rows'] = $this->wrapAll($results->getAllResults());
 
         return $results;

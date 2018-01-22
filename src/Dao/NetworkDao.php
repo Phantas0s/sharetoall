@@ -14,6 +14,28 @@ class NetworkDao extends DaoAbstract
         'networkSlug' => Format::STRING,
     ];
 
+    public function searchAllNetworksByUserId(int $userId): SearchResult
+    {
+        $params = [
+            'table_alias' => 'n',
+            'columns' => [
+                'n.*',
+                'un.userId',
+                'un.userNetworkTokenKey',
+                'un.userNetworkTokenSecret',
+            ],
+            'left_join' => [
+                [
+                    'n',
+                    'UserNetwork', 'un',
+                    'un.networkSlug = n.networkSlug AND un.userId = ' . $userId . ' OR un.userId IS NULL'
+                ]
+            ]
+        ];
+
+        return parent::search($params);
+    }
+
     public function searchWithNetworkUser(array $params = []): SearchResult
     {
         $defaults = [

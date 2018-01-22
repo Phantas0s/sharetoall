@@ -73,15 +73,11 @@ class SessionTest extends UnitTestCase
 
         $this->assertTrue($this->session->isAnonymous());
         $this->assertFalse($this->session->isUser());
-        $this->assertEquals('', $this->session->getUserFirstname());
-        $this->assertEquals('', $this->session->getUserLastname());
 
         $this->session->login('user@sharetoall.com', 'password', null);
 
         $this->assertFalse($this->session->isAnonymous());
         $this->assertTrue($this->session->isUser());
-        $this->assertEquals('Firstname', $this->session->getUserFirstName());
-        $this->assertEquals('Lastname', $this->session->getUserLastName());
     }
 
     public function testCreateOneTimeToken()

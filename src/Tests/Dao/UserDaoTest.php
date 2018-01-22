@@ -19,8 +19,6 @@ class UserDaoTest extends UnitTestCase
     {
         $this->dao->find(1);
 
-        $this->assertInternalType('string', $this->dao->userFirstname);
-        $this->assertInternalType('string', $this->dao->userLastname);
         $this->assertInternalType('string', $this->dao->userEmail);
         $this->assertInternalType('string', $this->dao->userPassword);
     }

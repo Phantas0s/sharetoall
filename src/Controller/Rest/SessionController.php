@@ -54,8 +54,8 @@ class SessionController
             'debug' => $this->debug
         );
 
-        $email = $request->request->get('email');
-        $password = $request->request->get('password');
+        $email = $request->request->get('loginEmail');
+        $password = $request->request->get('loginPass');
 
         if ($email) {
             $this->session->login($email, $password);

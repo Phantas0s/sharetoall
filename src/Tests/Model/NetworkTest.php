@@ -27,9 +27,10 @@ class NetworkTest extends UnitTestCase
 
     public function testFindByNetworkUser()
     {
-        $results = $this->model->findByNetworkUser(1);
+        $results = $this->model->findAllNetworkByUserId(1);
 
         $this->assertInstanceOf(Network::class, $results->getFirstResult());
+        $this->assertTrue(count($results->getAllResults()) > 0);
     }
 
     public function testFindWithNetworkUser()
@@ -37,5 +38,6 @@ class NetworkTest extends UnitTestCase
         $results = $this->model->findWithNetworkUser(['un.userId' => 1]);
 
         $this->assertInstanceOf(Network::class, $results->getFirstResult());
+        $this->assertTrue(count($results->getAllResults()) > 0);
     }
 }

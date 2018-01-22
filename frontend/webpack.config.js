@@ -7,6 +7,7 @@ const PATHS = {
     web: path.join(__dirname, 'src/web.js'),
     auth: path.join(__dirname, 'src/auth.js'),
     sharetoall: path.join(__dirname, 'src/sharetoall.js'),
+    confirm: path.join(__dirname, 'src/confirm.js'),
     build: path.join(__dirname, '../web/assets/build'),
 };
 
@@ -21,6 +22,7 @@ module.exports = {
     entry: {
         web: PATHS.web,
         auth: PATHS.auth,
+        confirm: PATHS.confirm,
         sharetoall: PATHS.sharetoall,
     },
     output: {
