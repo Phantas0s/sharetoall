@@ -39,3 +39,7 @@ services:
             - "@model.factory"
             - "@form.factory"
             - "@service.mail"
+
+    controller.rest.auth:
+        class: App\Controller\Rest\AuthController
+        arguments: [ "@service.session", "@model.user", "@service.mail" ]

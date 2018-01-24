@@ -49,29 +49,6 @@ class AuthController
         return '/';
     }
 
-    public function resetAction()
-    {
-        return array('email' => '', 'error' => false, 'success' => false, 'page_name' => 'Reset Password');
-    }
-
-    public function postResetAction(Request $request)
-    {
-        $error = false;
-        $success = false;
-        $email = $request->get('email');
-
-        try {
-            $user = $this->user->findByEmail($email);
-
-            $this->mail->passwordReset($user);
-
-            $success = true;
-        } catch(InvalidArgumentException $e) {
-            $error = $e->getMessage();
-        }
-
-        return array('email' => $email, 'error' => $error, 'success' => $success);
-    }
 
     public function passwordAction($token)
     {

@@ -29,9 +29,12 @@ const app = new Vue({
         loginModal: false,
         registerModal: false,
         confirmModal: false,
+        resetModal: false,
+        confirmResetModal: false,
 
         loginEmail: '',
         loginPass: '',
+        resetPasswordEmail: '',
 
         userEmail: '',
         userPassword: '',
@@ -81,6 +84,15 @@ const app = new Vue({
             Api.post('register', {form: form}).then(response => {
                 this.registerModal = false;
                 this.confirmModal = true;
+            }, error => {});
+        },
+
+        resetPassword: function(e) {
+            e.preventDefault();
+
+            Api.post('auth', {resetPasswordEmail: this.resetPasswordEmail}).then(response => {
+                this.resetModal = false;
+                this.confirmResetModal = true;
             }, error => {});
         },
     },

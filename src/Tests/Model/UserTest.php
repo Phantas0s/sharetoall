@@ -124,6 +124,7 @@ class UserTest extends UnitTestCase
     public function testSetPasswordResetToken()
     {
         DaoAbstract::setDateTimeClassName('\TestTools\Util\FixedDateTime');
+
         /** @var User $user */
         $user = $this->model->find(2);
         $token = '123456';

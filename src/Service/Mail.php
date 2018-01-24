@@ -59,8 +59,6 @@ class Mail
         $user->setPasswordResetToken($token);
 
         $values = array(
-            'firstname' => $user->userFirstname,
-            'lastname' => $user->userLastname,
             'email' => $user->userEmail,
         );
 

@@ -198,16 +198,6 @@ class Session
         return $this->token;
     }
 
-    public function getUserFirstName(): string
-    {
-        return $this->isUser() ? $this->getUser()->userFirstname : '';
-    }
-
-    public function getUserLastName(): string
-    {
-        return $this->isUser() ? $this->getUser()->userLastname : '';
-    }
-
     public function isAnonymous(): bool
     {
         return !$this->hasUserId();
