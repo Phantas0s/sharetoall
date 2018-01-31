@@ -29,7 +29,7 @@ Api.interceptors.response.use(function (response) {
     Event.publish('alert.error', data.message ? data.message : data.error);
 
     if(data.code === 401) {
-        window.location = '/auth/login';
+        window.location = '/';
     }
 
     return Promise.reject(error);

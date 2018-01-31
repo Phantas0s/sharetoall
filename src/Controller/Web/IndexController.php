@@ -13,6 +13,10 @@ class IndexController
 
     public function indexAction(Request $request)
     {
+        if ($request->query->get("reset")) {
+            return ['realm' => 'web', 'resetToken' => $request->query->get('reset')];
+        }
+
         return ['realm' => 'web'];
     }
 }

@@ -21,8 +21,8 @@ class User extends ModelAbstract
             throw new InvalidArgumentException('Password can not be empty');
         };
 
-        if (!preg_match('/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/', $password)) {
-            throw new InvalidArgumentException('Password is not secure');
+        if (strlen($password) <= 6) {
+            throw new InvalidArgumentException('Your password need to be at least 6 characters.');
         }
 
         // @codeCoverageIgnoreStart
