@@ -1,17 +1,15 @@
 {% extends 'root.twig' %}
 
 {% block content %}
+
 <div id="app">
     <v-app light>
         <v-toolbar class="white">
         <v-toolbar-title>Sharetoall</v-toolbar-title>
         <v-spacer></v-spacer>
-        {% if(user_id) %}
-            <v-btn href="/sharetoall">Dashboard</v-btn>
-        {% else %}
-            <v-btn @click.native="loginModal = true">Login</v-btn>
-            <v-btn @click.native="registerModal = true">Register</v-btn>
-        {% endif %}
+            <v-btn v-if="connected" href="/sharetoall">Dashboard</v-btn>
+            <v-btn v-if="!connected" @click.native="loginModal = true">Login</v-btn>
+            <v-btn v-if="!connected" @click.native="registerModal = true">Register</v-btn>
         </v-toolbar>
         <v-content>
             <section>

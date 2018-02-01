@@ -52,10 +52,16 @@ const app = new Vue({
         userPasswordConfirmVisible: false,
         newPasswordVisible: false,
         newPasswordConfirmVisible: false,
+
+        connected: false,
     },
     created() {
         this.email = this.$session.getEmail();
         this.session_token = this.$session.getToken();
+
+        if(this.$session.isUser()) {
+            this.connected = true;
+        }
     },
     methods: {
         logout: function (e) {
