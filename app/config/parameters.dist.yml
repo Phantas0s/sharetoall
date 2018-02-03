@@ -1,7 +1,7 @@
 parameters:
     app.version: '1.0'
     app.domain: sharetoall.loc
-    app.url: sharetoall.loc
+    app.url: http://sharetoall.loc
     app.redirect_uri: http://sharetoall.loc/sharetoall
     app.email: root@localhost
     app.locale: en

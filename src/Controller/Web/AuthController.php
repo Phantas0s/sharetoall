@@ -23,11 +23,6 @@ class AuthController
         $this->mail = $mail;
     }
 
-    public function loginAction()
-    {
-        return array('realm' => 'auth', 'page_name' => 'Login');
-    }
-
     public function postLoginAction(Request $request)
     {
         $session_token = $request->get('session_token');
@@ -49,46 +44,7 @@ class AuthController
         return '/';
     }
 
-
-    public function passwordAction($token)
-    {
-        $this->user->findByPasswordResetToken($token);
-
-        return array('token' => $token, 'page_name' => 'Reset Password');
-    }
-
-    public function postPasswordAction($token, Request $request)
-    {
-        $error = false;
-
-        try {
-            $user = $this->user->findByPasswordResetToken($token);
-
-            $password = $request->get('password');
-            $password_confirm = $request->get('password_confirm');
-
-            if ($password == $password_confirm) {
-                $user->updatePassword($password);
-                $user->deletePasswordResetToken();
-                $this->session->logout();
-                return '/';
-            } else {
-                $error = 'Passwords do not match';
-            }
-        } catch(InvalidArgumentException $e) {
-            $error = $e->getMessage();
-        }
-
-        return array('token' => $token, 'error' => $error);
-    }
-
-    public function logoutAction(): string
-    {
-        $this->session->logout();
-        return '/';
-    }
-
-    public function confirmEmailAction($token): array
+    public function confirmEmailAction($token)
     {
         try {
             $user = $this->user->findByVerificationToken($token);
