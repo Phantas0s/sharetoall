@@ -26,11 +26,32 @@ class AuthController
         try {
             $user = $this->user->findByEmail($email);
 
-            $this->mail->passwordReset($user);
+            $this->mail->passwordReset($user, $token);
         } catch(InvalidArgumentException $e) {
             $error = $e->getMessage();
         }
 
         return $user;
+    }
+
+    public function postResetAction($resetToken, Request $request)
+    {
+        $form = $request->get('form');
+
+        try {
+            $user = $this->user->findByPasswordResetToken($resetToken);
+
+            $password = $form['newPassword'];
+            $passwordConfirm = $form['newPasswordConfirm'];
+
+            if ($password == $passwordConfirm) {
+                $user->updatePassword($password);
+                $user->deletePasswordResetToken();
+            } else {
+                $error = 'Passwords do not match';
+            }
+        } catch(InvalidArgumentException $e) {
+            $error = $e->getMessage();
+        }
     }
 }

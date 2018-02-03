@@ -31,6 +31,8 @@ const app = new Vue({
         confirmModal: false,
         resetModal: false,
         confirmResetModal: false,
+        newPasswordModal: true,
+        newPasswordConfirmModal: false,
 
         loginEmail: '',
         loginPass: '',
@@ -39,6 +41,8 @@ const app = new Vue({
         userEmail: '',
         userPassword: '',
         userPasswordConfirm: '',
+        newPassword: '',
+        newPasswordConfirm: '',
         userNewsletter: false,
 
         session_token: '',
@@ -46,11 +50,18 @@ const app = new Vue({
         loginPassVisible: false,
         userPasswordVisible: false,
         userPasswordConfirmVisible: false,
+        newPasswordVisible: false,
+        newPasswordConfirmVisible: false,
 
+        connected: false,
     },
     created() {
         this.email = this.$session.getEmail();
         this.session_token = this.$session.getToken();
+
+        if(this.$session.isUser()) {
+            this.connected = true;
+        }
     },
     methods: {
         logout: function (e) {
@@ -94,6 +105,23 @@ const app = new Vue({
                 this.resetModal = false;
                 this.confirmResetModal = true;
             }, error => {});
+        },
+
+        changePassword: function(e) {
+            e.preventDefault();
+
+            let form = {
+                newPassword: this.newPassword,
+                newPasswordConfirm: this.newPasswordConfirm,
+            };
+            let resetToken = document.getElementById('resetTokenField').value;
+
+            Api.post(`auth/${resetToken}/reset`, {form: form}).then(response => {
+                this.newPasswordModal = false;
+                this.newPasswordConfirmModal = true;
+                this.$session.deleteToken();
+            }, error => {
+            });
         },
     },
 });

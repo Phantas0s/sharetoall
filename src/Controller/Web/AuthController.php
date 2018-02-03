@@ -71,7 +71,7 @@ class AuthController
                 $user->updatePassword($password);
                 $user->deletePasswordResetToken();
                 $this->session->logout();
-                return '/auth/login';
+                return '/';
             } else {
                 $error = 'Passwords do not match';
             }

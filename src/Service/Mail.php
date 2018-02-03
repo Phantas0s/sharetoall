@@ -60,6 +60,7 @@ class Mail
 
         $values = array(
             'email' => $user->userEmail,
+            'token' => $token,
         );
 
         $message = $this->createNewMessage('Password Reset', array($user->userEmail), 'password', $values);

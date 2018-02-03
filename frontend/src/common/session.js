@@ -70,7 +70,7 @@ class Session {
 
         Api.delete('session/' + token).then(
             () => {
-                window.location = '/auth/login';
+                window.location = '/';
             }
         );
     }

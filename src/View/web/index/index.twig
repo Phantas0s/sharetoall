@@ -1,17 +1,15 @@
 {% extends 'root.twig' %}
 
 {% block content %}
+
 <div id="app">
     <v-app light>
         <v-toolbar class="white">
         <v-toolbar-title>Sharetoall</v-toolbar-title>
         <v-spacer></v-spacer>
-        {% if(user_id) %}
-            <v-btn href="/sharetoall">Dashboard</v-btn>
-        {% else %}
-            <v-btn @click.native="loginModal = true">Login</v-btn>
-            <v-btn @click.native="registerModal = true">Register</v-btn>
-        {% endif %}
+            <v-btn v-if="connected" href="/sharetoall">Dashboard</v-btn>
+            <v-btn v-if="!connected" @click.native="loginModal = true">Login</v-btn>
+            <v-btn v-if="!connected" @click.native="registerModal = true">Register</v-btn>
         </v-toolbar>
         <v-content>
             <section>
@@ -249,7 +247,6 @@
         </v-dialog>
 
         <v-dialog v-model="registerModal" max-width="700px">
-
             <v-card class="pa-5">
                 <h2 class="form-title">Register</h2>
                 <div>Your data are safe here. Nothing will be shared.</div>
@@ -304,6 +301,48 @@
                 <p>To complete your subscription please confirm your email address by clicking on the link in the email we just send you.</p>
             </v-card>
         </v-dialog>
+
+        {% if resetToken %}
+            <v-dialog v-model="newPasswordModal" max-width="700px">
+                <v-card class="pa-5">
+                    <h2 class="form-title">Change your password</h2>
+                    <div class="form-wrapper form-500">
+                        <form class="form-new-password" id="newPasswordForm" method="post" name="new_passorwd_form" action="/auth/password" ref="newPasswordForm" @keyup.enter="newPassword">
+                            <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="new_password_session_token" />
+                            <v-text-field
+                                label="Your new password"
+                                name="newPassword"
+                                id="newPassword"
+                                :append-icon="newPasswordVisible ? 'visibility' : 'visibility_off'"
+                                :append-icon-cb="() => (newPasswordVisible = !newPasswordVisible)"
+                                :type="newPasswordVisible ? 'text' : 'password'"
+                                v-model="newPassword"
+                                required
+                            >
+                            </v-text-field>
+                            <v-text-field
+                                label="Confirm your new password"
+                                name="newPasswordConfirm"
+                                id="newPasswordConfirm"
+                                :append-icon="newPasswordConfirmVisible ? 'visibility' : 'visibility_off'"
+                                :append-icon-cb="() => (newPasswordConfirmVisible = !newPasswordConfirmVisible)"
+                                :type="newPasswordConfirmVisible ? 'text' : 'password'"
+                                v-model="newPasswordConfirm"
+                                required
+                            >
+                            </v-text-field>
+                            <input type="hidden" value="{{ resetToken }}" id="resetTokenField" />
+                            <v-btn @click="changePassword">Change</v-btn>
+                        </form>
+                    </div>
+                </v-card>
+            </v-dialog>
+            <v-dialog v-model="newPasswordConfirmModal" max-width="400px">
+                <v-card class="pa-5">
+                    <p>Your password has been changed.</p>
+                </v-card>
+            </v-dialog>
+        {% endif %}
         <v-dialog v-model="confirmResetModal" max-width="400px">
             <v-card class="pa-5">
                 <p>An email have been sent to you. You can click on the link in the email in order to change your password.</p>
