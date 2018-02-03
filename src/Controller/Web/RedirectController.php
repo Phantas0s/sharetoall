@@ -19,7 +19,7 @@ use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectController extends EntityControllerAbstract
+class RedirectController
 {
     use LoggerTrait;
 

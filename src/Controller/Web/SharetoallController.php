@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Web;
 
-class SharetoallController extends EntityControllerAbstract
+use App\Exception\UnauthorizedException;
+use App\Service\Session;
+
+class SharetoallController
 {
     public function indexAction()
     {

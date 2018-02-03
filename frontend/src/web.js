@@ -64,9 +64,8 @@ const app = new Vue({
         }
     },
     methods: {
-        logout: function (e) {
-            this.$session.deleteToken();
-            this.$refs.form.submit();
+        logout() {
+            this.$session.logout();
         },
 
         login: function (e) {

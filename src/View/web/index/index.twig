@@ -8,6 +8,7 @@
         <v-toolbar-title>Sharetoall</v-toolbar-title>
         <v-spacer></v-spacer>
             <v-btn v-if="connected" href="/sharetoall">Dashboard</v-btn>
+            <v-btn v-if="connected" @click.native="logout()">Logout</v-btn>
             <v-btn v-if="!connected" @click.native="loginModal = true">Login</v-btn>
             <v-btn v-if="!connected" @click.native="registerModal = true">Register</v-btn>
         </v-toolbar>
