@@ -2,5 +2,8 @@
 
 {% block content %}
 <script>
+    window.sessionToken = "{{ token }}";
+    window.sessionUser = '{{ user|raw }}';
+    window.redirect = '{{ app_url }}/sharetoall';
 </script>
 {% endblock %}

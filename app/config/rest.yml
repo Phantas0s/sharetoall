@@ -44,6 +44,5 @@ services:
         class: App\Controller\Rest\AuthController
         arguments:
             - "@service.session"
-            - "@model.factory"
-            - "@form.factory"
+            - "@model.user"
             - "@service.mail"

@@ -65,7 +65,7 @@ class Mail
 
         $message = $this->createNewMessage('Password Reset', array($user->userEmail), 'password', $values);
 
-        @$this->mailer->send($message);
+        $this->mailer->send($message);
     }
 
     public function welcome(User $user)
