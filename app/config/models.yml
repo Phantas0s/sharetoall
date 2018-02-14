@@ -32,3 +32,9 @@ services:
         shared: false
         arguments:
             - "@model.factory"
+
+    model.newsletter:
+        class: App\Model\Newsletter
+        shared: false
+        arguments:
+            - "@model.factory"

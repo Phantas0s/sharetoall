@@ -14,24 +14,26 @@
         </v-toolbar>
         <v-content>
             <section>
-            <v-parallax src="/assets/img/background.jpg" height="600">
+                <!-- <v-parallax src="/assets/img/background.jpg" height="600"> -->
+            <v-flex class="band green">
                 <v-layout
                 column
                 align-center
                 justify-center
-                class="white--text"
+                class="white--text band"
                 >
-                <h1 class="white--text mb-2 display-1 text-xs-center">Parallax Template</h1>
-                <div class="subheading mb-3 text-xs-center">Powered by Vuetify</div>
+                <h1 class="white--text mb-2 display-1 text-xs-center">Sharing for free on social media</h1>
+                <div class="subheading mb-3 text-xs-center">A simple and straightforward way</div>
                 <v-btn
                     class="blue lighten-2 mt-5"
                     dark
                     large
+                    v-if="!connected" @click.native="registerModal = true"
                 >
-                    Get Started
+                Quick registration
                 </v-btn>
                 </v-layout>
-            </v-parallax>
+            </v-flex>
             </section>
 
             <section>
@@ -41,44 +43,24 @@
                 class="my-5"
                 align-center
             >
-                <v-flex xs12 sm4 class="my-3">
-                <div class="text-xs-center">
-                    <h2 class="headline">The best way to start developing</h2>
-                    <span class="subheading">
-                    Cras facilisis mi vitae nunc
-                    </span>
-                </div>
-                </v-flex>
                 <v-flex xs12>
                 <v-container grid-list-xl>
                     <v-layout row wrap align-center>
                     <v-flex xs12 md4>
                         <v-card class="elevation-0 transparent">
                         <v-card-text class="text-xs-center">
-                            <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
+                            <v-icon x-large class="blue--text text--lighten-2">question_answer</v-icon>
                         </v-card-text>
                         <v-card-title primary-title class="layout justify-center">
-                            <div class="headline text-xs-center">Material Design</div>
+                            <div class="headline text-xs-center">Why sharetoall?</div>
                         </v-card-title>
-                        <v-card-text>
-                            Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                            Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
-                        </v-card-text>
-                        </v-card>
-                    </v-flex>
-                    <v-flex xs12 md4>
-                        <v-card class="elevation-0 transparent">
                         <v-card-text class="text-xs-center">
-                            <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
-                        </v-card-text>
-                        <v-card-title primary-title class="layout justify-center">
-                            <div class="headline">Fast development</div>
-                        </v-card-title>
-                        <v-card-text>
-                            Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                            Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                            <p>You don't want to spend half your day on social media?<br />
+                            You don't need fancy analytics?</p>
+
+                            <p>You just want to share your ideas and knowledge?</p>
+
+                            <p>Enter sharetoall, an easy way to share on social media.</p>
                         </v-card-text>
                         </v-card>
                     </v-flex>
@@ -88,12 +70,28 @@
                             <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
                         </v-card-text>
                         <v-card-title primary-title class="layout justify-center">
-                            <div class="headline text-xs-center">Completely Open Sourced</div>
+                            <div class="headline text-xs-center">The service is free</div>
                         </v-card-title>
-                        <v-card-text>
-                            Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                            Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                        <v-card-text class="text-xs-center">
+                            <p>This website is free and will stay free.</p>
+                            <p>However I take on my free time to develop it.</p>
+                            <p>If you like this website and want it to evolve, please consider a donation.</p>
+                        </v-card-text>
+                        </v-card>
+                    </v-flex>
+                    <v-flex xs12 md4>
+                        <v-card class="elevation-0 transparent">
+                        <v-card-text class="text-xs-center">
+                            <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
+                        </v-card-text>
+                        <v-card-title primary-title class="layout justify-center">
+                            <div class="headline">Safety for all your data</div>
+                        </v-card-title>
+                        <v-card-text class="text-xs-center">
+                            <p>Your data won't be sold to anybody.
+                            <p>The content shared on social media won't be saved on this website.</p>
+
+                            <p>You decide what you share to whom.</p>
                         </v-card-text>
                         </v-card>
                     </v-flex>
@@ -104,20 +102,23 @@
             </section>
 
             <section>
-            <v-parallax src="assets/section.jpg" height="380">
-                <v-layout column align-center justify-center>
-                <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
-                <em>Kick-start your application today</em>
-                <v-btn
-                    class="blue lighten-2 mt-5"
-                    dark
-                    large
-                    href="/pre-made-themes"
-                >
-                    Get Started
-                </v-btn>
+            <v-flex class="green ">
+                <v-layout column align-center justify-center class ="band">
+                <div class="headline white--text mb-3 text-xs-center">New functionalities</div>
+                <div class="white--text text-xs-center">
+                    <p>This website is in beta.</p>
+                    <p>Only basics functionalites are provided. More will come.<br />
+                    <v-btn
+                        class="blue lighten-2 mt-5"
+                        dark
+                        large
+                        @click.native="newsletterModal = true"
+                    >
+                        What's next?
+                    </v-btn>
+                </div>
                 </v-layout>
-            </v-parallax>
+            </v-flex>
             </section>
 
             <section>
@@ -126,67 +127,23 @@
                 <v-flex xs12 sm4>
                     <v-card class="elevation-0 transparent">
                     <v-card-title primary-title class="layout justify-center">
-                        <div class="headline">Company info</div>
+                        <div class="headline">The story of Sharetoall</div>
                     </v-card-title>
                     <v-card-text>
-                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                        Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                        <p>What pushed me to create this website?</p>
+                        <v-btn
+                            class="blue lighten-2 mt-5"
+                            dark
+                            large
+                        >
+                            I want to know!
+                        </v-btn>
                     </v-card-text>
-                    </v-card>
-                </v-flex>
-                <v-flex xs12 sm4 offset-sm1>
-                    <v-card class="elevation-0 transparent">
-                    <v-card-title primary-title class="layout justify-center">
-                        <div class="headline">Contact us</div>
-                    </v-card-title>
-                    <v-card-text>
-                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                    </v-card-text>
-                    <v-list class="transparent">
-                        <v-list-tile>
-                        <v-list-tile-action>
-                            <v-icon class="blue--text text--lighten-2">phone</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>777-867-5309</v-list-tile-title>
-                        </v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                        <v-list-tile-action>
-                            <v-icon class="blue--text text--lighten-2">place</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Chicago, US</v-list-tile-title>
-                        </v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                        <v-list-tile-action>
-                            <v-icon class="blue--text text--lighten-2">email</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>john@vuetifyjs.com</v-list-tile-title>
-                        </v-list-tile-content>
-                        </v-list-tile>
-                    </v-list>
                     </v-card>
                 </v-flex>
                 </v-layout>
             </v-container>
             </section>
-
-            <v-footer class="blue darken-2">
-            <v-layout row wrap align-center>
-                <v-flex xs12>
-                <div class="white--text ml-3">
-                    Made with
-                    <v-icon class="red--text">favorite</v-icon>
-                    by <a class="white--text" href="https://vuetifyjs.com" target="_blank">Vuetify</a>
-                    and <a class="white--text" href="https://github.com/vwxyzjn">Costa Huang</a>
-                </div>
-                </v-flex>
-            </v-layout>
-            </v-footer>
         </v-content>
 
         <v-dialog v-model="loginModal" max-width="500px">
@@ -247,10 +204,35 @@
             </v-card>
         </v-dialog>
 
+        <v-dialog v-model="newsletterModal" max-width="500px">
+            <v-card class="pa-5">
+                <h1 class="form-title">Newsletter subscription</h1>
+                <p>Subscribe to know what will happen next!</p>
+                <p>No spam, I promise</p>
+                <div class="form-wrapper form-500">
+                    <form class="form-signin" id="newsletter_email" method="post" name="newsletter_email" ref="newsletter_email" @keyup.enter="newsletterEmail">
+                        <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="newsletter_session_token" />
+                        <v-text-field
+                            label="Your email"
+                            name="newsletterEmail"
+                            id="newsletterEmail"
+                            value=""
+                            class="text-input"
+                            v-model="newsletterEmail"
+                            required
+                        >
+                        </v-text-field>
+
+                        <v-btn @click="newsletter">I subscribe!</v-btn>
+                    </form>
+                </div>
+            </v-card>
+        </v-dialog>
+
         <v-dialog v-model="registerModal" max-width="700px">
             <v-card class="pa-5">
                 <h2 class="form-title">Register</h2>
-                <div>Your data are safe here. Nothing will be shared.</div>
+                <div>Your information are safe here. Nothing will be divulged.</div>
                 <div class="form-wrapper form-500">
                     <form class="form-register" id="registerForm" method="post" name="register_form" action="/auth/register" ref="registerForm" @keyup.enter="register">
                         <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="register_session_token" />
@@ -347,6 +329,11 @@
         <v-dialog v-model="confirmResetModal" max-width="400px">
             <v-card class="pa-5">
                 <p>An email have been sent to you. You can click on the link in the email in order to change your password.</p>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="confirmNewsletterModal" max-width="400px">
+            <v-card class="pa-5">
+                <p>You have subscribed successfully to the newsletter</p>
             </v-card>
         </v-dialog>
     </v-app>

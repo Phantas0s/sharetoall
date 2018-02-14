@@ -33,10 +33,13 @@ const app = new Vue({
         confirmResetModal: false,
         newPasswordModal: true,
         newPasswordConfirmModal: false,
+        newsletterModal: false,
+        confirmNewsletterModal: false,
 
         loginEmail: '',
         loginPass: '',
         resetPasswordEmail: '',
+        newsletterEmail: '',
 
         userEmail: '',
         userPassword: '',
@@ -54,6 +57,7 @@ const app = new Vue({
         newPasswordConfirmVisible: false,
 
         connected: false,
+
     },
     created() {
         this.email = this.$session.getEmail();
@@ -121,6 +125,16 @@ const app = new Vue({
                 this.$session.deleteToken();
             }, error => {
             });
+        },
+
+        newsletter: function(e) {
+            e.preventDefault();
+
+            Api.post('newsletter', {email: this.newsletterEmail}).then(response => {
+                this.newsletterModal = false;
+                this.confirmNewsletterModal = true;
+            }, error => {});
+
         },
     },
 });

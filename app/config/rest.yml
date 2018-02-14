@@ -46,3 +46,8 @@ services:
             - "@service.session"
             - "@model.user"
             - "@service.mail"
+
+    controller.rest.newsletter:
+        class: App\Controller\Rest\NewsletterController
+        arguments:
+            - "@model.newsletter"

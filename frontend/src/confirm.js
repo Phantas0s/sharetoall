@@ -1,4 +1,5 @@
 import Session from 'common/session';
+import '../styles/sass/confirm.scss';
 
 const session = new Session(window.localStorage);
 session.setToken(window.sessionToken);
