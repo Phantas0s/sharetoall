@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RegisterController
 {
-    protected $modelName = 'User';
-
     protected $session;
     protected $modelFactory;
     protected $formFactory;
@@ -33,7 +31,8 @@ class RegisterController
         $this->modelFactory = $modelFactory;
         $this->formFactory = $formFactory;
         $this->mail = $mail;
-        $this->model = $this->createModel($this->modelName);
+
+        $this->model = $this->createModel("User");
     }
 
     protected function createModel(string $name)

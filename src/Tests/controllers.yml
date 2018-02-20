@@ -62,3 +62,8 @@ services:
             - "@form.factory" 
             - "@service.mail"
 
+    controller.rest.newsletter:
+        class: App\Controller\Rest\NewsletterController
+        arguments:
+            - "@model.newsletter"
+            - "@form.newsletter"

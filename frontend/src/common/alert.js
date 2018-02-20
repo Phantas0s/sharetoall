@@ -18,7 +18,7 @@ const Alert = {
 
 new Vue({
     el: '#alerts',
-    template: '<div id="alerts"><div v-for="message in messages" :class="message.type" class="alert">{{ message.msg }}</div></div>',
+    template: '<div id="alerts" class=""><div v-for="message in messages" :class="message.type" class="alert">{{ message.msg }}</div></div>',
     data() {
         return {
             messages: [],

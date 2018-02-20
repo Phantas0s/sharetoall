@@ -18,3 +18,10 @@ services:
         calls:
             - [ setFactoryNamespace, [ 'App\Form' ] ]
             - [ setFactoryPostfix, [ 'Form' ] ]
+
+    form.newsletter:
+        class: App\Form\User\NewsletterForm
+        arguments:
+            - "@translator"
+            - "@form.validator"
+            - "@form.options"

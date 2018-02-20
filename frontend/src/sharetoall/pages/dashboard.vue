@@ -1,4 +1,3 @@
-
 <template>
     <v-app light>
         <v-layout app>
@@ -56,10 +55,9 @@
                 </v-card>
             </v-flex>
             <v-toolbar dense app clipped-left fixed>
-                <h1><a href="/" title="home"><img src="/assets/img/logo.png">Sharetoall</a></h1>
+                <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall</a></h1>
                 <v-spacer></v-spacer>
-                <v-btn clipped-right @click.native="logout()">Logout</v-btn>
-                <v-btn @click.native="showNotification()">Show notification</v-btn>
+                <v-btn round primary outline clipped-right @click.native="logout()">Logout</v-btn>
             </v-toolbar>
             <v-flex xs4 class="ma-3 mt-5">
                 <v-card class="pa-3" app>
@@ -115,9 +113,6 @@ export default {
         };
     },
     methods: {
-        showNotification() {
-            this.$alert.warning('hello this is a warning');
-        },
         networkHasToken(network) {
             return network.userNetworkTokenKey != null;
         },
@@ -202,14 +197,6 @@ label{
 #networks .disabled .list__tile__sub-title{
     color: red;
 }
-.selected {
-    background-color: green;
-}
-
-h1 a {
-    text-decoration: none;
-    color: inherit;
-}
 
 main {
     margin: 0;
@@ -247,6 +234,7 @@ main {
     transform: rotate(360deg);
   }
 }
+
 @keyframes loader {
   from {
     transform: rotate(0);

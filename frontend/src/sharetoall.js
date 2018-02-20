@@ -18,7 +18,7 @@ import Vuetify from 'vuetify';
 const session = new Session(window.localStorage);
 
 if(!session.isUser()) {
-    window.location = '/';
+    window.location = '/auth/login';
     //To stop the execution
     throw 'Requires authentication';
 }
@@ -26,10 +26,14 @@ if(!session.isUser()) {
 Vue.use(Router);
 Vue.use(Vuetify,{
     theme: {
-        primary: '#3A992E',
-        secondary: '#b0bec5',
-        accent: '#8c9eff',
+        primary: '#33BD5F',
+        secondary: '#909090',
+        accent: '#ED4C4A',
         error: '#b71c1c',
+        // primary: '#3A992E',
+        // secondary: '#b0bec5',
+        // accent: '#8c9eff',
+        // error: '#b71c1c',
     },
 });
 

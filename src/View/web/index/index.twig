@@ -4,18 +4,18 @@
 
 <div id="app">
     <v-app light>
-        <v-toolbar class="white">
-        <v-toolbar-title>Sharetoall</v-toolbar-title>
-        <v-spacer></v-spacer>
-            <v-btn v-if="connected" href="/sharetoall">Dashboard</v-btn>
-            <v-btn v-if="connected" @click.native="logout()">Logout</v-btn>
-            <v-btn v-if="!connected" @click.native="loginModal = true">Login</v-btn>
-            <v-btn v-if="!connected" @click.native="registerModal = true">Register</v-btn>
+        <v-toolbar dense app clipped-left fixed>
+            <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall</a></h1>
+            <v-spacer></v-spacer>
+            <v-btn round primary outline v-if="connected" href="/sharetoall">Dashboard</v-btn>
+            <v-btn round primary outline v-if="connected" @click.native="logout()">Logout</v-btn>
+            <v-btn round primary outline v-if="!connected" @click.native="loginModal = true">Login</v-btn>
+            <v-btn round primary outline v-if="!connected" @click.native="registerModal = true">Register</v-btn>
         </v-toolbar>
         <v-content>
             <section>
                 <!-- <v-parallax src="/assets/img/background.jpg" height="600"> -->
-            <v-flex class="band green">
+            <v-flex class="band primary">
                 <v-layout
                 column
                 align-center
@@ -25,7 +25,7 @@
                 <h1 class="white--text mb-2 display-1 text-xs-center">Sharing for free on social media</h1>
                 <div class="subheading mb-3 text-xs-center">A simple and straightforward way</div>
                 <v-btn
-                    class="blue lighten-2 mt-5"
+                    class="accent white--text subheading mt-5"
                     dark
                     large
                     v-if="!connected" @click.native="registerModal = true"
@@ -49,7 +49,7 @@
                     <v-flex xs12 md4>
                         <v-card class="elevation-0 transparent">
                         <v-card-text class="text-xs-center">
-                            <v-icon x-large class="blue--text text--lighten-2">question_answer</v-icon>
+                            <v-icon x-large class="primary--text text--lighten-2">question_answer</v-icon>
                         </v-card-text>
                         <v-card-title primary-title class="layout justify-center">
                             <div class="headline text-xs-center">Why sharetoall?</div>
@@ -67,7 +67,7 @@
                     <v-flex xs12 md4>
                         <v-card class="elevation-0 transparent">
                         <v-card-text class="text-xs-center">
-                            <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
+                            <v-icon x-large class="primary--text text--lighten-2">build</v-icon>
                         </v-card-text>
                         <v-card-title primary-title class="layout justify-center">
                             <div class="headline text-xs-center">The service is free</div>
@@ -82,7 +82,7 @@
                     <v-flex xs12 md4>
                         <v-card class="elevation-0 transparent">
                         <v-card-text class="text-xs-center">
-                            <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
+                            <v-icon x-large class="primary--text text--lighten-2">flash_on</v-icon>
                         </v-card-text>
                         <v-card-title primary-title class="layout justify-center">
                             <div class="headline">Safety for all your data</div>
@@ -102,21 +102,30 @@
             </section>
 
             <section>
-            <v-flex class="green ">
+            <v-flex class="secondary">
                 <v-layout column align-center justify-center class ="band">
-                <div class="headline white--text mb-3 text-xs-center">New functionalities</div>
-                <div class="white--text text-xs-center">
-                    <p>This website is in beta.</p>
-                    <p>Only basics functionalites are provided. More will come.<br />
-                    <v-btn
-                        class="blue lighten-2 mt-5"
-                        dark
-                        large
-                        @click.native="newsletterModal = true"
-                    >
-                        What's next?
-                    </v-btn>
-                </div>
+                    <div class="headline white--text mb-3 text-xs-center">New functionalities</div>
+                    <div class="white--text text-xs-center">
+                    <p>Subscribe to know what will happen next!</p>
+                    <p>No spam, I promise</p>
+                    <div class="form-wrapper">
+                        <form class="form-signin" id="newsletter_email" method="post" name="newsletter_email" ref="newsletter_email" @keyup.enter="newsletterEmail">
+                            <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="newsletter_session_token" />
+                            <v-text-field
+                                label="Your email"
+                                name="newsletterEmail"
+                                id="newsletterEmail"
+                                color="white"
+                                value=""
+                                v-model="newsletterEmail"
+                                box
+                                required
+                            >
+                            </v-text-field>
+
+                            <v-btn @click="newsletter">I subscribe!</v-btn>
+                        </form>
+                    </div>
                 </v-layout>
             </v-flex>
             </section>
@@ -127,17 +136,24 @@
                 <v-flex xs12 sm4>
                     <v-card class="elevation-0 transparent">
                     <v-card-title primary-title class="layout justify-center">
-                        <div class="headline">The story of Sharetoall</div>
+                        <div class="headline">Share your experiences freely</div>
                     </v-card-title>
                     <v-card-text>
-                        <p>What pushed me to create this website?</p>
-                        <v-btn
-                            class="blue lighten-2 mt-5"
-                            dark
-                            large
-                        >
-                            I want to know!
-                        </v-btn>
+                        <p>Sharing is caring, right?</p>
+
+                        <p>I love to share great ideas for sure! Sharing about my passions, my experiences, sharing great content I find on Internet.<br />
+                        You would think that I love social media?</p>
+
+                        <p>Well, yes and no.</p>
+
+                        <p>I love them since you can communicate with the whole planet in one click. <br />
+                        I hate them because they are designed to be totally addictive. They are conceived for you to lose control. How many time I went on social media for hours without really sharing or learning anything on it?</p>
+
+                        <p>Sharetoall is my answer to those frustrations. A free and simple plateform to share on social media without any hooks.</p>
+
+                        <p>I create websites for a living and I love my job. This website is one of my creation but is still young. More and more functionalities will come with the same goal.</p>
+
+                        Since I do it on my free time any donation is welcome! It shows me that people are interested by my idea and have the same needs. It keeps my motivation flowing. What is better than feeling useful?
                     </v-card-text>
                     </v-card>
                 </v-flex>
@@ -199,31 +215,6 @@
                         </v-text-field>
 
                         <v-btn @click="resetPassword">Reset password</v-btn>
-                    </form>
-                </div>
-            </v-card>
-        </v-dialog>
-
-        <v-dialog v-model="newsletterModal" max-width="500px">
-            <v-card class="pa-5">
-                <h1 class="form-title">Newsletter subscription</h1>
-                <p>Subscribe to know what will happen next!</p>
-                <p>No spam, I promise</p>
-                <div class="form-wrapper form-500">
-                    <form class="form-signin" id="newsletter_email" method="post" name="newsletter_email" ref="newsletter_email" @keyup.enter="newsletterEmail">
-                        <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="newsletter_session_token" />
-                        <v-text-field
-                            label="Your email"
-                            name="newsletterEmail"
-                            id="newsletterEmail"
-                            value=""
-                            class="text-input"
-                            v-model="newsletterEmail"
-                            required
-                        >
-                        </v-text-field>
-
-                        <v-btn @click="newsletter">I subscribe!</v-btn>
                     </form>
                 </div>
             </v-card>

@@ -51,3 +51,4 @@ services:
         class: App\Controller\Rest\NewsletterController
         arguments:
             - "@model.newsletter"
+            - "@form.newsletter"

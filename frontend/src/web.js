@@ -15,9 +15,9 @@ Vue.prototype.$api = Api;
 
 Vue.use(Vuetify,{
     theme: {
-        primary: '#3A992E',
-        secondary: '#b0bec5',
-        accent: '#8c9eff',
+        primary: '#42BD69',
+        secondary: '#659DBD',
+        accent: '#B1A296',
         error: '#b71c1c',
     },
 });
@@ -33,7 +33,6 @@ const app = new Vue({
         confirmResetModal: false,
         newPasswordModal: true,
         newPasswordConfirmModal: false,
-        newsletterModal: false,
         confirmNewsletterModal: false,
 
         loginEmail: '',
