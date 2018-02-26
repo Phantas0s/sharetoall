@@ -106,4 +106,10 @@ abstract class DaoAbstract extends EntityDao
 
         return parent::search($params);
     }
+
+    public function deleteAll(array $cond)
+    {
+        $db = $this->getDb();
+        return $db->delete($this->_tableName, $cond);
+    }
 }

@@ -21,15 +21,8 @@ class FakeNetworkFactory implements NetworkFactoryInterface
 
     public function create(string $networkSlug): NetworkInterface
     {
-        $fakeApi = $this->container->get('network.fake');
-
-        if ($networkSlug == TwitterApi::NETWORK_SLUG) {
-            $fakeApi->setNetworkSlug('fakeTwitter');
-        }
-
-        if ($networkSlug == LinkedinApi::NETWORK_SLUG) {
-            $fakeApi->setNetworkSlug('fakeLinkedin');
-        }
+        $fakeApi = $this->container->get('network.fake.' . $networkSlug);
+        $fakeApi->setNetworkSlug('fake'.$networkSlug);
 
         return $fakeApi;
     }

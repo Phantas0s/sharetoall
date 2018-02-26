@@ -24,7 +24,11 @@ class NetworkDaoTest extends UnitTestCase
 
     public function testSearchWithUser()
     {
-        $result = $this->dao->searchWithNetworkUser(['cond' => ['un.userId' => 1]]);
+        $cond = [
+            'un.userId' => 1,
+        ];
+
+        $result = $this->dao->searchWithNetworkUser(['cond' => $cond]);
 
         $this->assertInstanceOf(NetworkDao::class, $result->getFirstResult());
         $this->assertTrue(count($result->getAllResults()) > 0);

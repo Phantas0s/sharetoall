@@ -26,9 +26,9 @@ if(!session.isUser()) {
 Vue.use(Router);
 Vue.use(Vuetify,{
     theme: {
-        primary: '#33BD5F',
-        secondary: '#909090',
-        accent: '#ED4C4A',
+        primary: '#42BD69',
+        secondary: '#659DBD',
+        accent: '#B1A296',
         error: '#b71c1c',
         // primary: '#3A992E',
         // secondary: '#b0bec5',

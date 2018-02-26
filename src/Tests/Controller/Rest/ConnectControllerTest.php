@@ -19,7 +19,7 @@ class ConnectControllerTest extends UnitTestCase
     public function testGetAction()
     {
         $request = Request::create('https://dummyurl');
-        $result = $this->controller->getAction('fake', $request);
+        $result = $this->controller->getAction('fake.twitter', $request);
         $this->assertEquals($result, 'http://dummyAuthUrl');
     }
 

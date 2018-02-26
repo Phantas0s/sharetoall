@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Tests\Service\Api;
+namespace App\Tests\Service\Api\OAuth1;
+
 use App\Service\Api\Client\ClientInterface;
 use App\Service\Api\NetworkInterface;
 use App\Service\Api\OAuth1\Auth;
 use App\Service\Api\OAuth1\Consumer;
 use App\Service\Api\OAuth1\Token;
 use Psr\SimpleCache\CacheInterface;
+use App\Tests\Service\Api\OAuth1\FakeApi;
 
 class FakeApi implements NetworkInterface
 {
@@ -22,15 +24,19 @@ class FakeApi implements NetworkInterface
     /** @var string */
     private $networkSlug = 'fake';
 
+    /** @var string */
+    private $apiName;
+
     public function __construct(
         CacheInterface $cache,
         ClientInterface $client,
         string $consumerKey,
-        string $consumerSecret
+        string $consumerSecret,
+        string $apiName
     ) {
         $consumer = new Consumer($consumerKey, $consumerSecret);
         $this->client = $client;
-        $this->auth = new Auth($cache, $client, $consumer, 'twitter');
+        $this->auth = new Auth($cache, $client, $consumer, $apiName);
     }
 
     public function getAuthUrl(int $uid, string $redirectUri): string

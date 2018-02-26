@@ -8,7 +8,7 @@
                             <v-list>
                                 <v-list-tile>
                                     <v-list-tile-title class="title">
-                                        Social networks
+                                        Social media
                                     </v-list-tile-title>
                                 </v-list-tile>
                             </v-list>
@@ -64,6 +64,7 @@
                     <v-form id="form-message">
                         <v-text-field
                             id="message"
+                            color="secondary"
                             name="message"
                             label="Message"
                             value=""

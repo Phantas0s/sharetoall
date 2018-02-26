@@ -13,6 +13,7 @@ use App\Model\ModelFactory;
 use App\Model\Network;
 use App\Service\Api\LinkedinApi;
 use App\Service\Api\NetworkFactoryInterface;
+use App\Service\Api\OAuth2\Token;
 use App\Service\Api\TwitterApi;
 use App\Service\Session;
 use Psr\Log\LogLevel;
@@ -95,6 +96,7 @@ class RedirectController
         $networkError = $request->get('error');
         if ($networkError) {
             throw new NetworkErrorException($networkError);
+            $this->log(LogLevel::ERROR, 'Error from Linkedin Api: '.$newtworkError);
         }
 
         $cachedTokenUid = $this->session->getUserId();
@@ -112,11 +114,17 @@ class RedirectController
             $this->log(LogLevel::ERROR, $e->getMessage());
         }
 
+        $now = new \DateTime();
+        $now->modify(sprintf("+ %d seconds", $token->getTtl()));
+        // -1 day to be sure every messages to linkedin are properly processed
+        $expire = $now->modify("-1 day")->format('Y-m-d H:i:s');
+
         $this->model->saveUserNetwork([
             'userId' => $this->session->getUserId(),
             'networkSlug' => $this->linkedinApi->getNetworkSlug(),
             'userNetworkTokenKey' => $token->getKey(),
             'userNetworkTokenSecret' => '',
+            'UserNetworkTokenExpire' => $expire
         ]);
 
         return $this->dashboardUri;

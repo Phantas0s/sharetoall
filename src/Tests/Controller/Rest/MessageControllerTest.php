@@ -26,7 +26,6 @@ class MessageControllerTest extends UnitTestCase
         ];
 
         $request = Request::create('http://dummyUrl', 'POST', $params);
-
         $result = $this->controller->postAction($request);
 
         $this->assertCount(1, $result);

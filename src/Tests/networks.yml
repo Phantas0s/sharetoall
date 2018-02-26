@@ -17,11 +17,32 @@ services:
             - %fake.consumer_key%
             - %fake.consumer_secret%
 
-    network.fake:
-        class: App\Tests\Service\Api\FakeApi
+    network.fake.linkedin:
+        class: App\Tests\Service\Api\OAuth2\FakeApi
         shared: false
         arguments:
             - "@cache"
             - "@guzzleClient"
             - %fake.consumer_key%
             - %fake.consumer_secret%
+            - "linkedin"
+
+    network.fake.twitter:
+        class: App\Tests\Service\Api\OAuth1\FakeApi
+        shared: false
+        arguments:
+            - "@cache"
+            - "@guzzleClient"
+            - %fake.consumer_key%
+            - %fake.consumer_secret%
+            - "twitter"
+
+    network.fake.supernetwork:
+        class: App\Tests\Service\Api\OAuth1\FakeApi
+        shared: false
+        arguments:
+            - "@cache"
+            - "@guzzleClient"
+            - %fake.consumer_key%
+            - %fake.consumer_secret%
+            - "twitter"

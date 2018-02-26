@@ -14,7 +14,6 @@ class Network extends ModelAbstract
 
     public function findAllNetworkByUserId(int $userId): SearchResult
     {
-
         $results = $this->getDao()->searchAllNetworksByUserId($userId);
         $results['rows'] = $this->wrapAll($results->getAllResults());
 
@@ -34,5 +33,11 @@ class Network extends ModelAbstract
         $networkUserDao = $this->createDao('UserNetwork');
         $networkUserDao->setValues($values);
         $networkUserDao->save();
+    }
+
+    public function invalidateUserNetwork()
+    {
+        $userNetworkDao = $this->createDao('UserNetwork');
+        $userNetworkDao->invalidate();
     }
 }
