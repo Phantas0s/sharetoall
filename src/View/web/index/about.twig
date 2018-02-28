@@ -1,0 +1,44 @@
+{% extends 'root.twig' %}
+
+{% block content %}
+
+<div id="app">
+    <div v-if="!$data" class="spinner">
+        <div class="cube1"></div>
+        <div class="cube2"></div>
+    </div>
+    <div v-cloak>
+        <v-app light>
+            <v-toolbar dense app clipped-left fixed>
+                <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall <small>beta</small></a></h1>
+                <v-spacer></v-spacer>
+                <v-btn round primary outline v-if="connected" href="/sharetoall">Dashboard</v-btn>
+                <v-btn round primary outline v-if="connected" @click.native="logout()">Logout</v-btn>
+                <v-btn round primary outline v-if="!connected" @click.native="loginModal = true">Login</v-btn>
+                <v-btn round primary outline v-if="!connected" @click.native="registerModal = true">Register</v-btn>
+            </v-toolbar>
+            <v-content>
+                <v-card class="pa-5">
+                    <v-card-text>
+                        <p>Sharing is caring, right?</p>
+
+                        <p>I love to share great ideas for sure! Sharing about my passions, my experiences, sharing great content I find on Internet.<br />
+                        You would think that I love social media?</p>
+
+                        <p>Well, yes and no.</p>
+
+                        <p>I love them since you can communicate with the whole planet in one click. <br />
+                        I hate them because they are designed to be totally addictive. They are conceived for you to lose control. How many time I went on social media for hours without really sharing or learning anything on it?</p>
+
+                        <p>Sharetoall is my answer to those frustrations. A free and simple plateform to share on social media without any hooks.</p>
+
+                        <p>I create websites for a living and I love my job. This website is one of my creation but is still young. More and more functionalities will come with the same goal.</p>
+
+                        Since I do it on my free time any donation is welcome! It shows me that people are interested by my idea and have the same needs. It keeps my motivation flowing. What is better than feeling useful?
+                    </v-card-text>
+                </v-card>
+            </v-content>
+        </v-app>
+    </div>
+</div>
+{% endblock %}

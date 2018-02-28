@@ -55,7 +55,7 @@
                 </v-card>
             </v-flex>
             <v-toolbar dense app clipped-left fixed>
-                <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall</a></h1>
+                <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall <small>beta</small></a></h1>
                 <v-spacer></v-spacer>
                 <v-btn round primary outline clipped-right @click.native="logout()">Logout</v-btn>
             </v-toolbar>
@@ -243,5 +243,10 @@ main {
   to {
     transform: rotate(360deg);
   }
+}
+
+small {
+    font-size: 0.6em;
+    color: #B1A296;
 }
 </style>

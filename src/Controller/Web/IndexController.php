@@ -18,4 +18,9 @@ class IndexController
 
         return ['realm' => 'web'];
     }
+
+    public function aboutAction()
+    {
+        return ['realm' => 'web'];
+    }
 }
