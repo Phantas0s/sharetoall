@@ -12,10 +12,13 @@
             <v-toolbar dense app clipped-left fixed>
                 <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall <small>beta</small></a></h1>
                 <v-spacer></v-spacer>
-                <v-btn round primary outline v-if="connected" href="/sharetoall">Dashboard</v-btn>
-                <v-btn round primary outline v-if="connected" @click.native="logout()">Logout</v-btn>
-                <v-btn round primary outline v-if="!connected" @click.native="loginModal = true">Login</v-btn>
-                <v-btn round primary outline v-if="!connected" @click.native="registerModal = true">Register</v-btn>
+                <v-toolbar-items>
+                    <v-btn flat color="secondary" v-if="connected" href="/sharetoall">Dashboard</v-btn>
+                    <v-btn flat color="secondary" v-if="connected" @click.native="logout()">Logout</v-btn>
+                    <v-btn flat color="secondary" v-if="!connected" @click.native="loginModal = true">Login</v-btn>
+                    <v-btn flat color="secondary" v-if="!connected" @click.native="registerModal = true">Register</v-btn>
+                    <v-btn flat color="secondary" href="index/about">About</v-btn>
+                </v-toolbar-items>
             </v-toolbar>
             <v-content>
                 <section>
@@ -80,6 +83,7 @@
 
                                             <v-card-text class="text-xs-center">
                                                 <p>This website is free and will stay free.</p>
+                                                <p>If you want to support me, consider making a donation.</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
@@ -143,23 +147,6 @@
                     </v-card>
                 </v-dialog>
 
-                <section>
-                    <v-container grid-list-xl>
-                        <v-layout row wrap justify-center class="my-5">
-                            <v-flex xs12 sm4>
-                                <v-card class="elevation-0 transparent">
-                                    <v-card-title primary-title class="layout justify-center">
-                                        <v-btn
-                                            class="accent white--text subheading mt-5"
-                                            href="index/about"
-                                            large
-                                            >About Sharetoall</v-btn>
-                                    </v-card-title>
-                                </v-card>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </section>
                 {% include 'web/modals/login.twig' %}
                 {% include 'web/modals/resetPassword.twig' %}
                 {% include 'web/modals/register.twig' %}

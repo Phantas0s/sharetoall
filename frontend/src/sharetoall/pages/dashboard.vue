@@ -57,7 +57,9 @@
             <v-toolbar dense app clipped-left fixed>
                 <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall <small>beta</small></a></h1>
                 <v-spacer></v-spacer>
-                <v-btn round primary outline clipped-right @click.native="logout()">Logout</v-btn>
+                <v-toolbar-items>
+                    <v-btn flat color="secondary" clipped-right @click.native="logout()">Logout</v-btn>
+                </v-toolbar-items>
             </v-toolbar>
             <v-flex xs4 class="ma-3 mt-5">
                 <v-card class="pa-3" app>
@@ -107,6 +109,7 @@ export default {
             'userId': this.$session.getUser().userId,
             'username': this.$session.getFullName(),
             'selectClass' :'primary',
+
             'messageLoading': false,
             'networkLoading': false,
             'twitterLoading': false,
