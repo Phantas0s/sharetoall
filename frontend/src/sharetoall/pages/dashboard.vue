@@ -1,95 +1,97 @@
 <template>
     <v-app light>
-        <v-layout app>
-            <v-flex xs2 offset-xs3>
-                <v-card>
-                    <v-navigation-drawer width="100%" permanent clipped app light>
-                        <v-toolbar flat>
-                            <v-list>
-                                <v-list-tile>
-                                    <v-list-tile-title class="title">
-                                        Social media
-                                    </v-list-tile-title>
+        <v-container app>
+            <v-layout v-bind="binding" app>
+                <v-flex lg4 xl2 offset-md1 offset-lg3>
+                    <v-card>
+                        <v-navigation-drawer width="100%" permanent clipped app light>
+                            <v-toolbar flat>
+                                <v-list>
+                                    <v-list-tile>
+                                        <v-list-tile-title class="title">
+                                            Social media
+                                        </v-list-tile-title>
+                                    </v-list-tile>
+                                </v-list>
+                            </v-toolbar>
+                            <v-divider></v-divider>
+                            <v-list id="networks">
+                                <v-list-tile
+                                    v-for="(network, key) in networks"
+                                    tag="div"
+                                    :key="key"
+                                    :class="[
+                                        {
+                                            'disabled': !networkHasToken(network),
+                                            'connected': networkHasToken(network),
+                                        }
+                                    ]"
+                                    @click="toggleNetwork">
+                                    <v-list-tile-avatar>
+                                        <v-btn fab small
+                                            :data-slug="network.networkSlug"
+                                            :class="[ isNetworkRegistered(network) ? selectClass + ' selected' : '' ]"
+                                            :loading="getLoading(network.networkSlug)"
+                                        >
+                                            <i :class="getSocialIcon(network.networkSlug)"></i>
+                                            <span slot="loader" class="network-loader">
+                                                <v-icon light>cached</v-icon>
+                                            </span>
+                                        </v-btn>
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            {{network.networkSlug}}
+                                        </v-list-tile-title>
+                                        <v-list-tile-sub-title v-if="isNetworkRegistered(network)">
+                                            Connected
+                                        </v-list-tile-sub-title>
+                                        <v-list-tile-sub-title v-else>
+                                            Click to connect
+                                        </v-list-tile-sub-title>
+                                    </v-list-tile-content>
                                 </v-list-tile>
                             </v-list>
-                        </v-toolbar>
-                        <v-divider></v-divider>
-                        <v-list id="networks">
-                            <v-list-tile
-                                v-for="(network, key) in networks"
-                                tag="div"
-                                :key="key"
-                                :class="[
-                                    {
-                                        'disabled': !networkHasToken(network),
-                                        'connected': networkHasToken(network),
-                                    }
-                                ]"
-                                @click="toggleNetwork">
-                                <v-list-tile-avatar>
-                                    <v-btn fab small
-                                        :data-slug="network.networkSlug"
-                                        :class="[ isNetworkRegistered(network) ? selectClass + ' selected' : '' ]"
-                                        :loading="getLoading(network.networkSlug)"
-                                    >
-                                        <i :class="getSocialIcon(network.networkSlug)"></i>
-                                        <span slot="loader" class="network-loader">
-                                            <v-icon light>cached</v-icon>
-                                        </span>
-                                    </v-btn>
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>
-                                        {{network.networkSlug}}
-                                    </v-list-tile-title>
-                                    <v-list-tile-sub-title v-if="isNetworkRegistered(network)">
-                                        Connected
-                                    </v-list-tile-sub-title>
-                                    <v-list-tile-sub-title v-else>
-                                        Click to connect
-                                    </v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
-                        </v-list>
-                    </v-navigation-drawer>
-                </v-card>
-            </v-flex>
-            <v-toolbar dense app clipped-left fixed>
-                <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall <small>beta</small></a></h1>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn flat color="secondary" clipped-right @click.native="logout()">Logout</v-btn>
-                </v-toolbar-items>
-            </v-toolbar>
-            <v-flex xs4 class="ma-3 mt-5">
-                <v-card class="pa-3" app>
-                    <v-form id="form-message">
-                        <v-text-field
-                            id="message"
-                            color="secondary"
-                            name="message"
-                            label="Message"
-                            value=""
-                            :rules="[(v) => v.length <= 280 || 'Max 280 characters']"
-                            :counter="280"
+                        </v-navigation-drawer>
+                    </v-card>
+                </v-flex>
+                <v-toolbar dense app clipped-left fixed>
+                    <h1><a href="/" class="black--text" title="home"><img class="hidden-xs-only" src="/assets/img/logo.png">Sharetoall <small class="hidden-xs-only">beta</small></a></h1>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn flat color="secondary" clipped-right @click.native="logout()">Logout</v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                <v-flex lg4 class="ma-3 mt-5">
+                    <v-card class="pa-3" app>
+                        <v-form id="form-message">
+                            <v-text-field
+                                id="message"
+                                color="secondary"
+                                name="message"
+                                label="Message"
+                                value=""
+                                :rules="[(v) => v.length <= 280 || 'Max 280 characters']"
+                                :counter="280"
 
-                            multi-line
-                        ></v-text-field>
-                        <v-btn
-                            id="share"
-                            @click.native="sendMessage"
-                            :loading="messageLoading"
-                            :disabled="messageLoading"
-                        >
-                            Share
-                            <v-icon right>send</v-icon>
-                            <span slot="loader">Sharing...</span>
-                        </v-btn>
-                    </v-form>
+                                multi-line
+                            ></v-text-field>
+                            <v-btn
+                                id="share"
+                                @click.native="sendMessage"
+                                :loading="messageLoading"
+                                :disabled="messageLoading"
+                            >
+                                Share
+                                <v-icon right>send</v-icon>
+                                <span slot="loader">Sharing...</span>
+                            </v-btn>
+                        </v-form>
+                    </v-card>
                 </v-card>
-            </v-card>
-            </v-flex>
-        </v-layout>
+                </v-flex>
+            </v-layout>
+        </v-container>
     </v-app>
 </template>
 
@@ -173,6 +175,15 @@ export default {
                 this.$alert.error('There was a problem sending your message.');
             });
         },
+    },
+    computed: {
+        binding () {
+          const binding = {}
+
+          if (this.$vuetify.breakpoint.xs) binding.column = true
+
+          return binding
+        }
     }
 };
 </script>
