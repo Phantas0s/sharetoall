@@ -3,15 +3,13 @@ version: '3'
 networks:
     default:
         external:
-            name: hypnos-proxy
+            name: nginx-proxy
 
 services:
     web:
         build:
             context: ./
             dockerfile: ./docker/nginx/Dockerfile
-        ports:
-            - 9090:80
         depends_on:
             - php
         volumes:
@@ -48,9 +46,11 @@ services:
         ports:
             - 8031:8025
 
-    # webdriver:
-    #     image: selenium/standalone-chrome
-    #     ports:
-    #         - "4567:4444"
-    #     external_links:
-    #         - hyproxy_nginx-proxy_1:sharetoall.loc
+    webdriver:
+        image: selenium/standalone-chrome
+        ports:
+            - "4444:4444"
+        volumes:
+            - /dev/shm:/dev/shm
+        external_links:
+            - nginx-proxy:sharetoall.loc

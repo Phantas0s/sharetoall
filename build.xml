@@ -38,6 +38,12 @@
         <exec command="./bin/codecept build" checkreturn="true" passthru="true"/>
     </target>
 
+    <target name="build-database-no-fixtures">
+        <exec command="./app/console database:drop" checkreturn="true" passthru="true" />
+        <exec command="./app/console database:create" checkreturn="true" passthru="true" />
+        <exec command="./app/console migrations:migrate -n" checkreturn="true" passthru="true" />
+    </target>
+
     <target name="build-database">
         <exec command="./app/console database:drop" checkreturn="true" passthru="true" />
         <exec command="./app/console database:create" checkreturn="true" passthru="true" />

@@ -59,7 +59,7 @@
                     <h1><a href="/" class="black--text" title="home"><img class="hidden-xs-only" src="/assets/img/logo.png">Sharetoall <small class="hidden-xs-only">beta</small></a></h1>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn flat color="secondary" clipped-right @click.native="logout()">Logout</v-btn>
+                        <v-btn flat color="secondary" id="button-logout" clipped-right @click.native="logout()">Logout</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-flex lg4 class="ma-3 mt-5">

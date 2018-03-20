@@ -27,7 +27,7 @@ class RegisterControllerTest extends UnitTestCase
                 'userEmail' => 'user@example.com',
                 'userPassword' => 'es58bhst89e5',
                 'userPasswordConfirm' => 'es58bhst89e5',
-                'userNewsletter' => 0
+                'userNewsletter' => 1
             ]
         ];
 
@@ -50,7 +50,7 @@ class RegisterControllerTest extends UnitTestCase
                 'userEmail' => 'user@sharetoall.com',
                 'userPassword' => 'es58bhst89e5',
                 'userPasswordConfirm' => 'es58bhst89e5',
-                'userNewsletter' => 0
+                'userNewsletter' => '0'
             ]
         ];
 
