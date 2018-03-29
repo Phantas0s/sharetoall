@@ -20,15 +20,15 @@ class MessageControllerTest extends UnitTestCase
     {
         $params = [
             'message' => 'This is a super message',
-            'networkSlugs' => [
-                'supernetwork'
-            ]
+            'networkSlug' => 'supernetwork',
         ];
 
         $request = Request::create('http://dummyUrl', 'POST', $params);
         $result = $this->controller->postAction($request);
 
-        $this->assertCount(1, $result);
-        $this->assertEquals('posted!', $result[0]);
+        $this->assertArrayHasKey('network', $result);
+        $this->assertArrayHasKey('response', $result);
+
+        $this->assertEquals($result['network'], 'supernetwork');
     }
 }

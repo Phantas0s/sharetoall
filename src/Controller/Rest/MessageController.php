@@ -46,48 +46,33 @@ class MessageController extends EntityControllerAbstract
         $this->session = $session;
     }
 
-    public function postAction(Request $request)
+    public function postAction(Request $request): array
     {
         $message = $request->get('message');
 
-        $networkSlugs = $request->get('networkSlugs');
-        $networks = $this->networkModel->findAllNetworkByUserId($this->session->getUserId());
-        $networks = $this->sortNetworks($networks->getAllResults());
+        $networkSlug = $request->get('networkSlug');
+        $network = $this->networkModel->findWithNetworkUser(['networkSlug' => $networkSlug])->getFirstResult();
 
-        $results = [];
-        foreach ($networkSlugs as $networkSlug) {
-            $networkApi = $this->networkFactory->create($networkSlug);
+        $networkApi = $this->networkFactory->create($networkSlug);
 
-            if (!isset($networks[$networkSlug]) || empty($networks[$networkSlug])) {
-                throw new NotFoundException('Impossible to find connect to the API');
-            }
-
-            $token = new Token(
-                $networks[$networkSlug]['key'],
-                $networks[$networkSlug]['secret']
-            );
-
-            try {
-                $results[] = $networkApi->postUpdate($message, $token);
-            } catch (ApiException $e) {
-                $this->log(LogLevel::ERROR, $e->getMessage());
-                continue;
-            }
+        if (empty($network->userNetworkTokenKey)) {
+            throw new NotFoundException('Error: You need to reconnect to '.$networkSlug);
         }
 
-        return $results;
-    }
+        $token = new Token(
+            $network->userNetworkTokenKey,
+            $network->userNetworkTokenSecret
+        );
 
-    private function sortNetworks(array $networks): array
-    {
-        $results = [];
-        foreach ($networks as $network) {
-            $results[$network->networkSlug] = [
-                'key' => $network->userNetworkTokenKey,
-                'secret' => $network->userNetworkTokenSecret,
-            ];
+        $response['network'] = $networkSlug;
+
+        try {
+            $response['response'] = $networkApi->postUpdate($message, $token);
+        } catch (ApiException $e) {
+            $this->log(LogLevel::ERROR, $e->getMessage());
+            throw new ApiException($e);
         }
 
-        return $results;
+        return $response;
     }
 }

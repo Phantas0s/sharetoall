@@ -167,13 +167,21 @@ export default {
 
             const networkSlugs = Array.from(connectedNetworks, network => network.dataset.slug);
 
-            this.$api.post(`message`, {networkSlugs: networkSlugs, message: message}).then(response => {
-                this.messageLoading = false;
-                this.$alert.success('Your message have been shared!');
-            }, error => {
-                this.messageLoading = false;
-                this.$alert.error('There was a problem sending your message.');
-            });
+            for (var i = 0; i < networkSlugs.length; i++) {
+                this.$api.post(`message`, {networkSlug: networkSlugs[i], message: message}).then(response => {
+                    this.messageLoading = false;
+                    this.$alert.success('Your message have been shared on '+response.data.network+'!');
+                }, error => {
+                    this.messageLoading = false;
+
+                    if (error.response.status == 404) {
+                        this.$alert.error(error.response.data.message);
+                        // disconnect from the network
+                    } else {
+                        this.$alert.error('Error trying to send a message.');
+                    }
+                });
+            }
         },
     },
     computed: {
