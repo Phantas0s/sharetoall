@@ -89,6 +89,14 @@
                                             <v-card-text class="text-xs-center">
                                                 <p>This website is free and will stay free.</p>
                                                 <p>If you want to support me, consider making a donation.</p>
+
+                                                <v-btn
+                                                    href="https://www.patreon.com/sharetoall"
+                                                    class="accent white--text subheading mt-5"
+                                                    dark
+                                                    large>
+                                                    Become a Patron!
+                                                </v-btn>
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
@@ -146,6 +154,14 @@
                     </v-flex>
                 </section>
 
+                <section>
+                    <v-flex class="accent">
+                        <v-layout column align-center justify-center class ="band">
+                            <div class="headline white--text mb-3 text-xs-center">Support me</div>
+                        </v-layout>
+                    </v-flex>
+                </section>
+
                 <v-dialog v-model="confirmNewsletterModal" max-width="400px">
                     <v-card class="pa-5">
                         <p>You have subscribed successfully to the newsletter</p>
@@ -164,4 +180,5 @@
         </v-app>
     </div>
 </div>
+
 {% endblock %}
