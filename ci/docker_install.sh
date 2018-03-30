@@ -12,7 +12,7 @@ apt-get install zip unzip -yqq
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php -yqq
 php -r "unlink('composer-setup.php');"
-php composer.phar install -yqq
+php composer.phar install
 
 # Install phpunit, the tool that we will use for testing
 curl --location --output /usr/local/bin/phpunit https://phar.phpunit.de/phpunit.phar
