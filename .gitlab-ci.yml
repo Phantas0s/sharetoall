@@ -17,5 +17,5 @@ before_script:
 
 test:sharetoall:
   script:
-  - bin/phing dev
+  - bin/phing build-database
   - phpunit --configuration phpunit.xml
