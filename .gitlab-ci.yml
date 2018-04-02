@@ -1,9 +1,19 @@
 image: php:7.2
 
+services:
+  - mysql:5.7
+
+variables:
+  MYSQL_DATABASE: sharetoall
+  MYSQL_ROOT_PASSWORD: sharetoall
+  DB_HOST: mysql
+  DB_USERNAME: root
+
 before_script:
 # Install dependencies
 - bash ci/docker_install.sh > /dev/null
 
 test:sharetoall:
   script:
+  - bin/phing dev
   - phpunit --configuration phpunit.xml
