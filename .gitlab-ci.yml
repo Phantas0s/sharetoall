@@ -6,13 +6,14 @@ services:
 
 variables:
   MYSQL_DATABASE: sharetoall
-  MYSQL_ROOT_PASSWORD: sharetoall
-  DB_HOST: db
-  DB_USERNAME: sharetoall
+  MYSQL_USER: sharetoall
+  MYSQL_PASSWORD: sharetoall
+  MYSQL_HOST: db
 
 before_script:
 # Install dependencies
 - bash ci/docker_install.sh > /dev/null
+- echo "SELECT 'OK';" | mysql --user="${DB_USERNAME} --password="${MYSQL_ROOT_PASSWORD}" --host=mysql "${MYSQL_DATABASE}"
 
 test:sharetoall:
   script:
