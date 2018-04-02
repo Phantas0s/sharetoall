@@ -17,6 +17,5 @@ before_script:
 
 test:sharetoall:
   script:
-  - echo "SELECT 'OK';" | mysql --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" --host=db "${MYSQL_DATABASE}"
   - bin/phing dev
   - phpunit --configuration phpunit.xml
