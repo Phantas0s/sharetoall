@@ -13,7 +13,7 @@ variables:
 before_script:
 # Install dependencies
 - bash ci/docker_install.sh > /dev/null
-- echo "SELECT 'OK';" | mysql --user="${DB_USERNAME} --password="${MYSQL_ROOT_PASSWORD}" --host=mysql "${MYSQL_DATABASE}"
+- echo "SELECT 'OK';" | mysql --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" --host=db "${MYSQL_DATABASE}"
 
 test:sharetoall:
   script:
