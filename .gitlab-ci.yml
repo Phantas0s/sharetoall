@@ -7,8 +7,8 @@ services:
 variables:
   MYSQL_DATABASE: sharetoall
   MYSQL_ROOT_PASSWORD: sharetoall
-  DB_HOST: mysql
-  DB_USERNAME: root
+  DB_HOST: db
+  DB_USERNAME: sharetoall
 
 before_script:
 # Install dependencies
