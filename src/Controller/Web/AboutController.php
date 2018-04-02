@@ -5,14 +5,10 @@ namespace App\Controller\Web;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class IndexController
+class AboutController
 {
     public function indexAction(Request $request)
     {
-        if ($request->query->get("reset")) {
-            return ['realm' => 'web', 'resetToken' => $request->query->get('reset')];
-        }
-
         return ['realm' => 'web'];
     }
 }

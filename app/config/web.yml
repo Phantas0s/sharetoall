@@ -38,6 +38,9 @@ services:
     controller.web.index:
         class: App\Controller\Web\IndexController
 
+    controller.web.about:
+        class: App\Controller\Web\IndexController
+
     controller.web.auth:
         class: App\Controller\Web\AuthController
         arguments: [ "@service.session", "@model.user", "@service.mail" ]

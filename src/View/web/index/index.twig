@@ -17,7 +17,7 @@
                     <v-btn flat color="secondary" id="button-logout" class="hidden-xs-only" v-if="connected" @click.native="logout()">Logout</v-btn>
                     <v-btn flat color="secondary" id="button-login" v-if="!connected" @click.native="loginModal = true">Login</v-btn>
                     <v-btn flat color="secondary" id="button-register" v-if="!connected" @click.native="registerModal = true">Register</v-btn>
-                    <v-btn flat color="secondary" id="button-about" class="hidden-xs-only" href="index/about">About</v-btn>
+                    <v-btn flat color="secondary" id="button-about" class="hidden-xs-only" href="about">About</v-btn>
                 </v-toolbar-items>
             </v-toolbar>
             <v-content>
@@ -69,9 +69,18 @@
                                             </v-card-title>
 
                                             <v-card-text class="text-xs-center">
-                                                <p>Sharetoall allows you to share on multiple social media at once.</p>
-                                                <p>You can share ideas and knowledge without procrastinating on social media.</p>
-                                                <p>Write your message and share it, it's that simple!</p>
+                                                <p>
+                                                    Tired to procrastinate on social media? <br />
+                                                    Sharetoall offer you a simple interface with one goal: sharing.
+                                                </p>
+                                                <p>Write your message, share it on multiple social media, you're done!</p>
+                                                <v-btn
+                                                    href="/about"
+                                                    class="accent white--text subheading mt-5"
+                                                    dark
+                                                    large>
+                                                    I want to know more!
+                                                </v-btn>
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
@@ -87,7 +96,7 @@
                                             </v-card-title>
 
                                             <v-card-text class="text-xs-center">
-                                                <p>This website is free and will stay free.</p>
+                                                <p>This service is free and will stay free.</p>
                                                 <p>If you want to support me, consider making a donation.</p>
 
                                                 <v-btn
@@ -108,14 +117,12 @@
                                             </v-card-text>
 
                                             <v-card-title primary-title class="layout justify-center">
-                                                <div class="headline">Safety for all your data</div>
+                                                <div class="headline">Safety for your data</div>
                                             </v-card-title>
 
                                             <v-card-text class="text-xs-center">
-                                                <p>Your data won't be sold to anybody.
                                                 <p>The content shared on social media won't be saved on this website.</p>
-
-                                                <p>You decide what you share to whom.</p>
+                                                <p>You decide what you share.</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
@@ -150,14 +157,6 @@
                                     <v-btn @click="newsletter">I subscribe!</v-btn>
                                 </form>
                             </div>
-                        </v-layout>
-                    </v-flex>
-                </section>
-
-                <section>
-                    <v-flex class="accent">
-                        <v-layout column align-center justify-center class ="band">
-                            <div class="headline white--text mb-3 text-xs-center">Support me</div>
                         </v-layout>
                     </v-flex>
                 </section>
