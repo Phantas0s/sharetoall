@@ -1,8 +1,5 @@
 image: php:7.2
 
-services:
-  - mysql:5.7
-
 variables:
   MYSQL_DATABASE: sharetoall
   MYSQL_ROOT_PASSWORD: sharetoall
@@ -14,6 +11,8 @@ before_script:
 - bash ci/docker_install.sh > /dev/null
 
 test:sharetoall:
+  services
+    - mariadb:latest
   script:
   - bin/phing dev
   - phpunit --configuration phpunit.xml
