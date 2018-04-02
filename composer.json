@@ -37,8 +37,7 @@
     "scripts": {
         "post-composer-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "app/clearcache",
-            "composer dumpautoload -o"
+            "app/clearcache"
         ],
         "post-install-cmd": [
             "@post-composer-scripts"
