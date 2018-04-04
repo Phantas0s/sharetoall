@@ -30,7 +30,7 @@
                     label="Confirm your password"
                     name="userPasswordConfirm"
                     id="userPasswordConfirm"
-                    :append-icon="userPasswordConfirm ? 'visibility' : 'visibility_off'"
+                    :append-icon="userPasswordConfirmVisible ? 'visibility' : 'visibility_off'"
                     :append-icon-cb="() => (userPasswordConfirmVisible = !userPasswordConfirmVisible)"
                     :type="userPasswordConfirmVisible ? 'text' : 'password'"
                     v-model="userPasswordConfirm"
@@ -51,6 +51,7 @@
 
 <v-dialog v-model="confirmModal" max-width="400px">
     <v-card class="pa-5">
-        <p>To complete your subscription please confirm your email address by clicking on the link in the email we just send you.</p>
+        <p>Thanks for registering!</p>
+        <p>We just sent you an email. Just click on the link inside it to confirm your email address.</p>
     </v-card>
 </v-dialog>

@@ -166,11 +166,18 @@ export default {
             const message = document.getElementById('message').value;
 
             const networkSlugs = Array.from(connectedNetworks, network => network.dataset.slug);
+            const networkSlugLg = networkSlugs.length;
 
-            for (var i = 0; i < networkSlugs.length; i++) {
+            if (networkSlugLg <= 0) {
+                this.$alert.error('You need to select at least one social media.');
+                this.messageLoading = false;
+                return false;
+            }
+
+            for (var i = 0; i < networkSlugLg; i++) {
                 this.$api.post(`message`, {networkSlug: networkSlugs[i], message: message}).then(response => {
                     this.messageLoading = false;
-                    this.$alert.success('Your message have been shared on '+response.data.network+'!');
+                    this.$alert.success('Your message has been shared on '+response.data.network+'!');
                 }, error => {
                     this.messageLoading = false;
 

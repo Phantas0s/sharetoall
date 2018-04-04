@@ -50,6 +50,10 @@ class MessageController extends EntityControllerAbstract
     {
         $message = $request->get('message');
 
+        if (strlen($message) <= 0) {
+            throw new NotFoundException('The message can\'t be empty.');
+        }
+
         $networkSlug = $request->get('networkSlug');
         $network = $this->networkModel->findWithNetworkUser(['networkSlug' => $networkSlug])->getFirstResult();
 

@@ -65,22 +65,15 @@
                                             </v-card-text>
 
                                             <v-card-title primary-title class="layout justify-center">
-                                                <div class="headline text-xs-center">What is sharetoall?</div>
+                                                <div class="headline text-xs-center">What is Sharetoall?</div>
                                             </v-card-title>
 
                                             <v-card-text class="text-xs-center">
                                                 <p>
                                                     Tired to procrastinate on social media? <br />
-                                                    Sharetoall offer you a simple interface with one goal: sharing.
+                                                    Sharetoall offers you a simple interface with one goal: sharing.
                                                 </p>
                                                 <p>Write your message, share it on multiple social media, you're done!</p>
-                                                <v-btn
-                                                    href="/about"
-                                                    class="accent white--text subheading mt-5"
-                                                    dark
-                                                    large>
-                                                    I want to know more!
-                                                </v-btn>
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
@@ -121,8 +114,9 @@
                                             </v-card-title>
 
                                             <v-card-text class="text-xs-center">
-                                                <p>The content shared on social media won't be saved on this website.</p>
-                                                <p>You decide what you share.</p>
+                                                <p>The only content shared is what you decide to share on social media.</p>
+                                                <p>The messages shared on social media won't be saved on this website.</p>
+                                                <p>Sharetoall will never sell or give any of your data.</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
@@ -137,8 +131,8 @@
                         <v-layout column align-center justify-center class ="band">
                             <div class="headline white--text mb-3 text-xs-center">New functionalities</div>
                             <div class="white--text text-xs-center">
-                            <p>Subscribe to know what will happen next!</p>
-                            <p>No spam, I promise</p>
+                            <p>Subscribe to know what functionalities will be added!</p>
+                            <p>No spam, I promise.</p>
                             <div class="form-wrapper">
                                 <form class="form-signin" id="newsletter_email" method="post" name="newsletter_email" ref="newsletter_email" @keyup.enter="newsletterEmail">
                                     <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="newsletter_session_token" />
