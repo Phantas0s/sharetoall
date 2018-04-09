@@ -1,21 +1,21 @@
 services:
   - name: mariadb:latest
-    alias: db
+  - alias: db
 
-    stages:
-      - test
+stages:
+  - test
 
-    test:
-      stage: build
-      image: php:7.2
-      variables:
-        MYSQL_DATABASE: sharetoall
-        MYSQL_USER: sharetoall
-        MYSQL_PASSWORD: sharetoall
-        MYSQL_ROOT_PASSWORD: sharetoall
-        MYSQL_HOST: db
-        before_script:
-          - bash ci/docker_install.sh > /dev/null
-        script:
-          - bin/phing build-database
-          - phpunit --configuration phpunit.xml
+test:
+  stage: build
+  image: php:7.2
+  variables:
+    MYSQL_DATABASE: sharetoall
+    MYSQL_USER: sharetoall
+    MYSQL_PASSWORD: sharetoall
+    MYSQL_ROOT_PASSWORD: sharetoall
+    MYSQL_HOST: db
+    before_script:
+      - bash ci/docker_install.sh > /dev/null
+    script:
+      - bin/phing build-database
+      - phpunit --configuration phpunit.xml
