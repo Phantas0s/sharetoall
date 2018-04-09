@@ -6,7 +6,7 @@ services:
   alias: db
 
 test:
-  stage: build
+  stage: test
   image: php:7.2
   variables:
     MYSQL_DATABASE: sharetoall
