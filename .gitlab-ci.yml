@@ -3,6 +3,7 @@ cache:
 
 stages:
   - test
+  - release
 
 services:
 - name: mariadb:latest
