@@ -3,7 +3,7 @@ stages:
 
 services:
   - name: mariadb:latest
-  alias: db
+alias: db
 
 test:
   stage: build
