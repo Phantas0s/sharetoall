@@ -1,4 +1,7 @@
-stages:
+cache:
+  key: "$CI_BUILD_REF_NAME php:7.2"
+  paths:
+  - node_modules/stages:
   - test
 
 services:
