@@ -1,10 +1,11 @@
 stages:
   - test
 
+services:
+  - name: mariadb:latest
+  alias: db
+
 test:
-  services:
-    - name: mariadb:latest
-    - alias: db
   stage: build
   image: php:7.2
   variables:
