@@ -2,8 +2,8 @@ stages:
   - test
 
 services:
-  - name: mariadb:latest
-alias: db
+- name: mariadb:latest
+  alias: db
 
 test:
   stage: build
