@@ -1,7 +1,7 @@
 cache:
   key: "$CI_BUILD_REF_NAME php:7.2"
-  paths:
-  - node_modules/stages:
+
+stages:
   - test
 
 services:
@@ -22,3 +22,22 @@ test:
   script:
     - bin/phing build-database
     - phpunit --configuration phpunit.xml
+
+release:
+  stage: release
+  image: docker:latest
+  only:
+    - "master"
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: "overlay"
+  before_script:
+    - docker version
+    - "docker info"
+    - "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+  script:
+    - "docker build -t ${CI_REGISTRY}/${CI_PROJECT_PATH}:latest --pull ."
+    - "docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:latest"
+  after_script:
+    - "docker logout ${CI_REGISTRY}"
