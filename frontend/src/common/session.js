@@ -7,9 +7,14 @@ class Session {
     constructor(storage) {
         this.storage = storage;
         this.session_token = this.storage.getItem('session_token');
+        // WARNING if the ttl change here, it needs to be changed on the server side (service/Session.php)
+        this.ttl = 604800;
 
         const userJson = this.storage.getItem('user');
         this.user = userJson !== 'undefined' ? JSON.parse(userJson) : null;
+
+        const expiration = this.storage.getItem('expiration');
+        this.expiration = expiration !== 'undefined' ? expiration : null;
     }
 
     setToken(token) {
@@ -25,6 +30,8 @@ class Session {
     deleteToken() {
         this.session_token = null;
         this.storage.removeItem('session_token');
+        this.expiration = null;
+        this.storage.removeItem('expiration');
         Api.defaults.headers.common['X-Session-Token'] = '';
         this.deleteUser();
     }
@@ -32,6 +39,30 @@ class Session {
     setUser(user) {
         this.user = user;
         this.storage.setItem('user', JSON.stringify(user));
+    }
+
+    setExpiration() {
+        this.expiration = parseInt(new Date().getTime() / 1000) + parseInt(this.ttl); // seconds
+        this.storage.setItem('expiration', JSON.stringify(this.expiration));
+    }
+
+    isExpired() {
+        const expiration = parseInt(this.storage.getItem('expiration'));
+        const currentTime = parseInt(new Date().getTime() / 1000); //seconds
+
+        if (currentTime > expiration) {
+            return false;
+        }
+
+        return true;
+    }
+
+    isValid() {
+        if (!this.isExpired() || !this.isUser()) {
+            return false;
+        }
+
+        return true;
     }
 
     getUser() {

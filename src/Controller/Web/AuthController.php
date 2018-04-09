@@ -29,7 +29,7 @@ class AuthController
 
         $result = array(
             'page_name' => 'Login',
-            'realm' => 'auth',
+            'realm' => 'web',
         );
 
         try {

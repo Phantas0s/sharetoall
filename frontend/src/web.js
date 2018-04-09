@@ -62,7 +62,7 @@ const app = new Vue({
         this.email = this.$session.getEmail();
         this.session_token = this.$session.getToken();
 
-        if(this.$session.isUser()) {
+        if(this.$session.isValid()) {
             this.connected = true;
         }
     },
@@ -79,6 +79,7 @@ const app = new Vue({
 
                 this.$session.setToken(response.data.token);
                 this.$session.setUser(response.data.user);
+                this.$session.setExpiration();
 
                 this.$refs.loginForm.submit();
             }, error => {});

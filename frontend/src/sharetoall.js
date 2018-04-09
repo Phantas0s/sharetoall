@@ -17,8 +17,9 @@ import Vuetify from 'vuetify';
 
 const session = new Session(window.localStorage);
 
-if(!session.isUser()) {
-    window.location = '/auth/login';
+if(!session.isValid()) {
+    window.location = '/';
+
     //To stop the execution
     throw 'Requires authentication';
 }
