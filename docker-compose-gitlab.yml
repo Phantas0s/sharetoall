@@ -32,4 +32,4 @@ services:
         build:
             context: ./
             dockerfile: ./docker/redis/Dockerfile
-        image: web:lateset
+        image: ${CI_REGISTRY}/${CI_PROJECT_PATH}:latest
