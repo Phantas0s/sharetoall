@@ -30,5 +30,6 @@ services:
 
     redis:
         build:
+            context: ./
             dockerfile: ./docker/redis/Dockerfile
         image: web/${CI_REGISTRY}/${CI_PROJECT_PATH}:latest
