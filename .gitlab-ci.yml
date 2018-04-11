@@ -38,7 +38,7 @@ release:
     - "docker info"
     - "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
   script:
-    - "docker-compose -f docker-compose-gitlab.yml build"
-    # - "docker-compose -f docker-compose-gitlab.yml push"
+    # - "docker-compose -f docker-compose-gitlab.yml build"
+    - "docker-compose -f docker-compose-gitlab.yml push"
   after_script:
     - "docker logout ${CI_REGISTRY}"
