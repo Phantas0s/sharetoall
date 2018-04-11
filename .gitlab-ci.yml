@@ -26,7 +26,7 @@ test:
 
 release:
   stage: release
-  image: docker:latest
+  image: gitlab/dind:latest
   only:
     - "master"
   services:
