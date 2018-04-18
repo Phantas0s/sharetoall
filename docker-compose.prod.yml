@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+    web:
+        image: registry.gitlab.com/phantas0s/sharetoall:web-latest
+        ports:
+            - 9090:80
+        volumes:
+            - ./web:/sharetoall/web
+        depends_on:
+            - php
+        environment:
+            - VIRTUAL_HOST=sharetoall.com www.sharetoall.com
+            - VIRTUAL_PORT=80
+            - HTTP_AUTH_LOGIN
+            - HTTP_AUTH_PASSWORD
+
+    php:
+        image: registry.gitlab.com/phantas0s/sharetoall:php-latest
+        volumes:
+            - /var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock
+            - ./web:/sharetoall/web
+            - ./storage:/sharetoall/storage
+        depends_on:
+            - redis
+
+    redis:
+        image: ${CI_REGISTRY}/${CI_PROJECT_PATH}:redis-latest
