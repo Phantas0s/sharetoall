@@ -25,25 +25,25 @@ stages:
 #     - bin/phing build-database
 #     - phpunit --configuration phpunit.xml
 
-release:
-  stage: release
-  image: gitlab/dind:latest
-  only:
-    - "master"
-    - "develop"
-  services:
-    - docker:dind
-  variables:
-    DOCKER_DRIVER: "overlay"
-  before_script:
-    - docker version
-    - "docker info"
-    - "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
-  script:
-    - "docker-compose -f docker-compose-release.yml build --pull"
-    - "docker-compose -f docker-compose-release.yml push"
-  after_script:
-    - "docker logout ${CI_REGISTRY}"
+# release:
+#   stage: release
+#   image: gitlab/dind:latest
+#   only:
+#     - "master"
+#     - "develop"
+#   services:
+#     - docker:dind
+#   variables:
+#     DOCKER_DRIVER: "overlay"
+#   before_script:
+#     - docker version
+#     - "docker info"
+#     - "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+#   script:
+#     - "docker-compose -f docker-compose-release.yml build --pull"
+#     - "docker-compose -f docker-compose-release.yml push"
+#   after_script:
+#     - "docker logout ${CI_REGISTRY}"
 
 deploy:
   stage: deploy
