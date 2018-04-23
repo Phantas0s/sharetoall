@@ -25,4 +25,4 @@ services:
             - redis
 
     redis:
-        image: ${CI_REGISTRY}/${CI_PROJECT_PATH}:redis-latest
+        image: registry.gitlab.com/phantas0s/sharetoall:redis-latest
