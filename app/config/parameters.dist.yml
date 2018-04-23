@@ -1,34 +1,28 @@
+# This file is auto-generated during the composer install
 parameters:
-    app.version: '1.0'
-    app.domain: sharetoall.loc
-    app.url: http://sharetoall.loc
-    app.redirect_uri: http://sharetoall.loc/sharetoall
-    app.email: root@localhost
-    app.locale: en
-
-    db.host: db
-    db.port: 3306
-    db.name: sharetoall
-    db.user: sharetoall
-    db.password: sharetoall
-
-    redis.host: redis
-    redis.port: 6379
-
-    mailer.host: mailhog
-    mailer.port: 1025
-    mailer.encryption: null
-    mailer.username: ''
-    mailer.password: ''
-    mailer.auth_mode: ''
-
-    feature.example: true
-
-    minified_js: true
-    minified_css: true
-
-    twitter.consumer_key: 'dummy'
-    twitter.consumer_secret: 'superDummy'
-
-    linkedin.consumer_key: 'dummy'
-    linkedin.consumer_secret: 'superDummy'
+    app.version: '%env(APP_VERSION)%'
+    app.domain: '%env(APP_DOMAIN)%'
+    app_url: '%env(APP_URL)%'
+    app_redirect_uri: '%env(APP_REDIRECT_URI)%'
+    app_email: '%env(APP_EMAIL)%'
+    app_locale: '%env(APP_LOCALE)%'
+    db_host: '%env(DB_HOST)%'
+    db_port: '%env(DB_PORT)%'
+    db_name: '%env(DB_NAME)%'
+    db_user: '%env(DB_USER)%'
+    db_password: '%env(DB_PASSWORD)%'
+    redis_host: '%env(REDIS_HOST)%'
+    redis_port: '%env(REDIS_PORT)%'
+    mailer_host: '%env(MAILER_HOST)%'
+    mailer_port: '%env(MAILER_PORT)%'
+    mailer_encryption: '%env(MAILER_ENCRYPTION)%'
+    mailer_username: '%env(MAILER_USERNAME)%'
+    mailer_password: '%env(MAILER_PASSWORD)%'
+    mailer_auth_mode: '%env(MAILER_AUTH_MODE)%'
+    feature_example: '%env(FEATURE_EXAMPLE)%'
+    minified_js: '%env(MINIFIED_JS)%'
+    minified_css: '%env(MINIFIED_CSS)%'
+    twitter_consumer_key: '%env(TWITTER_CONSUMER_KEY)%'
+    twitter_consumer_secret: '%env(TWITTER_CONSUMER_SECRET)%'
+    linkedin_consumer_key: '%env(LINKEDIN_CONSUMER_KEY)%'
+    linkedin_consumer_secret: '%env(LINKEDIN_CONSUMER_SECRET)%'
