@@ -50,7 +50,9 @@ RUN usermod -u 1000 www-data
 RUN composer dump-autoload --optimize && \
     composer run-script post-install-cmd
 
+
 RUN chown -R www-data:www-data /sharetoall/storage \
     && rm -r /sharetoall/docker \
     && app/clearcache
 
+RUN bin/phing build
