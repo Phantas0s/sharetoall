@@ -39,11 +39,11 @@ release:
     - docker version
     - "docker info"
     - "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
-  script:
     - "export ${HTTP_AUTH_LOGIN}"
     - "export ${HTTP_AUTH_PASSWORD}"
     - "touch config.env"
     - "echo ${PARAMETERS} > config.env"
+  script:
     - "docker-compose -f docker-compose-release.yml build --pull"
     - "docker-compose -f docker-compose-release.yml push"
   after_script:
