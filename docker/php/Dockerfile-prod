@@ -42,6 +42,7 @@ COPY ./docker/php/php-custom.ini /usr/local/etc/php/conf.d/
 WORKDIR /sharetoall
 
 RUN composer install --no-scripts --no-autoloader
+RUN bin/phing build
 
 COPY ./ /sharetoall/
 
@@ -50,9 +51,6 @@ RUN usermod -u 1000 www-data
 RUN composer dump-autoload --optimize && \
     composer run-script post-install-cmd
 
-
 RUN chown -R www-data:www-data /sharetoall/storage \
     && rm -r /sharetoall/docker \
     && app/clearcache
-
-RUN /sharetoall/bin/phing build
