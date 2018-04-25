@@ -55,4 +55,4 @@ RUN chown -R www-data:www-data /sharetoall/storage \
     && rm -r /sharetoall/docker \
     && app/clearcache
 
-RUN bin/phing build
+RUN /sharetoall/bin/phing build
