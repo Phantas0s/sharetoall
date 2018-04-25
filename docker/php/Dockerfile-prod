@@ -36,14 +36,12 @@ RUN mkdir -p \
         /sharetoall/storage
 
 COPY ./composer.* /sharetoall/
-COPY ./build.xml /sharetoall/
 COPY ./app /sharetoall/app
 COPY ./docker/php/php-custom.ini /usr/local/etc/php/conf.d/
 
 WORKDIR /sharetoall
 
 RUN composer install --no-scripts --no-autoloader
-RUN bin/phing build
 
 COPY ./ /sharetoall/
 
@@ -55,3 +53,5 @@ RUN composer dump-autoload --optimize && \
 RUN chown -R www-data:www-data /sharetoall/storage \
     && rm -r /sharetoall/docker \
     && app/clearcache
+
+RUN cd /sharetoall && bin/phing build
