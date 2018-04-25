@@ -24,9 +24,9 @@ services:
             dockerfile: ./docker/php/Dockerfile-prod
         image: ${CI_REGISTRY}/${CI_PROJECT_PATH}:php-latest
         volumes:
-            - /var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock
-            - ./web:/sharetoall/web
-            - ./storage:/sharetoall/storage
+            # - /var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock
+            # - ./web:/sharetoall/web
+            # - ./storage:/sharetoall/storage
         depends_on:
             - redis
         env_file:
