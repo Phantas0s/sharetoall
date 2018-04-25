@@ -6,3 +6,4 @@ vendor/*
 storage/cache/*
 storage/coverage/*
 storage/log/*
+ci/*
