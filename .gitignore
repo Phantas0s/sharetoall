@@ -60,9 +60,7 @@ docker-compose.override.yml
 
 # docker related configs #
 ##########################
-configuration.env
 *.env
 
 .testomatic.yml
-
 storage/profiler/*
