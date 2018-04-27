@@ -42,6 +42,7 @@ COPY ./docker/php/php-custom.ini /usr/local/etc/php/conf.d/
 WORKDIR /sharetoall
 
 RUN composer install --no-scripts --no-autoloader
+RUN bin/phing build-js
 
 COPY ./ /sharetoall/
 
