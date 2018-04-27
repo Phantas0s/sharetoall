@@ -13,6 +13,8 @@ RUN apk update \
 # COPY ./web/ /sharetoall/web/
 COPY ./docker/nginx/site.conf /etc/nginx/conf.d/default.conf
 
+RUN echo "login: $HTTP_AUTH_LOGIN"
+
 ADD ./docker/nginx/entrypoint.sh /bin/entrypoint.sh
 RUN chmod 777 /bin/entrypoint.sh
 CMD sh /bin/entrypoint.sh
