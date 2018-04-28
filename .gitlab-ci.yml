@@ -37,9 +37,9 @@ test:
     MAILER_HOST: mailhog
     MAILER_PORT: 1025
     MAILER_ENCRYPTION: null
-    MAILER_USERNAME: ''
-    MAILER_PASSWORD: ''
-    MAILER_AUTH_MODE: ''
+    MAILER_USERNAME: null
+    MAILER_PASSWORD: null
+    MAILER_AUTH_MODE: null
     FEATURE_EXAMPLE: 1
   before_script:
     - bash ci/docker_install.sh > /dev/null
