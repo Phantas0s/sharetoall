@@ -25,6 +25,8 @@ test:
     APP_REDIRECT_URI: 'http://sharetoall.loc/redirect/'
     APP_EMAIL: root@localhost
     APP_LOCALE: en
+    MINIFIED_JS: true
+    MINIFIED_CSS: true
     # DB_HOST: db
     # DB_PORT: 3306
     # DB_NAME: sharetoall
@@ -39,8 +41,6 @@ test:
     # MAILER_PASSWORD: ''
     # MAILER_AUTH_MODE: ''
     # FEATURE_EXAMPLE: true
-    MINIFIED_JS: true
-    MINIFIED_CSS: true
   before_script:
     - bash ci/docker_install.sh > /dev/null
   script:
