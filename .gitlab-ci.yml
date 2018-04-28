@@ -25,8 +25,8 @@ test:
     APP_REDIRECT_URI: http://sharetoall.loc/redirect/
     APP_EMAIL: root@localhost
     APP_LOCALE: en
-    MINIFIED_JS: true
-    MINIFIED_CSS: true
+    MINIFIED_JS: 1
+    MINIFIED_CSS: 1
     # DB_HOST: db
     # DB_PORT: 3306
     # DB_NAME: sharetoall
