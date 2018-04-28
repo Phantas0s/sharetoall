@@ -36,10 +36,10 @@ test:
     MINIFIED_CSS: 1
     MAILER_HOST: mailhog
     MAILER_PORT: 1025
-    MAILER_ENCRYPTION: null
-    MAILER_USERNAME: null
-    MAILER_PASSWORD: null
-    MAILER_AUTH_MODE: null
+    MAILER_ENCRYPTION: ''
+    MAILER_USERNAME: ''
+    MAILER_PASSWORD: ''
+    MAILER_AUTH_MODE: ''
     FEATURE_EXAMPLE: 1
   before_script:
     - bash ci/docker_install.sh > /dev/null
