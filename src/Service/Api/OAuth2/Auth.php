@@ -49,7 +49,7 @@ class Auth
         $defaultParams = [
             'response_type' => 'code',
             'client_id' => $this->consumer->getKey(),
-            'redirect_uri' => str_replace("'", "", $redirectUri),
+            'redirect_uri' => $redirectUri,
             'state' => $this->generateNonce()
         ];
 
