@@ -19,21 +19,19 @@ test:
     MYSQL_PASSWORD: sharetoall
     MYSQL_ROOT_PASSWORD: sharetoall
     MYSQL_HOST: db
-    APP_VERSION: 1.0
+    APP_VERSION: '1.0'
     APP_DOMAIN: sharetoall.loc
-    APP_URL: http://sharetoall.loc
-    APP_REDIRECT_URI: http://sharetoall.loc/redirect/
+    APP_URL: 'http://sharetoall.loc'
+    APP_REDIRECT_URI: 'http://sharetoall.loc/redirect/'
     APP_EMAIL: root@localhost
     APP_LOCALE: en
-    MINIFIED_JS: 1
-    MINIFIED_CSS: 1
-    # DB_HOST: db
-    # DB_PORT: 3306
-    # DB_NAME: sharetoall
-    # DB_USER: sharetoall
-    # DB_PASSWORD: sharetoall
-    # REDIS_HOST: redis
-    # REDIS_PORT: 6379
+    DB_HOST: db
+    DB_PORT: 3306
+    DB_NAME: sharetoall
+    DB_USER: sharetoall
+    DB_PASSWORD: sharetoall
+    REDIS_HOST: redis
+    REDIS_PORT: 6379
     # MAILER_HOST: mailhog
     # MAILER_PORT: 1025
     # MAILER_ENCRYPTION: null
@@ -41,6 +39,8 @@ test:
     # MAILER_PASSWORD: ''
     # MAILER_AUTH_MODE: ''
     # FEATURE_EXAMPLE: true
+    # MINIFIED_JS: true
+    # MINIFIED_CSS: true
   before_script:
     - bash ci/docker_install.sh > /dev/null
   script:
