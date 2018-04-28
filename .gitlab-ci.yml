@@ -32,6 +32,8 @@ test:
     DB_PASSWORD: sharetoall
     REDIS_HOST: redis
     REDIS_PORT: 6379
+    MINIFIED_JS: true
+    MINIFIED_CSS: true
     # MAILER_HOST: mailhog
     # MAILER_PORT: 1025
     # MAILER_ENCRYPTION: null
@@ -39,8 +41,6 @@ test:
     # MAILER_PASSWORD: ''
     # MAILER_AUTH_MODE: ''
     # FEATURE_EXAMPLE: true
-    # MINIFIED_JS: true
-    # MINIFIED_CSS: true
   before_script:
     - bash ci/docker_install.sh > /dev/null
   script:
