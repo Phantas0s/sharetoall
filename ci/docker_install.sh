@@ -9,7 +9,7 @@ set -xe
 # Here you can install any other extension that you need
 docker-php-ext-install pdo_mysql
 
-# Install git 
+# Install git
 apt-get update -yqq
 apt-get install git -yqq
 apt-get install zip unzip -yqq
