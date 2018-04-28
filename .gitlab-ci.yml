@@ -21,9 +21,9 @@ test:
     MYSQL_HOST: db
   before_script:
     - bash ci/docker_install.sh > /dev/null
+    - "touch config.env"
+    - "echo ${PARAMETERS} > config.env"
     - source config.env
-    # - "touch config.env"
-    # - "echo ${PARAMETERS} > config.env"
   script:
     - bin/phing build-database
     - phpunit --configuration phpunit.xml
