@@ -2,8 +2,8 @@
 #   key: "$CI_BUILD_REF_NAME php:7.2"
 
 stages:
-  # - test
-  # - release
+  - test
+  - release
   - deploy
 
 services:
