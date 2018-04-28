@@ -19,10 +19,10 @@ test:
     MYSQL_PASSWORD: sharetoall
     MYSQL_ROOT_PASSWORD: sharetoall
     MYSQL_HOST: db
-    APP_VERSION: '1.0'
+    APP_VERSION: 1.0
     APP_DOMAIN: sharetoall.loc
-    APP_URL: 'http://sharetoall.loc'
-    APP_REDIRECT_URI: 'http://sharetoall.loc/redirect/'
+    APP_URL: http://sharetoall.loc
+    APP_REDIRECT_URI: http://sharetoall.loc/redirect/
     APP_EMAIL: root@localhost
     APP_LOCALE: en
     MINIFIED_JS: true
