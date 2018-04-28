@@ -34,13 +34,13 @@ test:
     REDIS_PORT: 6379
     MINIFIED_JS: 1
     MINIFIED_CSS: 1
-    # MAILER_HOST: mailhog
-    # MAILER_PORT: 1025
-    # MAILER_ENCRYPTION: null
-    # MAILER_USERNAME: ''
-    # MAILER_PASSWORD: ''
-    # MAILER_AUTH_MODE: ''
-    # FEATURE_EXAMPLE: true
+    MAILER_HOST: mailhog
+    MAILER_PORT: 1025
+    MAILER_ENCRYPTION: null
+    MAILER_USERNAME: ''
+    MAILER_PASSWORD: ''
+    MAILER_AUTH_MODE: ''
+    FEATURE_EXAMPLE: 1
   before_script:
     - bash ci/docker_install.sh > /dev/null
   script:
