@@ -32,8 +32,8 @@ test:
     DB_PASSWORD: sharetoall
     REDIS_HOST: redis
     REDIS_PORT: 6379
-    MINIFIED_JS: true
-    MINIFIED_CSS: true
+    # MINIFIED_JS: true
+    # MINIFIED_CSS: true
     # MAILER_HOST: mailhog
     # MAILER_PORT: 1025
     # MAILER_ENCRYPTION: null
