@@ -2,28 +2,28 @@
 #   key: "$CI_BUILD_REF_NAME php:7.2"
 
 stages:
-  # - test
+  - test
   - release
   - deploy
 
-# services:
-# - name: mariadb:latest
-#   alias: db
+services:
+  - name: mariadb:latest
+    alias: db
 
-# test:
-#   stage: test
-#   image: php:7.2
-#   variables:
-#     MYSQL_DATABASE: sharetoall
-#     MYSQL_USER: sharetoall
-#     MYSQL_PASSWORD: sharetoall
-#     MYSQL_ROOT_PASSWORD: sharetoall
-#     MYSQL_HOST: db
-#   before_script:
-#     - bash ci/docker_install.sh > /dev/null
-#   script:
-#     - bin/phing build-database
-#     - phpunit --configuration phpunit.xml
+test:
+  stage: test
+  image: php:7.2
+  variables:
+    MYSQL_DATABASE: sharetoall
+    MYSQL_USER: sharetoall
+    MYSQL_PASSWORD: sharetoall
+    MYSQL_ROOT_PASSWORD: sharetoall
+    MYSQL_HOST: db
+  before_script:
+    - bash ci/docker_install.sh > /dev/null
+  script:
+    - bin/phing build-database
+    - phpunit --configuration phpunit.xml
 
 release:
   stage: release
@@ -39,8 +39,6 @@ release:
     - docker version
     - "docker info"
     - "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
-    # - "touch config.env"
-    # - "echo ${PARAMETERS} > config.env"
   script:
     - "docker-compose -f docker-compose-release.yml build --pull"
     - "docker-compose -f docker-compose-release.yml push"

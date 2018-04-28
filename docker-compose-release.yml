@@ -30,8 +30,6 @@ services:
             - ./storage:/sharetoall/storage
         depends_on:
             - redis
-        # env_file:
-        #     - config.env
 
     redis:
         build:
