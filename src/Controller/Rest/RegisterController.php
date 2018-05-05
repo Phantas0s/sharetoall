@@ -42,20 +42,15 @@ class RegisterController
 
     public function postAction(Request $request): User
     {
-        $dataForm = $request->request->get('form');
         $form = $this->formFactory->create('User\Register');
 
+        $form->setDefinedWritableValues($request->request->get("form"))->validate();
+        $dataForm = $form->getValuesByTag('user');
         $this->verifyUserExists($dataForm['userEmail']);
-
-        $form->setDefinedWritableValues($dataForm)->validate();
 
         if ($form->hasErrors()) {
             throw new FormInvalidException($form->getFirstError());
         }
-
-        $dataForm = $form->getValuesByTag('user');
-        $dataForm['userVerifEmailToken'] = $form->getVerificationToken();
-        $dataForm['userPassword'] = $form->getPasswordHash();
 
         $this->model->save($dataForm);
 
@@ -71,7 +66,7 @@ class RegisterController
         $users = $this->model->findAll(['userEmail' => $userEmail]);
 
         if (!empty($users)) {
-            throw new FormInvalidException('This email address already exists!');
+            throw new FormInvalidException('The email address already exists. Please choose a different one.');
         }
     }
 }

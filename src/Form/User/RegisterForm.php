@@ -50,6 +50,16 @@ class RegisterForm extends FormAbstract
         $this->setDefinition($definition);
     }
 
+    public function getValuesByTag(string $tag): array
+    {
+        $values = parent::getValuesByTag($tag);
+        $values['userVerifEmailToken'] = $this->getVerificationToken();
+        $values['userPassword'] = $this->getPasswordHash();
+        $values['userNewsletter'] = (int)$this->userNewsletter;
+
+        return $values;
+    }
+
     public function setPasswordHash(string $hash)
     {
         if ($this->_passwordHash) {

@@ -27,7 +27,7 @@ class RegisterControllerTest extends UnitTestCase
                 'userEmail' => 'user@example.com',
                 'userPassword' => 'es58bhst89e5',
                 'userPasswordConfirm' => 'es58bhst89e5',
-                'userNewsletter' => 1
+                'userNewsletter' => false
             ]
         ];
 
@@ -38,7 +38,7 @@ class RegisterControllerTest extends UnitTestCase
 
         $values = $user->getValues();
         $this->assertEquals($params['form']['userEmail'], $values['userEmail']);
-        $this->assertEquals($params['form']['userNewsletter'], $values['userNewsletter']);
+        $this->assertEquals(0, $values['userNewsletter']);
     }
 
     public function testPostActionWithExistingEmail()
