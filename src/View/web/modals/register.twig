@@ -43,14 +43,14 @@
                     name="userNewsletter"
                     type="checkbox"
                 ></v-checkbox>
-                <v-btn @click="register">register</v-btn>
+                <v-btn id="button-validate-register" @click="register">register</v-btn>
             </form>
         </div>
     </v-card>
 </v-dialog>
 
-<v-dialog v-model="confirmModal" max-width="400px">
-    <v-card class="pa-5">
+<v-dialog  v-model="confirmModal" max-width="400px">
+    <v-card id="popup-result-register" class="pa-5">
         <p>Thanks for registering!</p>
         <p>We just sent you an email. Just click on the link inside it to confirm your email address.</p>
     </v-card>

@@ -33,6 +33,7 @@ class Mail
             ->setSubject($subject)
             ->setFrom($this->from)
             ->setTo($recipients)
+            ->setContentType("text/html")
             ->setBody($body);
 
         return $message;

@@ -28,12 +28,12 @@ services:
         arguments:
             - "@service.session"
             - "@model.factory"
-            - "@form.factory" 
+            - "@form.factory"
             - "@service.network-factory-fake"
 
     controller.rest.connect:
         class: App\Controller\Rest\ConnectController
-        arguments: 
+        arguments:
             - "@service.session"
             - "@model.factory"
             - "@form.factory"
@@ -59,7 +59,7 @@ services:
         arguments:
             - "@service.session"
             - "@model.factory"
-            - "@form.factory" 
+            - "@form.factory"
             - "@service.mail"
 
     controller.rest.newsletter:

@@ -31,6 +31,7 @@
 
     <target name="test-acceptance">
         <phingcall target="build-codeception"/>
+        <phingcall target="build-database"/>
         <exec command="./bin/codecept run" checkreturn="true" passthru="true"/>
     </target>
 

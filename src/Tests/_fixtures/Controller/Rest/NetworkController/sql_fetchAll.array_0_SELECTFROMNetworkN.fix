@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:6:{i:0;a:2:{s:11:"networkSlug";s:4:"fake";s:11:"networkName";s:12:"Fake Network";}i:1;a:2:{s:11:"networkSlug";s:12:"fakeLinkedin";s:11:"networkName";s:13:"Fake Linkedin";}i:2;a:2:{s:11:"networkSlug";s:11:"fakeTwitter";s:11:"networkName";s:12:"Fake Twitter";}i:3;a:2:{s:11:"networkSlug";s:8:"linkedin";s:11:"networkName";s:8:"Linkedin";}i:4;a:2:{s:11:"networkSlug";s:12:"supernetwork";s:11:"networkName";s:13:"Super Network";}i:5;a:2:{s:11:"networkSlug";s:7:"twitter";s:11:"networkName";s:7:"Twitter";}}s:4:"args";a:1:{i:0;s:4367:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:6:{i:0;a:2:{s:11:"networkSlug";s:4:"fake";s:11:"networkName";s:12:"Fake Network";}i:1;a:2:{s:11:"networkSlug";s:12:"fakeLinkedin";s:11:"networkName";s:13:"Fake Linkedin";}i:2;a:2:{s:11:"networkSlug";s:11:"fakeTwitter";s:11:"networkName";s:12:"Fake Twitter";}i:3;a:2:{s:11:"networkSlug";s:8:"linkedin";s:11:"networkName";s:8:"Linkedin";}i:4;a:2:{s:11:"networkSlug";s:12:"supernetwork";s:11:"networkName";s:13:"Super Network";}i:5;a:2:{s:11:"networkSlug";s:7:"twitter";s:11:"networkName";s:7:"Twitter";}}s:4:"args";a:1:{i:0;s:4373:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (
@@ -43,7 +43,7 @@ a:2:{s:6:"result";a:6:{i:0;a:2:{s:11:"networkSlug";s:4:"fake";s:11:"networkName"
                     [password] => sharetoall
                 )
 
-            [platform:Doctrine\DBAL\Connection:private] => Doctrine\DBAL\Platforms\MySqlPlatform Object
+            [platform:Doctrine\DBAL\Connection:private] => Doctrine\DBAL\Platforms\MariaDb1027Platform Object
                 (
                     [doctrineTypeMapping:protected] => 
                     [doctrineTypeComments:protected] => 
