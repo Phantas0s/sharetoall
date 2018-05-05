@@ -14,4 +14,10 @@ return [
         'userVerifEmailToken' => '123456',
         'userResetPasswordToken' => '123456',
     ],
+    [
+        'userId' => 3,
+        'userEmail' => 'user2@sharetoall.com',
+        'userPassword' => '$2y$10$lQtIrnC2WGvOdz5crEt3L.WRjg3iHh.HsM8dEToXodfP6gF5kI8Vu', //password
+        'userVerified' => '2012-12-12'
+    ],
 ];

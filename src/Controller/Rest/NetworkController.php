@@ -17,6 +17,8 @@ class NetworkController extends EntityControllerAbstract
     public function getAction(string $userId, Request $request): array
     {
         $userId = (int)$userId;
+        // Invalidate user network which have token expiration date
+        // TODO: do that via CRON?
         $networks = $this->model->invalidateUserNetwork();
         $networks = $this->model->findAllNetworkByUserId($userId)->getAllResultsAsArray();
 

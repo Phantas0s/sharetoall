@@ -92,7 +92,8 @@ class RedirectController
         $state = $request->get('state');
         $code = $request->get('code');
 
-        // @todo see https://developer.linkedin.com/docs/oauth2 to manage better the LogLevel::ERROR
+        // TODO see https://developer.linkedin.com/docs/oauth2
+        // to manage better the LogLevel::ERROR
         $networkError = $request->get('error');
         if ($networkError) {
             throw new NetworkErrorException($networkError);
@@ -116,8 +117,8 @@ class RedirectController
 
         $now = new \DateTime();
         $now->modify(sprintf("+ %d seconds", $token->getTtl()));
-        // -1 day to be sure every messages to linkedin are properly processed
-        $expire = $now->modify("-1 day")->format('Y-m-d H:i:s');
+        // -1 hour to be sure every messages to linkedin are properly processed
+        $expire = $now->modify("-1 hour")->format('Y-m-d H:i:s');
 
         $this->model->saveUserNetwork([
             'userId' => $this->session->getUserId(),

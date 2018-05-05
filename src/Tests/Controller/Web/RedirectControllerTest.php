@@ -36,7 +36,7 @@ class RedirectControllerTest extends UnitTestCase
         DaoAbstract::setDateTimeClassName('\TestTools\Util\FixedDateTime');
         $params = [
             'code' => 'dummyCode',
-            'state' => 'dummyState'
+            'state' => 'superDummy'
         ];
 
         $request = Request::create('https://dummyurl', 'GET', $params);
