@@ -13,7 +13,7 @@ class ResetPasswordCest
         $I->click('#button-login');
         $I->seeElement('#modal-login');
         $I->click('#button-reset-password');
-        $I->wait(2);
+        $I->wait(4);
         $I->seeElement('#modal-reset-password');
         $I->fillField('[name = resetPasswordEmail]', 'user@sharetoall.com');
         $I->click('#button-validate-reset-password');
