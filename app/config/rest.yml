@@ -52,3 +52,9 @@ services:
         arguments:
             - "@model.newsletter"
             - "@form.newsletter"
+
+    controller.rest.contact:
+        class: App\Controller\Rest\ContactController
+        arguments:
+            - "@form.contact"
+            - "@service.mail"

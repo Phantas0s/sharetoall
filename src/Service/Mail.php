@@ -100,4 +100,21 @@ class Mail
 
         return $this->mailer->send($message);
     }
+
+    public function contact(string $email, string $message)
+    {
+        $values = [
+            'email' => $email,
+            'message' => $message
+        ];
+
+        $message = $this->createNewMessage(
+            'Sharetoall - contact form',
+            ["sharetoall@gmail.com"],
+            'contact',
+            $values
+        );
+
+        return $this->mailer->send($message);
+    }
 }

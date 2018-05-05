@@ -25,3 +25,10 @@ services:
             - "@translator"
             - "@form.validator"
             - "@form.options"
+
+    form.contact:
+        class: App\Form\Contact\CreateForm
+        arguments:
+            - "@translator"
+            - "@form.validator"
+            - "@form.options"

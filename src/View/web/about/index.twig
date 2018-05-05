@@ -17,6 +17,7 @@
                     <v-btn flat color="secondary" v-if="connected" @click.native="logout()">Logout</v-btn>
                     <v-btn flat color="secondary" v-if="!connected" @click.native="loginModal = true">Login</v-btn>
                     <v-btn flat color="secondary" v-if="!connected" @click.native="registerModal = true">Register</v-btn>
+                    <v-btn flat color="secondary" id="button-contact"  @click.native="contactModal = true">Contact</v-btn>
                 </v-toolbar-items>
             </v-toolbar>
             <v-content>
@@ -52,6 +53,7 @@
                 {% include 'web/modals/login.twig' %}
                 {% include 'web/modals/resetPassword.twig' %}
                 {% include 'web/modals/register.twig' %}
+                {% include 'web/modals/contact.twig' %}
             </v-content>
         </v-app>
     </div>

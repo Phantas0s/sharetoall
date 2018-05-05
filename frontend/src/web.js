@@ -34,6 +34,8 @@ const app = new Vue({
         newPasswordModal: true,
         newPasswordConfirmModal: false,
         confirmNewsletterModal: false,
+        contactModal: false,
+        confirmContactModal: false,
 
         loginEmail: '',
         loginPass: '',
@@ -43,9 +45,13 @@ const app = new Vue({
         userEmail: '',
         userPassword: '',
         userPasswordConfirm: '',
+        userNewsletter: false,
+
         newPassword: '',
         newPasswordConfirm: '',
-        userNewsletter: false,
+
+        contactEmail: '',
+        contactMessage: '',
 
         session_token: '',
 
@@ -135,6 +141,19 @@ const app = new Vue({
                 this.confirmNewsletterModal = true;
             }, error => {});
 
+        },
+        contact: function(e) {
+            e.preventDefault();
+
+            let form = {
+                email: this.contactEmail,
+                message: this.contactMessage,
+            };
+
+            Api.post('contact', {form: form}).then(response => {
+                this.contactModal = false;
+                this.confirmContactModal = true;
+            }, error => {});
         },
     },
 });

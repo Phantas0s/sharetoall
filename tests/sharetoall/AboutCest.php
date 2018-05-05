@@ -4,7 +4,7 @@ namespace sharetoall;
 
 class AboutCest
 {
-    public function AboutPage(\SharetoallTester $I)
+    public function aboutPage(\SharetoallTester $I)
     {
         $I->amOnPage('/');
         $I->click('#button-about');

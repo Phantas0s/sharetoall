@@ -26,8 +26,11 @@ class EntityControllerAbstract
     protected $formFactory;
     protected $model;
 
-    public function __construct(Session $session, ModelFactory $modelFactory, FormFactory $formFactory)
-    {
+    public function __construct(
+        Session $session,
+        ModelFactory $modelFactory,
+        FormFactory $formFactory
+    ) {
         $this->session = $session;
         $this->modelFactory = $modelFactory;
         $this->formFactory = $formFactory;

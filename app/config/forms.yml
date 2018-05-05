@@ -4,7 +4,7 @@ services:
         arguments:
             - "@translator"
         calls:
-            - [ setOptionsPath, [ "%app.path%/options" ] ]
+            - [setOptionsPath, ["%app.path%/options"]]
 
     form.validator:
         class: InputValidation\Form\Validator
@@ -16,11 +16,18 @@ services:
             - "@form.validator"
             - "@form.options"
         calls:
-            - [ setFactoryNamespace, [ 'App\Form' ] ]
-            - [ setFactoryPostfix, [ 'Form' ] ]
+            - [setFactoryNamespace, ['App\Form']]
+            - [setFactoryPostfix, ['Form']]
 
     form.newsletter:
         class: App\Form\User\NewsletterForm
+        arguments:
+            - "@translator"
+            - "@form.validator"
+            - "@form.options"
+
+    form.contact:
+        class: App\Form\Contact\CreateForm
         arguments:
             - "@translator"
             - "@form.validator"
