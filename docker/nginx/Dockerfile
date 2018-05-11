@@ -14,5 +14,5 @@ COPY ./docker/nginx/site.conf /etc/nginx/conf.d/default.conf
 
 # In order to activate htpasswd
 # ADD ./docker/nginx/entrypoint.sh /bin/entrypoint.sh
-RUN chmod 777 /bin/entrypoint.sh
-CMD sh /bin/entrypoint.sh
+# RUN chmod 777 /bin/entrypoint.sh
+# CMD sh /bin/entrypoint.sh
