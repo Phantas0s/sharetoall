@@ -110,7 +110,7 @@ class Mail
 
         $message = $this->createNewMessage(
             'Sharetoall - contact form',
-            ["sharetoall@gmail.com"],
+            ["sharetoall.no.reply@gmail.com"],
             'contact',
             $values
         );
