@@ -5,14 +5,9 @@ services:
         build:
             context: ./
             dockerfile: ./docker/nginx/Dockerfile
-            args:
-                - HTTP_AUTH_LOGIN=${HTTP_AUTH_LOGIN}
-                - HTTP_AUTH_PASSWORD=${HTTP_AUTH_PASSWORD}
         image: ${CI_REGISTRY}/${CI_PROJECT_PATH}:web-latest
         ports:
             - 9090:80
-        # volumes:
-        #     - ./web:/sharetoall/web
         depends_on:
             - php
         environment:
