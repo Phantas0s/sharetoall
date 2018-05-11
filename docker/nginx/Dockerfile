@@ -12,6 +12,7 @@ RUN apk update \
 
 COPY ./docker/nginx/site.conf /etc/nginx/conf.d/default.conf
 
-ADD ./docker/nginx/entrypoint.sh /bin/entrypoint.sh
+# In order to activate htpasswd
+# ADD ./docker/nginx/entrypoint.sh /bin/entrypoint.sh
 RUN chmod 777 /bin/entrypoint.sh
 CMD sh /bin/entrypoint.sh
