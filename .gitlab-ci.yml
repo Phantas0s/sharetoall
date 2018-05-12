@@ -3,7 +3,7 @@
 
 stages:
   - test
-  - release
+  - build
   - deploy
 
 services:
@@ -53,11 +53,12 @@ test:
     - bin/phing build-database
     - phpunit --configuration phpunit.xml
 
-release:
-  stage: release
+build:
+  stage: build
   image: gitlab/dind:latest
   only:
     - "develop"
+    - "feature/https"
   services:
     - docker:dind
   variables:
