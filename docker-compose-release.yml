@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: ./
-      dockerfile: ./docker-prod/nginx/Dockerfile
+      dockerfile: ./docker/nginx-prod/nginx/Dockerfile
     depends_on:
       - php
     links:
