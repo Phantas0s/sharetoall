@@ -58,7 +58,6 @@ build:
   image: gitlab/dind:latest
   only:
     - "develop"
-    - "feature/https"
   services:
     - docker:dind
   variables:
