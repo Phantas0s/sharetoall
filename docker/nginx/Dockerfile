@@ -10,5 +10,5 @@ RUN apk update \
     && apk add --virtual build-deps \
     openssl 
 
-COPY ./dhparam-2048.pem /etc/ssl/certs/dhparam-2048.pem
+COPY ./docker/nginx/dhparam-2048.pem /etc/ssl/certs/dhparam-2048.pem
 COPY ./docker/nginx/site-http.conf /etc/nginx/conf.d/default.conf
