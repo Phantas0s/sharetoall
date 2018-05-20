@@ -11,4 +11,4 @@ RUN apk update \
     openssl 
 
 COPY ./docker/nginx/dhparam-2048.pem /etc/ssl/certs/dhparam-2048.pem
-COPY ./docker/nginx/site-http.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx/site-https.conf /etc/nginx/conf.d/default.conf
