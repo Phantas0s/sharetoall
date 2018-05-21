@@ -4,16 +4,16 @@ services:
         arguments:
             - "@db"
         calls:
-            - [ setFactoryNamespace, [ 'App\Dao' ] ]
-            - [ setFactoryPostfix, [ 'Dao' ] ]
+            - [setFactoryNamespace, ['App\Dao']]
+            - [setFactoryPostfix, ['Dao']]
 
     model.factory:
         class: App\Model\ModelFactory
         arguments:
             - "@dao.factory"
         calls:
-            - [ setFactoryNamespace, [ 'App\Model' ] ]
-            - [ setFactoryPostfix, [ '' ] ]
+            - [setFactoryNamespace, ['App\Model']]
+            - [setFactoryPostfix, ['']]
 
     model.user:
         class: App\Model\User

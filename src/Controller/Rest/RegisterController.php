@@ -4,7 +4,7 @@ namespace App\Controller\Rest;
 
 use App\Exception\FormInvalidException;
 use App\Form\FormFactory;
-use App\Model\ModelFactory;
+use App\Model\Newsletter;
 use App\Model\User;
 use App\Service\Mail;
 use App\Service\Session;
@@ -14,25 +14,28 @@ use Symfony\Component\HttpFoundation\Request;
 class RegisterController
 {
     protected $session;
-    protected $modelFactory;
     protected $formFactory;
     protected $model;
 
     /** @var Mail */
     private $mail;
 
+    /** @var Newsletter */
+    private $newsletterModel;
+
     public function __construct(
         Session $session,
-        ModelFactory $modelFactory,
+        User $user,
+        Newsletter $newsletter,
         FormFactory $formFactory,
         Mail $mail
     ) {
         $this->session = $session;
-        $this->modelFactory = $modelFactory;
         $this->formFactory = $formFactory;
         $this->mail = $mail;
 
-        $this->model = $this->createModel("User");
+        $this->model = $user;
+        $this->newsletterModel = $newsletter;
     }
 
     protected function createModel(string $name)
@@ -53,6 +56,10 @@ class RegisterController
         }
 
         $this->model->save($dataForm);
+
+        if ($dataForm['userNewsletter']) {
+            $this->newsletterModel->save(['newsletterEmail' => $dataForm['userEmail']]);
+        }
 
         $this->mail->confirmEmail(
             $this->model

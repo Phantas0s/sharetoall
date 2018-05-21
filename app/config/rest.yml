@@ -1,11 +1,11 @@
 services:
     controller.rest.domain:
         class: App\Controller\Rest\DomainController
-        arguments: [ "@model.factory", "@form.factory" ]
+        arguments: ["@model.factory", "@form.factory"]
 
     controller.rest.session:
         class: App\Controller\Rest\SessionController
-        arguments: [ "@service.session", "@model.user", %app.version%, %app.debug%]
+        arguments: ["@service.session", "@model.user", %app.version%, %app.debug%]
 
     controller.rest.network:
         class: App\Controller\Rest\NetworkController
@@ -13,7 +13,7 @@ services:
 
     controller.rest.connect:
         class: App\Controller\Rest\ConnectController
-        arguments: 
+        arguments:
             - "@service.session"
             - "@model.factory"
             - "@form.factory"
@@ -24,7 +24,7 @@ services:
 
     controller.rest.message:
         class: App\Controller\Rest\MessageController
-        arguments: 
+        arguments:
             - "@service.session"
             - "@model.factory"
             - "@form.factory"
@@ -36,7 +36,8 @@ services:
         class: App\Controller\Rest\RegisterController
         arguments:
             - "@service.session"
-            - "@model.factory"
+            - "@model.user"
+            - "@model.newsletter"
             - "@form.factory"
             - "@service.mail"
 

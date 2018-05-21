@@ -7,21 +7,21 @@ services:
 
     controller.web.index:
         class: App\Controller\Web\IndexController
-        arguments: [ "@form.factory" ]
+        arguments: ["@form.factory"]
 
     controller.rest.session:
         class: App\Controller\Rest\SessionController
-        arguments: [ "@service.session", "@model.user", "1.2.3", true ]
+        arguments: ["@service.session", "@model.user", "1.2.3", true]
 
     controller.rest.users:
         class: App\Controller\Rest\UsersController
-        arguments: [ "@service.session", "@model.factory", "@form.factory" ]
+        arguments: ["@service.session", "@model.factory", "@form.factory"]
         calls:
-            - [ setMailService, [ "@service.mail" ] ]
+            - [setMailService, ["@service.mail"]]
 
     controller.rest.network:
         class: App\Controller\Rest\NetworkController
-        arguments: [ "@service.session", "@model.factory", "@form.factory" ]
+        arguments: ["@service.session", "@model.factory", "@form.factory"]
 
     controller.rest.message:
         class: App\Controller\Rest\MessageController
@@ -58,7 +58,8 @@ services:
         class: App\Controller\Rest\RegisterController
         arguments:
             - "@service.session"
-            - "@model.factory"
+            - "@model.user"
+            - "@model.newsletter"
             - "@form.factory"
             - "@service.mail"
 
