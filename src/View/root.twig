@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="/assets/build/{{ realm }}.css?{{ "web/assets/build/#{realm}.css" | md5sum }}" data-type="replaceable">
     <link rel="shortcut icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46898153-5"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-46898153-5');
+    </script>
 </head>
 <body>
     <div id="alerts" class="alert">
