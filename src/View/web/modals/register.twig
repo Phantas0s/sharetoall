@@ -1,7 +1,9 @@
 <v-dialog v-model="registerModal" max-width="700px">
     <v-card id="modal-register" class="pa-5">
         <h2 class="form-title">Register</h2>
-        <div>Your information are safe here. Nothing will be divulged.</div>
+        <div>
+            <p>Your information are safe here.</p>
+        </div>
         <div class="form-wrapper form-500">
             <form class="form-register" id="registerForm" method="post" name="register_form" action="/auth/register" ref="registerForm" @keyup.enter="register">
                 <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="register_session_token" />

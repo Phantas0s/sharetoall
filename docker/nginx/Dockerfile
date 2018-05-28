@@ -10,4 +10,5 @@ RUN apk update \
     && apk add --virtual build-deps \
     openssl 
 
+COPY ./web/ /sharetoall/web/
 COPY ./docker/nginx/site-https.conf /etc/nginx/conf.d/default.conf
