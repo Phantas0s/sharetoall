@@ -26,3 +26,4 @@ parameters:
     twitter.consumer_secret: '%env(TWITTER_CONSUMER_SECRET)%'
     linkedin.consumer_key: '%env(LINKEDIN_CONSUMER_KEY)%'
     linkedin.consumer_secret: '%env(LINKEDIN_CONSUMER_SECRET)%'
+    google.token: '%env(GOOGLE_TOKEN)%'
