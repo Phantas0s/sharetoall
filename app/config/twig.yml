@@ -32,6 +32,7 @@ services:
             - [ addGlobal, [ 'minified_css', %minified_css% ] ]
             - [ addGlobal, [ 'locale', %app.locale% ] ]
             - [ addGlobal, [ 'features', %features% ] ]
+            - [ addGlobal, [ 'google_token', %google.token% ] ]
             - [ addExtension, [ '@twig.md5sum' ] ]
             - [ addExtension, [ '@twig.trans' ] ]
 
