@@ -24,6 +24,7 @@ if(!session.isValid()) {
     throw 'Requires authentication';
 }
 
+
 Vue.use(Router);
 Vue.use(Vuetify,{
     theme: {
@@ -50,6 +51,7 @@ const router = new Router({
     saveScrollPosition: true,
 });
 
+Vue.config.productionTip = false;
 /* eslint-disable no-unused-vars */
 const app = new Vue({
     el: '#app',

@@ -16,6 +16,7 @@ const Alert = {
     },
 };
 
+Vue.config.productionTip = false;
 new Vue({
     el: '#alerts',
     template: '<div id="alerts" class=""><div @click="closeAlert()" v-for="message in messages" :class="message.type" class="alert">{{ message.msg }}</div></div>',
