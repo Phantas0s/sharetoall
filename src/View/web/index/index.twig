@@ -10,7 +10,7 @@
     <div v-cloak>
         <v-app light>
             <v-toolbar dense app clipped-left fixed>
-                <h1><a href="/" class="black--text" title="home"><img class="hidden-xs-only" src="/assets/img/logo.png">Sharetoall <small class="hidden-xs-only">beta</small></a></h1>
+                <h1><a href="/" class="black--text" title="home"><img class="hidden-xs-only" src="/assets/img/logo.png">Share<span class="accent-color">to</span>all<small class="beta hidden-xs-only">beta</small></a></h1>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                     <v-btn flat color="secondary" id="button-dashboard" v-if="connected" href="/sharetoall">Dashboard</v-btn>
@@ -30,7 +30,7 @@
                         justify-center
                         class="white--text band"
                         >
-                        <h1 class="white--text mb-2 mt-5 display-1 text-xs-center">Sharing for free on social media</h1>
+                        <h1 class="white--text mb-2 mt-5 display-1 text-xs-center">Sharing on social media for free</h1>
                         <div class="subheading mb-3 text-xs-center">A simple and straightforward way</div>
                         <v-btn
                             class="accent white--text subheading mt-5"
@@ -66,15 +66,15 @@
                                             </v-card-text>
 
                                             <v-card-title primary-title class="layout justify-center">
-                                                <div class="headline text-xs-center">What is Sharetoall?</div>
+                                                <h2 class="headline text-xs-center">What is Sharetoall</h2>
                                             </v-card-title>
 
                                             <v-card-text class="text-xs-center">
                                                 <p>
                                                     Tired to procrastinate on social media? <br />
-                                                    Sharetoall offers you a simple interface with one goal: sharing.
                                                 </p>
-                                                <p>Write your message, share it on multiple social media, you're done!</p>
+                                                <p>Sharetoall allows you to send messages on multiple social media platforms.</p>
+                                                <p>In a very simple way!</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
@@ -86,12 +86,12 @@
                                             </v-card-text>
 
                                             <v-card-title primary-title class="layout justify-center">
-                                                <div class="headline text-xs-center">Sharing for free</div>
+                                                <h2 class="headline text-xs-center">Donation based</h2>
                                             </v-card-title>
 
                                             <v-card-text class="text-xs-center">
-                                                <p>This service is free and will stay free.</p>
-                                                <p>If you want to support me, consider making a donation.</p>
+                                                <p>Sharetoall counts on donations to finance itself.</p>
+                                                <p>Please consider it if you use and like the service.</p>
 
                                                 <v-btn
                                                     href="https://www.patreon.com/sharetoall"
@@ -111,16 +111,16 @@
                                             </v-card-text>
 
                                             <v-card-title primary-title class="layout justify-center">
-                                                <div class="headline">Safety for your data</div>
+                                                <h2 class="headline">Safety for your data</h2>
                                             </v-card-title>
 
                                             <v-card-text class="text-xs-center">
-                                                <p>The only content shared is what you decide to share on social media.</p>
-                                                <p>The messages shared on social media won't be saved on this website.</p>
-                                                <p>Sharetoall will never sell or give any of your data.</p>
+                                                <p>Sharetoall only share what you want.</p>
+                                                <p>This service will never sell or give any of your data.</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-flex>
+
                                 </v-layout>
                             </v-container>
                         </v-flex>
