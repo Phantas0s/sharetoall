@@ -56,7 +56,7 @@
                     </v-card>
                 </v-flex>
                 <v-toolbar dense app clipped-left fixed>
-                    <h1><a href="/" class="black--text" title="home"><img class="hidden-xs-only" src="/assets/img/logo.png">Sharetoall <small class="hidden-xs-only">beta</small></a></h1>
+                    <h1><a href="/" class="black--text" title="home"><img class="hidden-xs-only" src="/assets/img/logo.png">Share<span class="accent-color">to</span>all<small class="beta hidden-xs-only">beta</small></a></h1>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn flat color="secondary" id="button-logout" clipped-right @click.native="logout()">Logout</v-btn>

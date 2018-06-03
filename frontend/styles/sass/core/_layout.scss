@@ -2,3 +2,27 @@ h1 a {
     text-decoration: none;
 }
 
+.first-grey {
+    color: $firstGrey
+}
+
+.second-grey {
+    color: $secondGrey
+}
+
+.third-grey {
+    color: $thirdGrey
+}
+
+.beta {
+    padding-left: 0.5em;
+}
+
+.accent-color {
+    color: #B1A296;
+}
+
+.card__title h2 {
+    padding: 0;
+    margin: 0;
+}
