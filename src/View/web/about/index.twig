@@ -10,7 +10,7 @@
     <div v-cloak>
         <v-app light>
             <v-toolbar dense app clipped-left fixed>
-                <h1><a href="/" class="black--text" title="home"><img src="/assets/img/logo.png">Sharetoall <small>beta</small></a></h1>
+                <h1><a href="/" class="black--text" title="home"><img class="hidden-xs-only" src="/assets/img/logo.png">Share<span class="accent-color">to</span>all<small class="beta hidden-xs-only">beta</small></a></h1>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                     <v-btn flat color="secondary" v-if="connected" href="/sharetoall">Dashboard</v-btn>
@@ -22,16 +22,19 @@
             </v-toolbar>
             <v-content>
                 <v-flex xs4 offset-xs4 id="about-container" class="pa-3 mt-3">
-                    <h1>Welcome to Sharetoall!</h1>
+                    <h1 class="mb-5 mt-4 display-1 text-xs-center">Welcome to Sharetoall</h1>
 
-                    <p>My name is Matthieu Cneude. I am a web developer and creator of Sharetoall.</p>
+                    <p>I am very pleased you are here!</p>
+                    <p>Let me introduce myself: I am Matthieu Cneude, web developer and creator of Sharetoall.</p>
+
+                    <p>Now you might wonder: why did I create this service?</p>
 
                     <p>Imagine that you found a very interesting piece of knowledge on Internet. Naturally you want to share it to a maximum of people.
                     <p>To do so you would need to:
                         <ol>
-                            <li>Go to every single social media you have an account on</li>
-                            <li>Share the helpful information you found</li>
-                            <li>Hope that you won't stay on them procrastinating</li>
+                            <li>Go to every single social media you have an account on.</li>
+                            <li>Share the helpful information you found.</li>
+                            <li>Hope that you won't stay on them procrastinating.</li>
                         </ol>
                     </p>
                     <p>A bit tedious, isn't it?</p>
@@ -49,7 +52,7 @@
 
                     <p>More and more functionalities will be added keeping these goal in mind.</p>
 
-                    <p>Since I work on this website on my free time, any donation are welcome! It will help add new functionalities.</p>
+                    <p>If you want to know more about me, you can easily send me a message via the contact form or even search my name on Internet :)</p>
 
                     <v-btn
                         href="https://www.patreon.com/sharetoall"
