@@ -23,7 +23,7 @@ class DashboardCest
     {
         $I->seeInCurrentUrl('/dashboard');
         $I->click('.v-btn[data-slug="linkedin"]');
-        $I->wait(10);
+        $I->wait(6);
         $I->makeScreenshot('linkedin');
         $I->fillField('[name = session_key]', 'caillebuster1@hotmail.com');
         $I->fillField('[name = session_password]', new PasswordArgument('t7xx8urjLQXpn6gxbSr0'));
