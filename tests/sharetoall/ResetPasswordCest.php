@@ -10,6 +10,8 @@ class ResetPasswordCest
     public function modalResetPassword(\SharetoallTester $I)
     {
         $I->amOnPage('/');
+        $I->click('.cc-dismiss');
+        $I->wait(2);
         $I->click('#button-login');
         $I->seeElement('#modal-login');
         $I->click('#button-reset-password');

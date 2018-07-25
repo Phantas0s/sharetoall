@@ -61,7 +61,7 @@ new Vue({
         },
 
         addErrorMessage: function (message) {
-            this.addMessage('error', message, 80000);
+            this.addMessage('error', message, 6000);
         },
 
         addSuccessMessage: function (message) {

@@ -21,7 +21,7 @@ class ConnectController extends EntityControllerAbstract
 
     protected $modelName = 'Network';
 
-    /** @var string */
+    /***/
     private $redirectUri;
 
     public function __construct(
@@ -54,7 +54,11 @@ class ConnectController extends EntityControllerAbstract
         try {
             return $network->getAuthUrl($this->session->getUserId(), $redirectUri);
         } catch (ApiException $e) {
-            $this->log(LogLevel::ERROR, $e->getMessage());
+            $this->log(
+                LogLevel::ERROR,
+                "Error while trying to connect to $networkSlug with redirect URI $redirectUri - Exception: " . $e->getMessage()
+            );
+            // send an alert here
         }
     }
 }

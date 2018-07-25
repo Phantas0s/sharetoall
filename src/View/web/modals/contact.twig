@@ -18,18 +18,16 @@
                     required
                 >
                 </v-text-field>
-                <v-text-field
+                <v-textarea
                     label="Your message"
                     color="secondary"
                     name="contactMessage"
                     id="contact-message"
                     value=""
                     v-model="contactMessage"
-                    multi-line
-                required
+                    required
                 >
-                </v-text-field>
-
+                </v-textarea>
                 <v-btn id="button-validate-contact" @click="contact">Send</v-btn>
             </form>
         </div>

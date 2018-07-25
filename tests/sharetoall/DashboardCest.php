@@ -10,6 +10,8 @@ class DashboardCest
     public function connect(SharetoallTester $I)
     {
         $I->amOnPage('/');
+        $I->click('.cc-dismiss');
+        $I->wait(2);
         $I->click('#button-login');
         $I->fillField('[name = loginEmail]', 'user@sharetoall.com');
         $I->fillField('[name = loginPass]', 'password');
@@ -20,8 +22,8 @@ class DashboardCest
     public function connectOnLinkedin(SharetoallTester $I)
     {
         $I->seeInCurrentUrl('/dashboard');
-        $I->click('.btn[data-slug="linkedin"]');
-        $I->wait(6);
+        $I->click('.v-btn[data-slug="linkedin"]');
+        $I->wait(10);
         $I->makeScreenshot('linkedin');
         $I->fillField('[name = session_key]', 'caillebuster1@hotmail.com');
         $I->fillField('[name = session_password]', new PasswordArgument('t7xx8urjLQXpn6gxbSr0'));
@@ -29,14 +31,14 @@ class DashboardCest
         $I->wait(10);
         $I->seeInCurrentUrl('/dashboard');
         $I->makeScreenshot('linkedin_connected');
-        $I->seeElement('.connected .btn[data-slug="linkedin"]');
-        $I->click('.btn[data-slug="linkedin"]');
+        $I->seeElement('.connected .v-btn[data-slug="linkedin"]');
+        $I->click('.v-btn[data-slug="linkedin"]');
     }
 
     public function connectOnTwitter(SharetoallTester $I)
     {
         $I->seeInCurrentUrl('/dashboard');
-        $I->click('.btn[data-slug="twitter"]');
+        $I->click('.v-btn[data-slug="twitter"]');
         $I->wait(6);
         $I->makeScreenshot('twitter');
         $I->fillField('#username_or_email', new PasswordArgument('MatthieuCneude'));
@@ -45,14 +47,15 @@ class DashboardCest
         $I->wait(10);
         $I->seeInCurrentUrl('/dashboard');
         $I->makeScreenshot('twitter_connected');
-        $I->seeElement('.connected .btn[data-slug="twitter"]');
-        $I->click('.btn[data-slug="twitter"]');
+        $I->seeElement('.connected .v-btn[data-slug="twitter"]');
+        $I->click('.v-btn[data-slug="twitter"]');
     }
 
     public function Logout(SharetoallTester $I)
     {
         $I->amOnPage('/sharetoall#/dashboard');
-        $I->wait(4);
+        $I->click('.cc-dismiss');
+        $I->wait(2);
         $I->click('#button-logout');
         $I->wait(1);
         $I->amOnPage('/');
