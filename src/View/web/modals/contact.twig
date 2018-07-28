@@ -1,11 +1,11 @@
 <v-dialog v-model="contactModal" max-width="500px">
     <v-card id="modal-contact" class="pa-5">
-        <h1 class="form-title">Contact</h1>
+        <h2 class="form-title">Contact</h2>
+        <div>
+            <p>You can contact me if you have suggestions or problems.</p>
+            <p>If you find a bug please send a precise description of it.</p>
+        </div>
         <div class="form-wrapper form-500">
-            <div>You can always contact me if you have some suggestions or problems.</div>
-            <br />
-            <div>If you find a bug please send a precise description of it.</div>
-            <br />
             <form id="form-contact" class="form-contact" id="contact" method="post" name="contact_form" ref="contactForm" @keyup.enter="contact">
                 <input type="hidden" name="session_token" value="{{ session_token }}" v-model="session_token" ref="contact_session_token" />
                 <v-text-field
@@ -18,18 +18,16 @@
                     required
                 >
                 </v-text-field>
-                <v-text-field
+                <v-textarea
                     label="Your message"
                     color="secondary"
                     name="contactMessage"
                     id="contact-message"
                     value=""
                     v-model="contactMessage"
-                    multi-line
-                required
+                    required
                 >
-                </v-text-field>
-
+                </v-textarea>
                 <v-btn id="button-validate-contact" @click="contact">Send</v-btn>
             </form>
         </div>

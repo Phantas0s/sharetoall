@@ -1,3 +1,28 @@
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    <script>
+    window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+    "palette": {
+        "popup": {
+        "background": "#216942",
+        "text": "#b2d192"
+        },
+        "button": {
+        "background": "#afed71"
+        }
+    },
+    "position": "top"
+    })});
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_token }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-46898153-5');
+    </script>
+
     <script src="/assets/build/{{ realm }}.js?{{ "web/assets/build/#{realm}.js" | md5sum }}"></script>
 </body>
 </html>

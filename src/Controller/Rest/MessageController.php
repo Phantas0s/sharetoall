@@ -26,7 +26,7 @@ class MessageController extends EntityControllerAbstract
     protected $createFormName = 'Message/CreateForm';
 
     /** @var NetworkFactory */
-    private $NetworkFactory;
+    private $networkFactory;
 
     /** @var Network */
     private $networkModel;
@@ -73,8 +73,14 @@ class MessageController extends EntityControllerAbstract
         try {
             $response['response'] = $networkApi->postUpdate($message, $token);
         } catch (ApiException $e) {
-            $this->log(LogLevel::ERROR, $e->getMessage());
-            throw new ApiException($e);
+            $message = sprintf(
+                "can't send message %s to network with slug %s with exception %s",
+                $message,
+                $networkSlug,
+                $e->getMessage()
+            );
+            $this->log(LogLevel::ERROR, $message);
+            throw new ApiException($message);
         }
 
         return $response;

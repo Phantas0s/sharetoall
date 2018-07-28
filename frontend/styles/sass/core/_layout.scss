@@ -26,3 +26,10 @@ h1 a {
     padding: 0;
     margin: 0;
 }
+
+.v-navigation-drawer {
+    position: relative;
+}
+.application .theme--light.v-text-field--box .v-input__slot, .theme--light .v-text-field--box .v-input__slot {
+    background: hsla(0,0%,100%,.6) !important;
+}

@@ -89,14 +89,14 @@ deploy:
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H $DEPLOYMENT_SERVER_IP >> ~/.ssh/known_hosts
   script:
-    - ssh hypnos@$DEPLOYMENT_SERVER_IP "docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}; \
-                                        cd /usr/share/nginx/html/sharetoall; \
-                                        docker-compose -f docker-compose.prod.yml stop; \
-                                        docker-compose -f docker-compose.prod.yml rm -f; \
-                                        docker volume rm sharetoall_public; \
-                                        docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH}:php-latest; \
-                                        docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH}:redis-latest; \
-                                        docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH}:web-latest; \
+    - ssh hypnos@$DEPLOYMENT_SERVER_IP "docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY};
+                                        cd /usr/share/nginx/html/sharetoall;
+                                        docker-compose -f docker-compose.prod.yml stop;
+                                        docker-compose -f docker-compose.prod.yml rm -f;
+                                        docker volume rm sharetoall_public;
+                                        docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH}:php-latest;
+                                        docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH}:redis-latest;
+                                        docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH}:web-latest;
                                         docker-compose -f docker-compose.prod.yml up -d --force-recreate"
   after_script:
     - "docker logout ${CI_REGISTRY}"

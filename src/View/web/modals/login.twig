@@ -19,7 +19,7 @@
                     name="loginPass"
                     id="loginPass"
                     :append-icon="loginPassVisible ? 'visibility' : 'visibility_off'"
-                    :append-icon-cb="() => (loginPassVisible = !loginPassVisible)"
+                    @click:append="() => (loginPassVisible = !loginPassVisible)"
                     :type="loginPassVisible ? 'text' : 'password'"
                     v-model="loginPass"
                 required

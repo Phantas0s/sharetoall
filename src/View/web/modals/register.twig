@@ -2,7 +2,7 @@
     <v-card id="modal-register" class="pa-5">
         <h2 class="form-title">Registration</h2>
         <div>
-            <p>Your information are safe here.</p>
+            <p>These information are safe here.</p>
         </div>
         <div class="form-wrapper form-500">
             <form class="form-register" id="registerForm" method="post" name="register_form" action="/auth/register" ref="registerForm" @keyup.enter="register">
@@ -22,7 +22,7 @@
                     name="userPassword"
                     id="userPassword"
                     :append-icon="userPasswordVisible ? 'visibility' : 'visibility_off'"
-                    :append-icon-cb="() => (userPasswordVisible = !userPasswordVisible)"
+                    @click:append="() => (userPasswordVisible = !userPasswordVisible)"
                     :type="userPasswordVisible ? 'text' : 'password'"
                     v-model="userPassword"
                     required
@@ -33,7 +33,7 @@
                     name="userPasswordConfirm"
                     id="userPasswordConfirm"
                     :append-icon="userPasswordConfirmVisible ? 'visibility' : 'visibility_off'"
-                    :append-icon-cb="() => (userPasswordConfirmVisible = !userPasswordConfirmVisible)"
+                    @click:append="() => (userPasswordConfirmVisible = !userPasswordConfirmVisible)"
                     :type="userPasswordConfirmVisible ? 'text' : 'password'"
                     v-model="userPasswordConfirm"
                     required
