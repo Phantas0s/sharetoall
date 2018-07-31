@@ -22,8 +22,8 @@
                                     :key="key"
                                     :class="[
                                         {
-                                            'disabled': !networkHasToken(network),
-                                            'connected': networkHasToken(network),
+                                            'list-item disabled': !networkHasToken(network),
+                                            'list-item connected': networkHasToken(network),
                                         }
                                     ]"
                                     @click="toggleNetwork">
@@ -65,7 +65,7 @@
                 <v-flex lg4 class="ma-3 mt-5">
                     <v-card class="pa-3" app>
                         <v-form id="form-message">
-                            <v-text-field
+                            <v-textarea
                                 id="message"
                                 color="secondary"
                                 name="message"
@@ -73,9 +73,7 @@
                                 value=""
                                 :rules="[(v) => v.length <= 280 || 'Max 280 characters']"
                                 :counter="280"
-
-                                multi-line
-                            ></v-text-field>
+                            ></v-textarea>
                             <v-btn
                                 id="share"
                                 @click.native="sendMessage"
@@ -136,7 +134,7 @@ export default {
         },
         toggleNetwork(event) {
             const el = event.target;
-            const listItem = el.closest("li");
+            const listItem = el.closest(".list-item");
             const button = listItem.querySelector('button');
             const listTile = el.closest(".list__tile");
 

@@ -10,6 +10,8 @@ class RegistrationCest
     public function modalRegister(\SharetoallTester $I)
     {
         $I->amOnPage('/');
+        $I->click('.cc-dismiss');
+        $I->wait(2);
         $I->click('#button-register');
         $I->seeElement('#modal-register');
         $I->fillField('[name = userEmail]', 'test123@sharetoall.com');
@@ -24,6 +26,8 @@ class RegistrationCest
     public function modalRegisterWithoutNewsletter(\SharetoallTester $I)
     {
         $I->amOnPage('/');
+        $I->click('.cc-dismiss');
+        $I->wait(2);
         $I->click('#button-register');
         $I->seeElement('#modal-register');
         $I->fillField('[name = userEmail]', 'test456@sharetoall.com');

@@ -10,6 +10,8 @@ class ContactCest
     public function contactModal(\SharetoallTester $I)
     {
         $I->amOnPage('/');
+        $I->click('.cc-dismiss');
+        $I->wait(2);
         $I->click('#button-contact');
         $I->wait(4);
         $I->seeElement('#modal-contact');
