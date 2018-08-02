@@ -71,6 +71,7 @@
                                 name="message"
                                 label="Message"
                                 value=""
+                                v-model="message"
                                 :rules="[(v) => v.length <= 280 || 'Max 280 characters']"
                                 :counter="280"
                             ></v-textarea>
@@ -109,6 +110,7 @@ export default {
             'userId': this.$session.getUser().userId,
             'username': this.$session.getFullName(),
             'selectClass' :'primary',
+            'message': '',
 
             'messageLoading': false,
             'networkLoading': false,
@@ -161,7 +163,6 @@ export default {
 
             const networks = document.getElementById('networks');
             const connectedNetworks = networks.querySelectorAll('.selected');
-            const message = document.getElementById('message').value;
 
             const networkSlugs = Array.from(connectedNetworks, network => network.dataset.slug);
             const networkSlugLg = networkSlugs.length;
@@ -173,7 +174,8 @@ export default {
             }
 
             for (var i = 0; i < networkSlugLg; i++) {
-                this.$api.post(`message`, {networkSlug: networkSlugs[i], message: message}).then(response => {
+                this.$api.post(`message`, {networkSlug: networkSlugs[i], message: this.message}).then(response => {
+                    this.message = "";
                     this.messageLoading = false;
                     this.$alert.success('Your message has been shared on '+response.data.network+'!');
                 }, error => {
