@@ -18,16 +18,16 @@ class Form {
     getValues() {
         const result = {};
         const def = this.getDefinition();
-        
+
         for(let prop in def) {
             if(def.hasOwnProperty(prop)) {
                 result[prop] = def[prop].value;
             }
         }
-        
+
         return result;
     }
-    
+
     setDefinition(definition) {
         this.definition = definition;
     }

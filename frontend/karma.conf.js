@@ -13,12 +13,12 @@ module.exports = (config) => {
 
         phantomjsLauncher: {
             // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
-            exitOnResourceError: true
+            exitOnResourceError: true,
         },
 
         browsers: ['PhantomJS'],
 
-/*        customLaunchers: {
+        /*        customLaunchers: {
             'chrome-webdriver': {
                 base: 'WebDriver',
                 config: {
@@ -31,18 +31,18 @@ module.exports = (config) => {
         }, */
 
         files: [
-            {pattern: 'tests/**/*_test.js', watched: false}
+            {pattern: 'tests/**/*_test.js', watched: false},
         ],
 
         // Preprocess through webpack
         preprocessors: {
-            'tests/**/*_test.js': ['webpack']
+            'tests/**/*_test.js': ['webpack'],
         },
 
         reporters: ['progress', 'html'],
 
         htmlReporter: {
-            outputFile: 'tests/result.html'
+            outputFile: 'tests/result.html',
         },
 
         webpack: {
@@ -53,8 +53,8 @@ module.exports = (config) => {
                     path.join(__dirname, 'tests'),
                 ],
                 alias: {
-                    vue: 'vue/dist/vue.js'
-                }
+                    vue: 'vue/dist/vue.js',
+                },
             },
             module: {
                 rules: [
@@ -62,11 +62,11 @@ module.exports = (config) => {
                         test: /\.js$/,
                         loader: 'babel-loader',
                         query: {
-                            presets: ['es2015']
+                            presets: ['es2015'],
                         },
                     },
-                ]
-            }
+                ],
+            },
         },
 
         singleRun: true,

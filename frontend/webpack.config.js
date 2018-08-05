@@ -11,7 +11,7 @@ const PATHS = {
 };
 
 const sassPlugin = new ExtractTextPlugin({
-    filename: '[name].css'
+    filename: '[name].css',
 });
 
 // See https://github.com/webpack/loader-utils/issues/56
@@ -37,7 +37,7 @@ module.exports = {
         },
     },
     plugins: [
-        sassPlugin
+        sassPlugin,
     ],
     node: {
         fs: 'empty',
@@ -72,10 +72,10 @@ module.exports = {
                     use: [
                         'css-loader',
                         'sass-loader',
-                        'postcss-loader'
+                        'postcss-loader',
                     ],
-                    fallback: 'style-loader'
-                })
+                    fallback: 'style-loader',
+                }),
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
@@ -93,5 +93,5 @@ module.exports = {
                 },
             },
         ],
-    }
+    },
 };

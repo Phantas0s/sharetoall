@@ -115,7 +115,7 @@ export default {
             'messageLoading': false,
             'networkLoading': false,
             'twitterLoading': false,
-            'linkedinLoading': false
+            'linkedinLoading': false,
         };
     },
     methods: {
@@ -123,7 +123,7 @@ export default {
             return network.userNetworkTokenKey != null;
         },
         getSocialIcon(slug){
-            return "pe-so-" + slug;
+            return 'pe-so-' + slug;
         },
         getLoading(slug){
             return this[slug + 'Loading'];
@@ -136,9 +136,8 @@ export default {
         },
         toggleNetwork(event) {
             const el = event.target;
-            const listItem = el.closest(".list-item");
+            const listItem = el.closest('.list-item');
             const button = listItem.querySelector('button');
-            const listTile = el.closest(".list__tile");
 
             button.classList.toggle(this.selectClass);
             button.classList.toggle('selected');
@@ -150,7 +149,7 @@ export default {
                 this.$api.get(`connect/${networkSlug}`).then(response => {
                     this[networkSlug + 'Loading'] = true;
                     window.location = response.data;
-                }, error => {
+                }, () => {
                     this.networkLoading = false;
                     button.classList.toggle(this.selectClass);
                     button.classList.toggle('selected');
@@ -174,8 +173,8 @@ export default {
             }
 
             for (var i = 0; i < networkSlugLg; i++) {
-                this.$api.post(`message`, {networkSlug: networkSlugs[i], message: this.message}).then(response => {
-                    this.message = "";
+                this.$api.post('message', {networkSlug: networkSlugs[i], message: this.message}).then(response => {
+                    this.message = '';
                     this.messageLoading = false;
                     this.$alert.success('Your message has been shared on '+response.data.network+'!');
                 }, error => {
@@ -193,13 +192,11 @@ export default {
     },
     computed: {
         binding () {
-          const binding = {}
-
-          if (this.$vuetify.breakpoint.xs) binding.column = true
-
-          return binding
-        }
-    }
+            const binding = {};
+            if (this.$vuetify.breakpoint.xs) binding.column = true;
+            return binding;
+        },
+    },
 };
 </script>
 
