@@ -9,10 +9,10 @@
 <script>
 'use strict';
 
-    export default {
-        name: 'app',
-        computed: {},
-    };
+export default {
+    name: 'app',
+    computed: {},
+};
 </script>
 
 <style lang="css">
