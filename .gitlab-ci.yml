@@ -53,6 +53,7 @@ test:
   script:
     - bin/phing build-database
     - phpunit --configuration phpunit.xml
+    # - bin/phing test-acceptance
 
 build:
   stage: build

@@ -51,6 +51,39 @@ class DashboardCest
         $I->click('.v-btn[data-slug="twitter"]');
     }
 
+    public function shareOnTwitter(SharetoallTester $I)
+    {
+        $I->seeInCurrentUrl('/dashboard');
+        // Unselect linkedin and dummy network (unit tests)
+        $I->click('.v-btn[data-slug="linkedin"]');
+        $I->click('.v-btn[data-slug="fakeLinkedin"]');
+        $I->click('.v-btn[data-slug="fakeTwitter"]');
+        $I->click('.v-btn[data-slug="supernetwork"]');
+        // Select twitter
+        $I->click('.v-btn[data-slug="twitter"]');
+        $I->fillField('#message', $this->randomSentence());
+        $I->makeScreenshot('before-twitter-share-message');
+        $I->click('#share');
+        $I->wait(4);
+        $I->makeScreenshot('twitter-share-message');
+        $I->seeElement('.success');
+    }
+
+    public function shareOnLinkedin(SharetoallTester $I)
+    {
+        $I->seeInCurrentUrl('/dashboard');
+        // Unselect twitter
+        $I->click('.v-btn[data-slug="twitter"]');
+        // Select linkedin
+        $I->click('.v-btn[data-slug="linkedin"]');
+        $I->fillField('#message', $this->randomSentence());
+        $I->makeScreenshot('before-linkedin-share-message');
+        $I->click('#share');
+        $I->wait(4);
+        $I->makeScreenshot('twitter-linkedin-message');
+        $I->seeElement('.success');
+    }
+
     public function Logout(SharetoallTester $I)
     {
         $I->amOnPage('/sharetoall#/dashboard');
@@ -70,5 +103,18 @@ class DashboardCest
         // $I->wait(10);
         // $I->makeScreenshot('linkedin_mess_sent');
         // $I->seeElement('success');
+    }
+
+    public function randomSentence() :string
+    {
+        $phrases = array(
+            'I like salad which cost' . rand(),
+            'Do you like salad which cost ' . rand(),
+            'I hope you do like salad which cost ' . rand(),
+            'I\'m not sure about my state right now which can
+            ' . rand(),
+        );
+
+        return $phrases[array_rand($phrases)];
     }
 }
