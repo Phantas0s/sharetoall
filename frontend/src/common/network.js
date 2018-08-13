@@ -14,6 +14,12 @@ class Network {
             response => Promise.resolve(new Collection(response.data))
         );
     }
+
+    deleteUserNetwork(userId, networkSlug) {
+        return Api.delete('/network/' + userId + '/' + networkSlug).then(
+            response => Promise.resolve(new Collection(response.data))
+        );
+    }
 }
 
 export default Network;

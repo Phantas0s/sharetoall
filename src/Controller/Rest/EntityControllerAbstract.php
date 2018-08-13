@@ -37,7 +37,7 @@ class EntityControllerAbstract
         $this->model = $this->createModel($this->modelName);
 
         if (!$this->session->isUser()) {
-            throw new UnauthorizedException ('Please login or sign up to continue');
+            throw new UnauthorizedException('Please login or sign up to continue');
         }
     }
 
@@ -97,54 +97,4 @@ class EntityControllerAbstract
         return $form->getAsArray();
     }
 
-    public function optionsAction($id, Request $request)
-    {
-        // Only load data for existing users
-        if ($id == 'new') {
-            $form = $this->createForm($this->createFormName);
-        } else {
-            $form = $this->createForm($this->editFormName);
-            $this->model->find($id);
-            $form->setDefinedValues($this->model->getValues());
-        }
-
-        return $form->getAsArray();
-    }
-
-    public function deleteAction($id)
-    {
-        $this->model->find($id)->delete();
-    }
-
-    public function putAction($id, Request $request)
-    {
-        $this->model->find($id);
-
-        $form = $this->createForm($this->editFormName);
-
-        $form->setDefinedWritableValues($request->request->all())->validate();
-
-        if ($form->hasErrors()) {
-            throw new FormInvalidException($form->getFirstError());
-        }
-
-        $this->model->update($form->getValues());
-
-        return $this->model->getValues();
-    }
-
-    public function postAction(Request $request)
-    {
-        $form = $this->createForm($this->createFormName);
-
-        $form->setDefinedWritableValues($request->request->all())->validate();
-
-        if ($form->hasErrors()) {
-            throw new FormInvalidException($form->getFirstError());
-        }
-
-        $this->model->save($form->getValues());
-
-        return $this->model->getValues();
-    }
 }

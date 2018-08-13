@@ -3,6 +3,7 @@
 namespace App\Controller\Rest;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class NetworkController extends EntityControllerAbstract
 {
@@ -23,5 +24,13 @@ class NetworkController extends EntityControllerAbstract
         $networks = $this->model->findAllNetworkByUserId($userId)->getAllResultsAsArray();
 
         return $networks;
+    }
+
+    public function deleteAction(string $userId, string $networkSlug, Request $request): Response
+    {
+        $userId = (int)$userId;
+        $this->model->deleteUserNetwork($userId, $networkSlug);
+
+        return new Response("", 202);
     }
 }

@@ -40,17 +40,8 @@ class RestRouter extends Router
 
             $count = count($parts);
 
-            if ($count % 2 == 0 && $prefix != 'post') {
-                $prefix = 'c' . $prefix;
-            }
-
             for ($i = 0; $i < $count; $i++) {
                 $params[] = $parts[$i];
-
-                if (isset($parts[$i + 1])) {
-                    $i++;
-                    $subResources .= ucfirst($parts[$i]);
-                }
             }
 
             $params[] = $request;
@@ -61,7 +52,7 @@ class RestRouter extends Router
             $controllerInstance = $this->getController($controllerService);
 
             if (!method_exists($controllerInstance, $actionName)) {
-                throw new MethodNotAllowedException ('Method ' . $method . ' not supported');
+                throw new MethodNotAllowedException ('Method ' . $method . ' not supported with action '. $actionName);
             }
 
             if (!$this->hasPermission($request)) {

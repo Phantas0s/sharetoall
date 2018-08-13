@@ -40,4 +40,10 @@ class Network extends ModelAbstract
         $userNetworkDao = $this->createDao('UserNetwork');
         $userNetworkDao->invalidate();
     }
+
+    public function deleteUserNetwork(int $userId, string $networkSlug)
+    {
+        $userNetworkDao = $this->createDao("UserNetwork");
+        $userNetworkDao->deleteAll(["userId" => $userId, "networkSlug" => $networkSlug]);
+    }
 }

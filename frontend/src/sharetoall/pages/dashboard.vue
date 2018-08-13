@@ -45,6 +45,9 @@
                                         </v-list-tile-title>
                                         <v-list-tile-sub-title v-if="isNetworkRegistered(network)">
                                             Connected
+                                        <v-btn flat @click="disconnect" icon color="pink">
+                                            <v-icon>favorite</v-icon>
+                                        </v-btn>
                                         </v-list-tile-sub-title>
                                         <v-list-tile-sub-title v-else>
                                             Click to connect
@@ -153,6 +156,23 @@ export default {
                     this.networkLoading = false;
                     button.classList.toggle(this.selectClass);
                     button.classList.toggle('selected');
+                });
+            }
+        },
+        disconnect(event) {
+            const el = event.target;
+            const listItem = el.closest('.list-item');
+            const button = listItem.querySelector('button');
+            console.log('lala');
+
+            if(listItem.classList.contains('connected') && button.classList.contains(this.selectClass)) {
+                const networkSlug = button.dataset.slug;
+                this[networkSlug + 'Loading'] = true;
+
+                this.$network.deleteUserNetwork(this.userId, networkSlug).then(() => {
+                    listItem.toggle('connected');
+                }, () => {
+                    this.networkLoading = false;
                 });
             }
         },
