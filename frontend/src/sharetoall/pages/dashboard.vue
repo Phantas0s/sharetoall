@@ -26,8 +26,8 @@
                                             'list-item connected': networkHasToken(network),
                                         }
                                     ]"
-                                    @click="toggleNetwork">
-                                    <v-list-tile-avatar>
+                                    >
+                                    <v-list-tile-action @click="toggleNetwork">
                                         <v-btn fab small
                                             :data-slug="network.networkSlug"
                                             :class="[ isNetworkRegistered(network) ? selectClass + ' selected' : '' ]"
@@ -38,21 +38,35 @@
                                                 <v-icon light>cached</v-icon>
                                             </span>
                                         </v-btn>
-                                    </v-list-tile-avatar>
-                                    <v-list-tile-content>
+                                    </v-list-tile-action>
+                                    <v-list-tile-content @click="toggleNetwork">
                                         <v-list-tile-title>
                                             {{network.networkSlug}}
                                         </v-list-tile-title>
                                         <v-list-tile-sub-title v-if="isNetworkRegistered(network)">
                                             Connected
-                                        <v-btn flat @click="disconnect" icon color="pink">
-                                            <v-icon>favorite</v-icon>
-                                        </v-btn>
                                         </v-list-tile-sub-title>
                                         <v-list-tile-sub-title v-else>
                                             Click to connect
                                         </v-list-tile-sub-title>
                                     </v-list-tile-content>
+                                    <v-list-tile-avatar v-if="isNetworkRegistered(network)">
+                                        <v-menu bottom left>
+                                            <v-btn flat slot="activator" icon color="accent">
+                                                <v-icon small>settings</v-icon>
+                                            </v-btn>
+                                            <v-list>
+                                                <v-list-tile
+                                                    v-for="(networkOption, i) in networkOptions"
+                                                    :key="i"
+                                                >
+                                                    <v-list-tile-title :data-slug="network.networkSlug" @click="disconnectNetwork">
+                                                        {{ networkOption.title }}
+                                                    </v-list-tile-title>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-menu>
+                                    </v-list-tile-avatar>
                                 </v-list-tile>
                             </v-list>
                         </v-navigation-drawer>
@@ -119,6 +133,10 @@ export default {
             'networkLoading': false,
             'twitterLoading': false,
             'linkedinLoading': false,
+
+            'networkOptions': [
+                { title: 'Disconnect', function: 'disconnectNetwork' },
+            ],
         };
     },
     methods: {
@@ -159,22 +177,18 @@ export default {
                 });
             }
         },
-        disconnect(event) {
+        disconnectNetwork(event) {
             const el = event.target;
-            const listItem = el.closest('.list-item');
-            const button = listItem.querySelector('button');
-            console.log('lala');
 
-            if(listItem.classList.contains('connected') && button.classList.contains(this.selectClass)) {
-                const networkSlug = button.dataset.slug;
-                this[networkSlug + 'Loading'] = true;
+            const networkSlug = el.dataset.slug;
+            this[networkSlug + 'Loading'] = true;
 
-                this.$network.deleteUserNetwork(this.userId, networkSlug).then(() => {
-                    listItem.toggle('connected');
-                }, () => {
-                    this.networkLoading = false;
-                });
-            }
+            this.$network.deleteUserNetwork(this.userId, networkSlug).then(() => {
+                this[networkSlug + 'Loading'] = false;
+            }, (error) => {
+                this.$alert.error('ERROR '+error);
+                this[networkSlug + 'Loading'] = false;
+            });
         },
         sendMessage(event) {
             event.preventDefault();
