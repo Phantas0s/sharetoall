@@ -22,10 +22,11 @@
                                     :key="key"
                                     :class="[
                                         {
-                                            'list-item disabled': !networkHasToken(network),
-                                            'list-item connected': networkHasToken(network),
+                                            'list-item disabled': !isNetworkRegistered(network),
+                                            'list-item connected': isNetworkRegistered(network),
                                         }
                                     ]"
+                                    @click=""
                                     >
                                     <v-list-tile-action @click="toggleNetwork">
                                         <v-btn fab small
@@ -43,24 +44,22 @@
                                         <v-list-tile-title>
                                             {{network.networkSlug}}
                                         </v-list-tile-title>
-                                        <v-list-tile-sub-title v-if="isNetworkRegistered(network)">
-                                            Connected
-                                        </v-list-tile-sub-title>
-                                        <v-list-tile-sub-title v-else>
-                                            Click to connect
+                                        <v-list-tile-sub-title>
+                                            {{ isNetworkRegistered(network) ? "Connected" : "Click to connect" }}
                                         </v-list-tile-sub-title>
                                     </v-list-tile-content>
                                     <v-list-tile-avatar v-if="isNetworkRegistered(network)">
-                                        <v-menu bottom left>
+                                        <v-menu bottom nudge-right>
                                             <v-btn flat slot="activator" icon color="accent">
                                                 <v-icon small>settings</v-icon>
                                             </v-btn>
-                                            <v-list>
+                                            <v-list dense>
                                                 <v-list-tile
                                                     v-for="(networkOption, i) in networkOptions"
                                                     :key="i"
+                                                    @click="disconnectNetwork"
                                                 >
-                                                    <v-list-tile-title :data-slug="network.networkSlug" @click="disconnectNetwork">
+                                                    <v-list-tile-title :data-slug="network.networkSlug">
                                                         {{ networkOption.title }}
                                                     </v-list-tile-title>
                                                 </v-list-tile>
@@ -92,16 +91,18 @@
                                 :rules="[(v) => v.length <= 280 || 'Max 280 characters']"
                                 :counter="280"
                             ></v-textarea>
-                            <v-btn
-                                id="share"
-                                @click.native="sendMessage"
-                                :loading="messageLoading"
-                                :disabled="messageLoading"
-                            >
-                                Share
-                                <v-icon right>send</v-icon>
-                                <span slot="loader">Sharing...</span>
-                            </v-btn>
+                            <div class="pt-2 text-xs-right">
+                                <v-btn
+                                    id="share"
+                                    @click.native="sendMessage"
+                                    :loading="messageLoading"
+                                    :disabled="messageLoading"
+                                >
+                                    Share
+                                    <v-icon right>send</v-icon>
+                                    <span slot="loader">Sharing...</span>
+                                </v-btn>
+                            </div>
                         </v-form>
                     </v-card>
                 </v-card>
@@ -117,9 +118,7 @@
 export default {
     name: 'dashboard',
     created () {
-        this.$network.findUserNetwork(this.userId).then(response => {
-            this.networks = response;
-        });
+        this.refreshNetworks()
     },
     data() {
         return {
@@ -133,16 +132,12 @@ export default {
             'networkLoading': false,
             'twitterLoading': false,
             'linkedinLoading': false,
-
             'networkOptions': [
                 { title: 'Disconnect', function: 'disconnectNetwork' },
             ],
         };
     },
     methods: {
-        networkHasToken(network) {
-            return network.userNetworkTokenKey != null;
-        },
         getSocialIcon(slug){
             return 'pe-so-' + slug;
         },
@@ -151,6 +146,14 @@ export default {
         },
         logout() {
             this.$session.logout();
+        },
+        refreshNetworks(networkSlug) {
+            this.$network.findUserNetwork(this.userId).then(response => {
+                this.networks = response;
+                if(networkSlug != undefined) {
+                    this[networkSlug + 'Loading'] = false;
+                }
+            });
         },
         isNetworkRegistered(network) {
             return network.userId == this.userId;
@@ -184,7 +187,8 @@ export default {
             this[networkSlug + 'Loading'] = true;
 
             this.$network.deleteUserNetwork(this.userId, networkSlug).then(() => {
-                this[networkSlug + 'Loading'] = false;
+                // TODO only refresh one network
+                this.refreshNetworks(networkSlug);
             }, (error) => {
                 this.$alert.error('ERROR '+error);
                 this[networkSlug + 'Loading'] = false;

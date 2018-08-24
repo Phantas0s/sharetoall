@@ -94,24 +94,13 @@ class DashboardCest
         $I->amOnPage('/');
     }
 
-    public function sendMessageToLinkedin(SharetoallTester $I)
-    {
-        // $I->click('.btn[data-slug="linkedin"]');
-        // $I->fillField('#message', 'Hello! Somebody is searching a job?');
-        // $I->click('#share');
-        // $I->makeScreenshot('linkedin_mess_send');
-        // $I->wait(10);
-        // $I->makeScreenshot('linkedin_mess_sent');
-        // $I->seeElement('success');
-    }
-
-    public function randomSentence() :string
+    private function randomSentence():string
     {
         $phrases = array(
             'I like salad which cost' . rand(),
             'Do you like salad which cost ' . rand(),
             'I hope you do like salad which cost ' . rand(),
-            'I\'m not sure about my state right now which can
+            'I\'m not sure about my state right now which can cost
             ' . rand(),
         );
 
