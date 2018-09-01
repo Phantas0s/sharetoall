@@ -41,8 +41,7 @@ class NetworkControllerTest extends UnitTestCase
         foreach ($networks as $values) {
             $this->assertArrayHasKey('networkName', $values);
             $this->assertArrayHasKey('networkSlug', $values);
-            $this->assertArrayHasKey('userNetworkTokenKey', $values);
-            $this->assertArrayHasKey('userNetworkTokenSecret', $values);
+            $this->assertArrayHasKey('networkTokenExpire', $values);
         }
     }
 }

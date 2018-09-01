@@ -3,6 +3,7 @@
 namespace App\Controller\Rest;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class NetworkController extends EntityControllerAbstract
 {
@@ -20,8 +21,15 @@ class NetworkController extends EntityControllerAbstract
         // Invalidate user network which have token expiration date
         // TODO: do that via CRON?
         $networks = $this->model->invalidateUserNetwork();
-        $networks = $this->model->findAllNetworkByUserId($userId)->getAllResultsAsArray();
+        $networks = $this->model->findAllNetworkByUserId($userId);
+        return $this->model->mapNetworksToFrontend($networks);
+    }
 
-        return $networks;
+    public function deleteAction(string $userId, string $networkSlug, Request $request): Response
+    {
+        $userId = (int)$userId;
+        $this->model->deleteUserNetwork($userId, $networkSlug);
+
+        return new Response("", 202);
     }
 }

@@ -22,12 +22,13 @@
                                     :key="key"
                                     :class="[
                                         {
-                                            'list-item disabled': !networkHasToken(network),
-                                            'list-item connected': networkHasToken(network),
+                                            'list-item disabled': !isNetworkRegistered(network),
+                                            'list-item connected': isNetworkRegistered(network),
                                         }
                                     ]"
-                                    @click="toggleNetwork">
-                                    <v-list-tile-avatar>
+                                    @click=""
+                                    >
+                                    <v-list-tile-action @click="toggleNetwork">
                                         <v-btn fab small
                                             :data-slug="network.networkSlug"
                                             :class="[ isNetworkRegistered(network) ? selectClass + ' selected' : '' ]"
@@ -38,18 +39,33 @@
                                                 <v-icon light>cached</v-icon>
                                             </span>
                                         </v-btn>
-                                    </v-list-tile-avatar>
-                                    <v-list-tile-content>
+                                    </v-list-tile-action>
+                                    <v-list-tile-content @click="toggleNetwork">
                                         <v-list-tile-title>
                                             {{network.networkSlug}}
                                         </v-list-tile-title>
-                                        <v-list-tile-sub-title v-if="isNetworkRegistered(network)">
-                                            Connected
-                                        </v-list-tile-sub-title>
-                                        <v-list-tile-sub-title v-else>
-                                            Click to connect
+                                        <v-list-tile-sub-title>
+                                            {{ isNetworkRegistered(network) ? "Connected" : "Click to connect" }}
                                         </v-list-tile-sub-title>
                                     </v-list-tile-content>
+                                    <v-list-tile-avatar v-if="isNetworkRegistered(network)">
+                                        <v-menu bottom nudge-right>
+                                            <v-btn flat slot="activator" icon color="accent">
+                                                <v-icon small>settings</v-icon>
+                                            </v-btn>
+                                            <v-list dense>
+                                                <v-list-tile
+                                                    v-for="(networkOption, i) in networkOptions"
+                                                    :key="i"
+                                                    @click="disconnectNetwork"
+                                                >
+                                                    <v-list-tile-title :data-slug="network.networkSlug">
+                                                        {{ networkOption.title }}
+                                                    </v-list-tile-title>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-menu>
+                                    </v-list-tile-avatar>
                                 </v-list-tile>
                             </v-list>
                         </v-navigation-drawer>
@@ -71,19 +87,22 @@
                                 name="message"
                                 label="Message"
                                 value=""
+                                v-model="message"
                                 :rules="[(v) => v.length <= 280 || 'Max 280 characters']"
                                 :counter="280"
                             ></v-textarea>
-                            <v-btn
-                                id="share"
-                                @click.native="sendMessage"
-                                :loading="messageLoading"
-                                :disabled="messageLoading"
-                            >
-                                Share
-                                <v-icon right>send</v-icon>
-                                <span slot="loader">Sharing...</span>
-                            </v-btn>
+                            <div class="pt-2 text-xs-right">
+                                <v-btn
+                                    id="share"
+                                    @click.native="sendMessage"
+                                    :loading="messageLoading"
+                                    :disabled="messageLoading"
+                                >
+                                    Share
+                                    <v-icon right>send</v-icon>
+                                    <span slot="loader">Sharing...</span>
+                                </v-btn>
+                            </div>
                         </v-form>
                     </v-card>
                 </v-card>
@@ -99,9 +118,7 @@
 export default {
     name: 'dashboard',
     created () {
-        this.$network.findUserNetwork(this.userId).then(response => {
-            this.networks = response;
-        });
+        this.refreshNetworks()
     },
     data() {
         return {
@@ -109,19 +126,20 @@ export default {
             'userId': this.$session.getUser().userId,
             'username': this.$session.getFullName(),
             'selectClass' :'primary',
+            'message': '',
 
             'messageLoading': false,
             'networkLoading': false,
             'twitterLoading': false,
-            'linkedinLoading': false
+            'linkedinLoading': false,
+            'networkOptions': [
+                { title: 'Disconnect', function: 'disconnectNetwork' },
+            ],
         };
     },
     methods: {
-        networkHasToken(network) {
-            return network.userNetworkTokenKey != null;
-        },
         getSocialIcon(slug){
-            return "pe-so-" + slug;
+            return 'pe-so-' + slug;
         },
         getLoading(slug){
             return this[slug + 'Loading'];
@@ -129,14 +147,21 @@ export default {
         logout() {
             this.$session.logout();
         },
+        refreshNetworks(networkSlug) {
+            this.$network.findUserNetwork(this.userId).then(response => {
+                this.networks = response;
+                if(networkSlug != undefined) {
+                    this[networkSlug + 'Loading'] = false;
+                }
+            });
+        },
         isNetworkRegistered(network) {
             return network.userId == this.userId;
         },
         toggleNetwork(event) {
             const el = event.target;
-            const listItem = el.closest(".list-item");
+            const listItem = el.closest('.list-item');
             const button = listItem.querySelector('button');
-            const listTile = el.closest(".list__tile");
 
             button.classList.toggle(this.selectClass);
             button.classList.toggle('selected');
@@ -148,12 +173,26 @@ export default {
                 this.$api.get(`connect/${networkSlug}`).then(response => {
                     this[networkSlug + 'Loading'] = true;
                     window.location = response.data;
-                }, error => {
+                }, () => {
                     this.networkLoading = false;
                     button.classList.toggle(this.selectClass);
                     button.classList.toggle('selected');
                 });
             }
+        },
+        disconnectNetwork(event) {
+            const el = event.target;
+
+            const networkSlug = el.dataset.slug;
+            this[networkSlug + 'Loading'] = true;
+
+            this.$network.deleteUserNetwork(this.userId, networkSlug).then(() => {
+                // TODO only refresh one network
+                this.refreshNetworks(networkSlug);
+            }, (error) => {
+                this.$alert.error('ERROR '+error);
+                this[networkSlug + 'Loading'] = false;
+            });
         },
         sendMessage(event) {
             event.preventDefault();
@@ -161,7 +200,6 @@ export default {
 
             const networks = document.getElementById('networks');
             const connectedNetworks = networks.querySelectorAll('.selected');
-            const message = document.getElementById('message').value;
 
             const networkSlugs = Array.from(connectedNetworks, network => network.dataset.slug);
             const networkSlugLg = networkSlugs.length;
@@ -173,7 +211,8 @@ export default {
             }
 
             for (var i = 0; i < networkSlugLg; i++) {
-                this.$api.post(`message`, {networkSlug: networkSlugs[i], message: message}).then(response => {
+                this.$api.post('message', {networkSlug: networkSlugs[i], message: this.message}).then(response => {
+                    this.message = '';
                     this.messageLoading = false;
                     this.$alert.success('Your message has been shared on '+response.data.network+'!');
                 }, error => {
@@ -191,13 +230,11 @@ export default {
     },
     computed: {
         binding () {
-          const binding = {}
-
-          if (this.$vuetify.breakpoint.xs) binding.column = true
-
-          return binding
-        }
-    }
+            const binding = {};
+            if (this.$vuetify.breakpoint.xs) binding.column = true;
+            return binding;
+        },
+    },
 };
 </script>
 

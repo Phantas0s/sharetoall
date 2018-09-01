@@ -16,7 +16,6 @@ class Collection {
 
     getValues() {
         const result = {};
-
         _.forOwn(this, (value, key) => result[key] = value);
 
         return result;

@@ -36,21 +36,6 @@ class RestRouterTest extends UnitTestCase
         $this->container->get('router.error')->route();
     }
 
-    public function testCgetRoute()
-    {
-        $request = Request::create('http://localhost/api/fake');
-        $this->router->route('/api', 'controller.rest.');
-        $response = $this->app->handle($request);
-        $result = json_decode($response->getContent(), true);
-        $this->assertEquals('cgetAction', $this->controller->actionName);
-        $this->assertInstanceOf(Request::class, $this->controller->request);
-        $this->assertInternalType('array', $result);
-        $this->assertArrayHasKey('request', $result);
-        $this->assertArrayHasKey('actionName', $result);
-        $this->assertEquals('cgetAction', $result['actionName']);
-        $this->assertInternalType('array', $result['request']);
-    }
-
     public function testGetRoute()
     {
         $request = Request::create('http://localhost/api/fake/345');
@@ -64,25 +49,6 @@ class RestRouterTest extends UnitTestCase
         $this->assertArrayHasKey('actionName', $result);
         $this->assertEquals('getAction', $result['actionName']);
         $this->assertEquals(345, $result['id']);
-        $this->assertInternalType('array', $result['request']);
-    }
-
-    public function testOptionsCommentRoute()
-    {
-        $token = $this->session->generateToken()->getToken();
-        $request = Request::create('http://localhost/api/fake/345/comment/1', 'OPTIONS');
-        $request->headers->add(array('X-Session-Token' => $token));
-        $this->router->route('/api', 'controller.rest.');
-        $response = $this->app->handle($request);
-        $result = json_decode($response->getContent(), true);
-        $this->assertEquals('optionsCommentAction', $this->controller->actionName);
-        $this->assertInstanceOf(Request::class, $this->controller->request);
-        $this->assertInternalType('array', $result);
-        $this->assertArrayHasKey('request', $result);
-        $this->assertArrayHasKey('actionName', $result);
-        $this->assertEquals('optionsCommentAction', $result['actionName']);
-        $this->assertEquals(345, $result['id']);
-        $this->assertEquals(1, $result['commentId']);
         $this->assertInternalType('array', $result['request']);
     }
 }

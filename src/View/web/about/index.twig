@@ -22,12 +22,13 @@
             </v-toolbar>
             <v-content>
                 <v-flex xs4 offset-xs4 id="about-container" class="pa-3 mt-3">
-                    <h1 class="mb-5 mt-4 display-1 text-xs-center">Welcome to Sharetoall</h1>
+                    <h1 class="mb-5 mt-4 display-2 text-xs-center">Welcome to Sharetoall</h1>
 
-                    <p>I am very pleased you are here!</p>
                     <p>Let me introduce myself: I am <a href="https://www.google.com/search?q=matthieu+cneude" title="google matthieu cneude">Matthieu Cneude</a>, web developer and creator of Sharetoall.</p>
 
                     <p>Now you might wonder: why did I create this service?</p>
+
+                    <h2 class="mb-5 mt-4 display-1 text-xs-center">Sharing made easy</h2>
 
                     <p>Imagine that you found a very interesting piece of knowledge on Internet. Naturally you want to share it to a maximum of people.
                     <p>To do so you would need to:
@@ -41,19 +42,24 @@
 
                     <p>I think the principle of social media is great: sharing to people valuable and helpful pieces of knowledge.</p>
 
+                    <h2 class="mb-5 mt-4 display-1 text-xs-center">An answer to social media problems</h2>
+
                     <p>However, social media have some problems:</p>
                     <ul>
                         <li>They are engineered to hook you on their website.</li>
                         <li>They are totally addictive.</li>
                         <li>They will try to sell a maximum via advertisements and other tricks.</li>
-                    w</ul>
+                    </ul>
 
-                    <p>Sharetoall is an answer to those frustrations. A free and simple platform to share on social media without any hooks.</p>
+                    <p>Sharetoall is an answer to these frustrations. A free and simple platform to share on social media without any hooks.</p>
 
-                    <p>More and more functionalities will be added keeping these goal in mind.</p>
+                    <h2 class="mb-5 mt-4 display-1 text-xs-center">It will grow and stay 100% free!</h2>
 
-                    <p>If you want to know more about me, you can easily send me a message via the contact form.</p>
+                    <p>More and more functionalities will be added keeping these goals in mind.</p>
+                    <p>However, nothing is totally free in this world. Since I don't want to sell your data, I try instead a very ambitious challenge: finance sharetoall with donations.</ br>
+                    <p>If you want to know more, you can easily send me a message via the contact form or you can subrscribe at the newsletter.</p>
 
+                <v-card-text class="text-xs-center">
                     <v-btn
                         href="https://www.patreon.com/sharetoall"
                         class="accent white--text subheading mt-5"
@@ -61,6 +67,7 @@
                         large>
                         Become a Patron
                     </v-btn>
+                </v-card-text>
                 </v-flex>
                 {% include 'web/modals/login.twig' %}
                 {% include 'web/modals/resetPassword.twig' %}
