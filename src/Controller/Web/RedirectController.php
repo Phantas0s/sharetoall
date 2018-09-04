@@ -76,7 +76,6 @@ class RedirectController
         $ui = $this->twitterApi->getUserInfo($token);
         $userInfo = json_decode($ui->getBody(), true);
 
-
         $this->model->saveUserNetwork([
             'userId' => $this->session->getUserId(),
             'userNetworkAccount' => isset($userInfo["screen_name"]) ? $userInfo["screen_name"] : null,
@@ -118,6 +117,7 @@ class RedirectController
             $token = $this->linkedinApi->getLongTimeToken($code, $cachedTokenUid, $redirectUri);
         } catch (ApiException $e) {
             $this->log(LogLevel::ERROR, $e->getMessage());
+            return $this->dashboardUri;
         }
 
         $now = new \DateTime();
@@ -125,8 +125,17 @@ class RedirectController
         // -1 hour to be sure every messages to linkedin are properly processed
         $expire = $now->modify("-1 hour")->format('Y-m-d H:i:s');
 
+        $ui = $this->linkedinApi->getUserInfo($token->getKey());
+        $userInfo = json_decode($ui->getBody(), true);
+
+        $name = null;
+        if (isset($userInfo["firstName"]) && isset($userInfo["lastName"])) {
+            $name = sprintf("%s %s", $userInfo["firstName"], $userInfo["lastName"]);
+        }
+
         $this->model->saveUserNetwork([
             'userId' => $this->session->getUserId(),
+            'userNetworkAccount' => $name,
             'networkSlug' => $this->linkedinApi->getNetworkSlug(),
             'userNetworkTokenKey' => $token->getKey(),
             'userNetworkTokenSecret' => '',

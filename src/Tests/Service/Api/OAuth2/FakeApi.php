@@ -71,8 +71,15 @@ class FakeApi implements NetworkInterface
         return 'posted!';
     }
 
-    public function getUserInfo(Token $token): string
+    public function getUserInfo(string $tokenKey): object
     {
-        return 'infos';
+        $class =  new class {
+            public function getBody()
+            {
+                return "{\"firstName\": \"hello\", \"lastName\":\"you\"}";
+            }
+        };
+
+        return $class;
     }
 }

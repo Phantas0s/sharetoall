@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:10:{s:6:"userId";s:1:"4";s:9:"userEmail";s:16:"user@example.com";s:12:"userPassword";s:60:"$2y$10$8ZUbgXMLCjPRaGCnDMLo2ea1iZP1519MNHt4WevDq.bFQhI6kEKk6";s:19:"userVerifEmailToken";s:32:"1584faa0992966c1d980383d093099b2";s:12:"userVerified";N;s:22:"userResetPasswordToken";N;s:14:"userNewsletter";s:1:"0";s:7:"created";s:19:"2016-01-22 23:42:05";s:7:"updated";s:19:"2016-01-22 23:42:05";s:7:"deleted";N;}s:4:"args";a:1:{i:0;s:4775:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:10:{s:6:"userId";s:1:"4";s:9:"userEmail";s:16:"user@example.com";s:12:"userPassword";s:60:"$2y$10$4wIvHTk5xHhNE4hY0yVXBOjUAQuYn3Z3FZ1.nJdJxo5rOPxHEtPye";s:19:"userVerifEmailToken";s:32:"4eef587700f0ccc51ebdc0299febefbf";s:12:"userVerified";N;s:22:"userResetPasswordToken";N;s:14:"userNewsletter";s:1:"0";s:7:"created";s:19:"2016-01-22 23:42:05";s:7:"updated";s:19:"2016-01-22 23:42:05";s:7:"deleted";N;}s:4:"args";a:1:{i:0;s:4775:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (
