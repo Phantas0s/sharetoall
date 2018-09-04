@@ -31,6 +31,7 @@ class TwitterApi implements NetworkInterface
     const API_TOKEN_FETCH_LONGTIME_METHOD = 'oauth/access_token';
 
     const API_POST_TWEET_METHOD = 'statuses/update.json';
+    const API_GET_USER_INFO_METHOD = 'account/settings.json';
 
     const NETWORK_SLUG = 'twitter';
 
@@ -70,6 +71,37 @@ class TwitterApi implements NetworkInterface
     public function verifyCallbackToken(string $callbackToken, int $uid)
     {
         return $this->auth->verifyCallbackToken($callbackToken, $uid);
+    }
+
+    public function getUserInfo(Token $token)
+    {
+        if (empty($token->getKey()) || empty($token->getSecret())) {
+            throw new InvalidArgumentException('impossible to find token');
+        }
+
+        $url = self::API_HOST . self::API_VERSION . '/' . self::API_GET_USER_INFO_METHOD;
+
+        $headers = [
+            'Authorization' =>  $this->auth->buildOauthHeaders($url, 'GET', $token)
+        ];
+
+        try {
+            $response = $this->client->get($url, $headers);
+        } catch (\Exception $e) {
+            throw new ApiMessageException($e->getMessage());
+        }
+
+        if ($response->getStatusCode() != 200) {
+            throw new ApiStatusCodeException(
+                sprintf(
+                    'Wrong status code: %d with body %s',
+                    $response->getStatusCode(),
+                    (string)$response->getBody()
+                )
+            );
+        }
+
+        return $response;
     }
 
     public function postUpdate(string $content, Token $token)

@@ -22,6 +22,7 @@ class NetworkDao extends DaoAbstract
             'columns' => [
                 'n.*',
                 'un.userId',
+                'un.userNetworkAccount',
                 'un.userNetworkTokenKey',
                 'un.userNetworkTokenSecret',
                 'un.userNetworkTokenExpire',

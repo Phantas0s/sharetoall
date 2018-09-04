@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:8:{s:6:"userId";s:1:"2";s:11:"networkSlug";s:10:"supersuper";s:19:"userNetworkTokenKey";s:13:"notdeletedkey";s:22:"userNetworkTokenSecret";s:13:"notdeletedkey";s:22:"userNetworkTokenExpire";s:19:"3000-10-10 00:00:00";s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}s:4:"args";a:1:{i:0;s:4829:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:9:{s:6:"userId";s:1:"2";s:18:"userNetworkAccount";N;s:11:"networkSlug";s:10:"supersuper";s:19:"userNetworkTokenKey";s:13:"notdeletedkey";s:22:"userNetworkTokenSecret";s:13:"notdeletedkey";s:22:"userNetworkTokenExpire";s:19:"3000-10-10 00:00:00";s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}s:4:"args";a:1:{i:0;s:4829:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (

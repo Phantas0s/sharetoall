@@ -66,8 +66,13 @@ class FakeApi implements NetworkInterface
         return $this;
     }
 
-    public function postUpdate(string $content, Token $token)
+    public function postUpdate(string $content, Token $token): string
     {
         return 'posted!';
+    }
+
+    public function getUserInfo(Token $token): string
+    {
+        return 'infos';
     }
 }

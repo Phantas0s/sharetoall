@@ -73,8 +73,13 @@ class RedirectController
             $cachedTokenUid
         );
 
+        $ui = $this->twitterApi->getUserInfo($token);
+        $userInfo = json_decode($ui->getBody(), true);
+
+
         $this->model->saveUserNetwork([
             'userId' => $this->session->getUserId(),
+            'userNetworkAccount' => isset($userInfo["screen_name"]) ? $userInfo["screen_name"] : null,
             'networkSlug' => $this->twitterApi->getNetworkSlug(),
             'userNetworkTokenKey' => $token->getKey(),
             'userNetworkTokenSecret' => $token->getSecret(),
