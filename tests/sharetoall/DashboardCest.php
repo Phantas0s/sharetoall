@@ -67,6 +67,7 @@ class DashboardCest
         $I->wait(4);
         $I->makeScreenshot('twitter-share-message');
         $I->seeElement('.success');
+        $I->canSee('MatthieuCneude');
     }
 
     public function shareOnLinkedin(SharetoallTester $I)
@@ -82,6 +83,7 @@ class DashboardCest
         $I->wait(4);
         $I->makeScreenshot('twitter-linkedin-message');
         $I->seeElement('.success');
+        $I->canSee('Jean Dufour');
     }
 
     public function Logout(SharetoallTester $I)
