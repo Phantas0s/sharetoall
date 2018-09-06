@@ -70,4 +70,16 @@ class FakeApi implements NetworkInterface
     {
         return 'posted!';
     }
+
+    public function getUserInfo(Token $token): object
+    {
+        $class =  new class {
+            public function getBody()
+            {
+                return "{\"screen_name\": \"hello\"}";
+            }
+        };
+
+        return $class;
+    }
 }

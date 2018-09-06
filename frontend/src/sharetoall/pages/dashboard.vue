@@ -45,7 +45,7 @@
                                             {{network.networkSlug}}
                                         </v-list-tile-title>
                                         <v-list-tile-sub-title>
-                                            {{ isNetworkRegistered(network) ? "Connected" : "Click to connect" }}
+                                            {{ networkStatus(network) }}
                                         </v-list-tile-sub-title>
                                     </v-list-tile-content>
                                     <v-list-tile-avatar v-if="isNetworkRegistered(network)">
@@ -157,6 +157,18 @@ export default {
         },
         isNetworkRegistered(network) {
             return network.userId == this.userId;
+        },
+        networkStatus(network) {
+
+            if (!this.isNetworkRegistered(network)) {
+                return 'Click to connect';
+            }
+
+            if (network.userAccount == '' || network.userAccount == undefined) {
+                return 'Connected';
+            }
+
+            return network.userAccount;
         },
         toggleNetwork(event) {
             const el = event.target;

@@ -40,4 +40,17 @@ class NetworkTest extends UnitTestCase
         $this->assertInstanceOf(Network::class, $results->getFirstResult());
         $this->assertTrue(count($results->getAllResults()) > 0);
     }
+
+    public function testMapNetworksToFrontend()
+    {
+        $results = $this->model->findAllNetworkByUserId(1);
+        $networks = $this->model->mapNetworksToFrontend($results);
+        foreach ($networks as $network) {
+            $this->assertArrayHasKey("userAccount", $network);
+            $this->assertArrayHasKey("networkSlug", $network);
+            $this->assertArrayHasKey("networkName", $network);
+            $this->assertArrayHasKey("userId", $network);
+            $this->assertArrayHasKey("networkTokenExpire", $network);
+        }
+    }
 }

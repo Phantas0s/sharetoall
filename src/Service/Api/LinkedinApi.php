@@ -38,6 +38,7 @@ class LinkedinApi implements NetworkInterface
     const API_TOKEN_FETCH_LONGTIME_METHOD = 'accessToken';
 
     const API_SHARE_METHOD = 'people/~/shares?format=json';
+    const API_USER_INFO_METHOD = 'people/~?format=json';
 
     const API_VERSION = 'v2';
     const API_TIMEOUT = '1000';
@@ -80,6 +81,33 @@ class LinkedinApi implements NetworkInterface
         return $this->auth->verifyCallbackToken($callbackToken, $uid);
     }
 
+    // TODO sort out this token mess (OAUTH1 / OAUTH2)
+    public function getUserInfo(string $tokenKey)
+    {
+        $url = self::API_HOST . '/v1/' . self::API_USER_INFO_METHOD;
+
+        $headers = [
+            'Authorization' => 'Bearer ' . $tokenKey,
+        ];
+
+        try {
+            $response = $this->client->get($url, $headers);
+        } catch (\Exception $e) {
+            throw new ApiMessageException($e->getMessage());
+        }
+
+        if (!in_array($response->getStatusCode(), $this->acceptedStatusCode)) {
+            throw new ApiStatusCodeException(
+                sprintf(
+                    'Wrong status code: %d with body %s',
+                    $response->getStatusCode(),
+                    $response->getBody()
+                )
+            );
+        }
+
+        return $response;
+    }
     public function postUpdate(string $content, Token $token)
     {
         $url = self::API_HOST . '/v1/' . self::API_SHARE_METHOD;

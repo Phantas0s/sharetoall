@@ -54,6 +54,7 @@ class Network extends ModelAbstract
         $results = $networks->getAllResults();
         foreach ($results as $network) {
             $networksArr[$network->networkSlug] = [
+                "userAccount" => $network->userNetworkAccount,
                 "networkSlug" => $network->networkSlug,
                 "networkName" => $network->networkName,
                 "userId" => $network->userId,
