@@ -1,6 +1,12 @@
 Sharetoall
 ===========================================================
 
+## Installation 
+
+1. Clone the repository
+2. Create a new config.env file at the root of the project - these are environment used by the file `app/config/parameters.yml`. 
+Environment variables are docker friendly.
+
 ## Deployment
 
 See [here](https://laverna.cc/app/#/notes/f/notebook/q/7105aae8-072b-9745-285b-9b0914d6ed86/show/84cd301c-8fdb-669a-f4e5-9b60d83c3879)
