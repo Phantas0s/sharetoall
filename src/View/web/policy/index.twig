@@ -1,0 +1,202 @@
+{% extends 'root.twig' %}
+
+{% block content %}
+
+<div id="app">
+    <div v-if="!$data" class="spinner">
+        <div class="cube1"></div>
+        <div class="cube2"></div>
+    </div>
+    <div v-cloak>
+        <v-app light>
+            <v-toolbar dense app clipped-left fixed>
+                <h1><a href="/" class="black--text" title="home"><img class="hidden-xs-only" src="/assets/img/logo.png">Share<span class="accent-color">to</span>all<small class="beta hidden-xs-only">beta</small></a></h1>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn flat color="secondary" id="button-dashboard" v-if="connected" href="/sharetoall">Dashboard</v-btn>
+                    <v-btn flat color="secondary" id="button-logout" class="hidden-xs-only" v-if="connected" @click.native="logout()">Logout</v-btn>
+                    <v-btn flat color="secondary" id="button-login" v-if="!connected" @click.native="loginModal = true">Login</v-btn>
+                    <v-btn flat color="secondary" id="button-register" v-if="!connected" @click.native="registerModal = true">Registration</v-btn>
+                    <v-btn flat color="secondary" id="button-contact"  @click.native="contactModal = true">Contact</v-btn>
+                    <v-btn flat color="secondary" id="button-about" class="hidden-xs-only" href="about">About</v-btn>
+                </v-toolbar-items>
+            </v-toolbar>
+            <v-content>
+                <v-flex xs6 offset-xs3 id="policy-container" class="pa-3 mt-3">
+                                <h1 class="entry-title text-center mt-0">Privacy Policy</h1>
+
+
+                            <div >
+                                <div class="text-center">Latest update: October 10, 2018</div>
+                                <h4 class="mt-48 mb-32">Types of Data collected</h4>
+                                <p>Among the types of Personal Data that Sharetoall collects, by itself or through third parties, there are: Cookies, Usage Data and email address.</p>
+                                <p>Complete details on each type of Personal Data collected are provided in the dedicated sections of this privacy policy or by specific explanation texts displayed prior to the Data collection.<br />
+                                Personal Data may be freely provided by the User, or, in case of Usage Data, collected automatically when using Sharetoall.<br />
+                                Unless specified otherwise, all Data requested by Sharetoall is mandatory and failure to provide this Data may make it impossible for Sharetoall to provide its services. In cases where Sharetoall specifically states that some Data is not mandatory, Users are free not to communicate this Data without consequences to the availability or the functioning of the Service.<br />
+                                Users who are uncertain about which Personal Data is mandatory are welcome to contact the Owner.<br />
+                                Any use of Cookies – or of other tracking tools – by Sharetoall or by the owners of third-party services used by Sharetoall serves the purpose of providing the Service required by the User, in addition to any other purposes described in the present document and in the Cookie Policy, if available.</p>
+                                <p>Users are responsible for any third-party Personal Data obtained, published or shared through Sharetoall and confirm that they have the third party&#8217;s consent to provide the Data to the Owner.</p>
+                                <h4 class="mt-48 mb-32">Mode and place of processing the Data</h4>
+                                <p class="mb-16 h6">Methods of processing</p>
+                                <p>The Owner takes appropriate security measures to prevent unauthorized access, disclosure, modification, or unauthorized destruction of the Data.<br />
+                                The Data processing is carried out using computers and/or IT enabled tools, following organizational procedures and modes strictly related to the purposes indicated. In addition to the Owner, in some cases, the Data may be accessible to certain types of persons in charge, involved with the operation of Sharetoall (administration, sales, marketing, legal, system administration) or external parties (such as third-party technical service providers, mail carriers, hosting providers, IT companies, communications agencies) appointed, if necessary, as Data Processors by the Owner. The updated list of these parties may be requested from the Owner at any time.</p>
+                                <p class="mb-16 h6">Legal basis of processing</p>
+                                <p>The Owner may process Personal Data relating to Users if one of the following applies:</p>
+                                <ul>
+                                    <li>Users have given their consent for one or more specific purposes. Note: Under some legislations the Owner may be allowed to process Personal Data until the User objects to such processing (“opt-out”), without having to rely on consent or any other of the following legal bases. This, however, does not apply, whenever the processing of Personal Data is subject to European data protection law;</li>
+                                    <li>provision of Data is necessary for the performance of an agreement with the User and/or for any pre-contractual obligations thereof;</li>
+                                    <li>processing is necessary for compliance with a legal obligation to which the Owner is subject;</li>
+                                    <li>processing is related to a task that is carried out in the public interest or in the exercise of official authority vested in the Owner;</li>
+                                    <li>processing is necessary for the purposes of the legitimate interests pursued by the Owner or by a third party.</li>
+                                </ul>
+                                <p>In any case, the Owner will gladly help to clarify the specific legal basis that applies to the processing, and in particular whether the provision of Personal Data is a statutory or contractual requirement, or a requirement necessary to enter into a contract.</p>
+                                <p class="mb-16 h6">Place</p>
+                                <p>The Data is processed at the Owner&#8217;s operating offices and in any other places where the parties involved in the processing are located.</p>
+                                <p>Depending on the User&#8217;s location, data transfers may involve transferring the User&#8217;s Data to a country other than their own. To find out more about the place of processing of such transferred Data, Users can check the section containing details about the processing of Personal Data.</p>
+                                <p>Users are also entitled to learn about the legal basis of Data transfers to a country outside the European Union or to any international organization governed by public international law or set up by two or more countries, such as the UN, and about the security measures taken by the Owner to safeguard their Data.</p>
+                                <p>If any such transfer takes place, Users can find out more by checking the relevant sections of this document or inquire with the Owner using the information provided in the contact section.</p>
+                                <p class="mb-16 h6">Retention time</p>
+                                <p>Personal Data shall be processed and stored for as long as required by the purpose they have been collected for.</p>
+                                <p>Therefore:</p>
+                                <ul>
+                                    <li>Personal Data collected for purposes related to the performance of a contract between the Owner and the User shall be retained until such contract has been fully performed.</li>
+                                    <li>Personal Data collected for the purposes of the Owner’s legitimate interests shall be retained as long as needed to fulfill such purposes. Users may find specific information regarding the legitimate interests pursued by the Owner within the relevant sections of this document or by contacting the Owner.</li>
+                                </ul>
+                                <p>The Owner may be allowed to retain Personal Data for a longer period whenever the User has given consent to such processing, as long as such consent is not withdrawn. Furthermore, the Owner may be obliged to retain Personal Data for a longer period whenever required to do so for the performance of a legal obligation or upon order of an authority.</p>
+                                <p>Once the retention period expires, Personal Data shall be deleted. Therefore, the right to access, the right to erasure, the right to rectification and the right to data portability cannot be enforced after expiration of the retention period.</p>
+                                <h4 class="mt-48 mb-32">The purposes of processing</h4>
+                                <p>The Data concerning the User is collected to allow the Owner to provide its Services, as well as for the following purposes: Analytics, Contacting the User, Displaying content from external platforms, Managing contacts and sending messages and Registration and authentication.</p>
+                                <p>Users can find further detailed information about such purposes of processing and about the specific Personal Data used for each purpose in the respective sections of this document.</p>
+                                <h4 class="mt-48 mb-32">Detailed information on the processing of Personal Data</h4>
+                                <p>Personal Data is collected for the following purposes and using the following services:</p>
+                                <p class="mb-16 h6">Analytics</p>
+                                <p>The services contained in this section enable the Owner to monitor and analyze web traffic and can be used to keep track of User behavior.</p>
+                                <p class="mb-16 h6">Google Analytics with anonymized IP (Google Inc.)</p>
+                                <p>The services contained in this section enable the Owner to monitor and analyze web traffic and can be used to keep track of User behavior.</p>
+                                <p>Google Analytics is a web analysis service provided by Google Inc. (“Google”). Google utilizes the Data collected to track and examine the use of Sharetoall, to prepare reports on its activities and share them with other Google services.<br />
+                                Google may use the Data collected to contextualize and personalize the ads of its own advertising network.<br />
+                                This integration of Google Analytics anonymizes your IP address. It works by shortening Users&#8217; IP addresses within member states of the European Union or in other contracting states to the Agreement on the European Economic Area. Only in exceptional cases will the complete IP address be sent to a Google server and shortened within the US.</p>
+                                <p>Personal Data collected:<br />
+                                Cookies and Usage Data.</p>
+                                <p>Place of processing:<br />
+                                United States<br />
+                                –<br />
+                                <a href="https://www.google.com/intl/en/policies/privacy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a> – <a href="https://tools.google.com/dlpage/gaoptout?hl=en" target="_blank" rel="noopener">Opt Out</a>.</p>
+                                <p class="mb-16 h6">Managing contacts and sending messages</p>
+                                <p>This type of service makes it possible to manage a database of email contacts, phone contacts or any other contact information to communicate with the User.<br />
+                                These services may also collect data concerning the date and time when the message was viewed by the User, as well as when the User interacted with it, such as by clicking on links included in the message.</p>
+                                <p class="mb-16 h6">Registration and authentication</p>
+                                <p>By registering or authenticating, Users allow Sharetoall to identify them and give them access to dedicated services.<br />
+                                Depending on what is described below, third parties may provide registration and authentication services. In this case, Sharetoall will be able to access some Data, stored by these third-party services, for registration, identification purposes or to send data to these services.</p>
+                                <p class="mb-16 h6">Facebook Authentication (Facebook, Inc.)</p>
+                                <div class="wrap">
+                                    <p>Facebook Authentication is a registration and authentication service provided by Facebook, Inc. and is connected to the Facebook social network.</p>
+                                </div>
+                                <p>Personal Data collected: various types of Data as specified in the privacy policy of the service.</p>
+                                <p>Place of processing: United States – <a href="https://www.facebook.com/help/405977429438260" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. Privacy Shield participant.</p>
+                                <p class="mb-16 h6">Linkedin OAuth</p>
+                                <div class="wrap">
+                                    <div class="wrap">
+                                        <p>Linkedin OAuth is a registration and authentication service provided by Linkedin LLC and is connected to the Linkedin network.</p>
+                                    </div>
+                                    <p>Personal Data collected: various types of Data as specified in the privacy policy of the service.</p>
+                                    <p>Place of processing: United States – <a href="https://www.linkedin.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. Privacy Shield participant.</p>
+                                </div>
+                                <p class="mb-16 h6">Twitter OAuth (Twitter, Inc.)</p>
+                                <div class="wrap">
+                                    <div class="wrap">
+                                        <p>Twitter Oauth is a registration and authentication service provided by Twitter, Inc. and is connected to the Twitter social network.</p>
+                                    </div>
+                                    <p>Personal Data collected: various types of Data as specified in the privacy policy of the service.</p>
+                                    <p>Place of processing: United States – <a href="https://dev.twitter.com/terms/api-terms" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. Privacy Shield participant.</p>
+                                    <p class="expand-click w_icon_24 policyicon_purpose_5115603">Displaying content from external platforms</p>
+                                    <p>This type of service allows you to view content hosted on external platforms directly from the pages of Sharetoall and interact with them.<br />
+                                    This type of service might still collect web traffic data for the pages where the service is installed, even when Users do not use it.</p>
+                                    <p class="mb-16 h6">Google Fonts (Google Inc.)</p>
+                                    <div class="wrap">
+                                        <p>Google Fonts is a typeface visualization service provided by Google Inc. that allows Sharetoall to incorporate content of this kind on its pages.</p>
+                                    </div>
+                                    <p>Personal Data collected: Usage Data and various types of Data as specified in the privacy policy of the service.</p>
+                                    <p>Place of processing: United States – <a href="https://www.google.com/intl/policies/privacy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. Privacy Shield participant.</p>
+                                    <p class="expand-click w_icon_24 policyicon_purpose_5115587">Contacting the User</p>
+                                    <p class="mb-16 h6">Contact form (Sharetoall)</p>
+                                    <div class="wrap">
+                                        <p>By filling in the contact form with their Data, the User authorizes Sharetoall to use these details to reply to requests for information, quotes or any other kind of request as indicated by the form’s header.</p>
+                                    </div>
+                                    <p>Personal Data collected: email address.</p>
+                                    <p class="mb-16 h6">Mailing list or newsletter (Sharetoall)</p>
+                                    <div class="wrap">
+                                        <p>By registering on the mailing list or for the newsletter, the User’s email address will be added to the contact list of those who may receive email messages containing information of commercial or promotional nature concerning Sharetoall. Your email address might also be added to this list as a result of signing up to Sharetoall or after making a purchase.</p>
+                                    </div>
+                                    <p>Personal Data collected: email address.</p>
+                                </div>
+                                <h4 class="mt-48 mb-32">The rights of Users</h4>
+                                <p>Users may exercise certain rights regarding their Data processed by the Owner.</p>
+                                <p>In particular, Users have the right to do the following:</p>
+                                <ul>
+                                    <li><b>Withdraw their consent at any time.</b> Users have the right to withdraw consent where they have previously given their consent to the processing of their Personal Data.</li>
+                                    <li><b>Object to processing of their Data.</b> Users have the right to object to the processing of their Data if the processing is carried out on a legal basis other than consent. Further details are provided in the dedicated section below.</li>
+                                    <li><b>Access their Data.</b> Users have the right to learn if Data is being processed by the Owner, obtain disclosure regarding certain aspects of the processing and obtain a copy of the Data undergoing processing.</li>
+                                    <li><b>Verify and seek rectification.</b> Users have the right to verify the accuracy of their Data and ask for it to be updated or corrected.</li>
+                                    <li><b>Restrict the processing of their Data.</b> Users have the right, under certain circumstances, to restrict the processing of their Data. In this case, the Owner will not process their Data for any purpose other than storing it.</li>
+                                    <li><b>Have their Personal Data deleted or otherwise removed.</b> Users have the right, under certain circumstances, to obtain the erasure of their Data from the Owner.</li>
+                                    <li><b>Receive their Data and have it transferred to another controller.</b> Users have the right to receive their Data in a structured, commonly used and machine readable format and, if technically feasible, to have it transmitted to another controller without any hindrance. This provision is applicable provided that the Data is processed by automated means and that the processing is based on the User&#8217;s consent, on a contract which the User is part of or on pre-contractual obligations thereof.</li>
+                                    <li><b>Lodge a complaint.</b> Users have the right to bring a claim before their competent data protection authority.</li>
+                                </ul>
+                                <p class="mb-16 h6">Details about the right to object to processing</p>
+                                <p>Where Personal Data is processed for a public interest, in the exercise of an official authority vested in the Owner or for the purposes of the legitimate interests pursued by the Owner, Users may object to such processing by providing a ground related to their particular situation to justify the objection.</p>
+                                <p>Users must know that, however, should their Personal Data be processed for direct marketing purposes, they can object to that processing at any time without providing any justification. To learn, whether the Owner is processing Personal Data for direct marketing purposes, Users may refer to the relevant sections of this document.</p>
+                                <p class="mb-16 h6">How to exercise these rights</p>
+                                <p>Any requests to exercise User rights can be directed to the Owner through the contact details provided in this document. These requests can be exercised free of charge and will be addressed by the Owner as early as possible and always within one month.</p>
+                                <h4 class="mt-48 mb-32">Additional information about Data collection and processing</h4>
+                                <p class="mb-16 h6">Legal action</p>
+                                <p>The User&#8217;s Personal Data may be used for legal purposes by the Owner in Court or in the stages leading to possible legal action arising from improper use of Sharetoall or the related Services.<br />
+                                The User declares to be aware that the Owner may be required to reveal personal data upon request of public authorities.</p>
+                                <p class="mb-16 h6">Additional information about User&#8217;s Personal Data</p>
+                                <p>In addition to the information contained in this privacy policy, Sharetoall may provide the User with additional and contextual information concerning particular Services or the collection and processing of Personal Data upon request.</p>
+                                <p class="mb-16 h6">System logs and maintenance</p>
+                                <p>For operation and maintenance purposes, Sharetoall and any third-party services may collect files that record interaction with Sharetoall (System logs) use other Personal Data (such as the IP Address) for this purpose.</p>
+                                <p class="mb-16 h6">Information not contained in this policy</p>
+                                <p>More details concerning the collection or processing of Personal Data may be requested from the Owner at any time. Please see the contact information at the beginning of this document.</p>
+                                <p class="mb-16 h6">How “Do Not Track” requests are handled</p>
+                                <p>Sharetoall does not support “Do Not Track” requests.<br />
+                                To determine whether any of the third-party services it uses honor the “Do Not Track” requests, please read their privacy policies.</p>
+                                <p class="mb-16 h6">Changes to this privacy policy</p>
+                                <p>The Owner reserves the right to make changes to this privacy policy at any time by giving notice to its Users on this page and possibly within Sharetoall and/or &#8211; as far as technically and legally feasible &#8211; sending a notice to Users via any contact information available to the Owner. It is strongly recommended to check this page often, referring to the date of the last modification listed at the bottom.</p>
+                                <p>Should the changes affect processing activities performed on the basis of the User’s consent, the Owner shall collect new consent from the User, where required.</p>
+                                <h4 class="mt-48 mb-32">Definitions and legal references</h4>
+                                <p class="mb-16 h6">Personal Data (or Data)</p>
+                                <p>Any information that directly, indirectly, or in connection with other information — including a personal identification number — allows for the identification or identifiability of a natural person.</p>
+                                <p class="mb-16 h6">Usage Data</p>
+                                <p>Information collected automatically through Sharetoall (or third-party services employed in Sharetoall), which can include: the IP addresses or domain names of the computers utilized by the Users who use Sharetoall, the URI addresses (Uniform Resource Identifier), the time of the request, the method utilized to submit the request to the server, the size of the file received in response, the numerical code indicating the status of the server&#8217;s answer (successful outcome, error, etc.), the country of origin, the features of the browser and the operating system utilized by the User, the various time details per visit (e.g., the time spent on each page within the Application) and the details about the path followed within the Application with special reference to the sequence of pages visited, and other parameters about the device operating system and/or the User&#8217;s IT environment.</p>
+                                <p class="mb-16 h6">User</p>
+                                <p>The individual using Sharetoall who, unless otherwise specified, coincides with the Data Subject.</p>
+                                <p class="mb-16 h6">Data Subject</p>
+                                <p>The natural person to whom the Personal Data refers.</p>
+                                <p class="mb-16 h6">Data Processor (or Data Supervisor)</p>
+                                <p>The natural or legal person, public authority, agency or other body which processes Personal Data on behalf of the Controller, as described in this privacy policy.</p>
+                                <p class="mb-16 h6">Data Controller (or Owner)</p>
+                                <p>The natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of Personal Data, including the security measures concerning the operation and use of Sharetoall. The Data Controller, unless otherwise specified, is the Owner of Sharetoall.</p>
+                                <p class="mb-16 h6">Sharetoall (or this Application)</p>
+                                <p>The means by which the Personal Data of the User is collected and processed.</p>
+                                <p class="mb-16 h6">Service</p>
+                                <p>The service provided by Sharetoall as described in the relative terms (if available) and on this site/application.</p>
+                                <p class="mb-16 h6">European Union (or EU)</p>
+                                <p>Unless otherwise specified, all references made within this document to the European Union include all current member states to the European Union and the European Economic Area.</p>
+                                <p class="mb-16 h6">Cookies</p>
+                                <p>Small sets of data stored in the User&#8217;s device.</p>
+                                <h4 class="mt-48 mb-32">Legal information</h4>
+                                <p>This privacy statement has been prepared based on provisions of multiple legislations, including Art. 13/14 of Regulation (EU) 2016/679 (General Data Protection Regulation).</p>
+                                <p>This privacy policy relates solely to Sharetoall, if not stated otherwise within this document.</p>
+                                </div>
+
+                    </v-flex>
+                {% include 'web/modals/login.twig' %}
+                {% include 'web/modals/resetPassword.twig' %}
+                {% include 'web/modals/register.twig' %}
+                {% include 'web/modals/contact.twig' %}
+            </v-content>
+        </v-app>
+                            </div>
+    </br>
+    {% endblock %}
