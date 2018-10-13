@@ -91,12 +91,14 @@
                     </div>
 
                 </v-flex>
+                {% include 'web/index/footer.twig' %}
+                <!-- Include the modals -->
                 {% include 'web/modals/login.twig' %}
                 {% include 'web/modals/resetPassword.twig' %}
                 {% include 'web/modals/register.twig' %}
                 {% include 'web/modals/contact.twig' %}
             </v-content>
         </v-app>
-        </div>
-        </br>
-        {% endblock %}
+    </div>
+</div>
+{% endblock %}
