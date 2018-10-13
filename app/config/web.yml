@@ -38,6 +38,10 @@ services:
     controller.web.index:
         class: App\Controller\Web\IndexController
 
+    controller.web.policy:
+        class: App\Controller\Web\PolicyController
+
+
     controller.web.about:
         class: App\Controller\Web\IndexController
 
