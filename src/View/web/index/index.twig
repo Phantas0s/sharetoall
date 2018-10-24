@@ -91,13 +91,13 @@
                                             <v-card-text class="text-xs-center">
                                                 <p>Sharetoall counts on donations to finance itself.</p>
                                                 <p>Please consider it if you use and want the service to grow.</p>
-
                                                 <v-btn
-                                                    href="https://www.patreon.com/sharetoall"
                                                     class="accent white--text subheading mt-5"
                                                     dark
-                                                    large>
-                                                    Become a Patron
+                                                    large
+                                                    @click.native="donationModal = true"
+                                                >
+                                                    Donate
                                                 </v-btn>
                                             </v-card-text>
                                         </v-card>
@@ -169,6 +169,7 @@
                 {% include 'web/modals/resetPassword.twig' %}
                 {% include 'web/modals/register.twig' %}
                 {% include 'web/modals/contact.twig' %}
+                {% include 'web/modals/donation.twig' %}
 
                 {% if resetToken %}
                     {% include 'web/modals/resetPasswordForm.twig' %}

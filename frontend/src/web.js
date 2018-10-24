@@ -38,6 +38,7 @@ const app = new Vue({
         confirmNewsletterModal: false,
         contactModal: false,
         confirmContactModal: false,
+        donationModal: false,
 
         loginEmail: '',
         loginPass: '',

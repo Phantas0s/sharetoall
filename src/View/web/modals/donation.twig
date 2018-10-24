@@ -1,0 +1,27 @@
+<v-dialog v-model="donationModal" max-width="500px">
+    <v-card id="modal-donation" class="pa-5">
+        <h2 class="form-title text-xs-center">Thank you for supporting Sharetoall!</h2>
+        <v-card-text class="text-xs-center">
+            <div>
+                <p>You can donate every month via Patreon:</p>
+                <v-btn
+                    href="https://www.patreon.com/sharetoall"
+                    class="accent white--text subheading mb-5"
+                    dark>
+                    Become a Patron
+                </v-btn>
+            </div>
+            <div>
+                <p>You can as well do a one time donation via paypal:</p>
+                <div class="form-wrapper form-500">
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="BAZJ5VX9V8ULQ">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form>
+                </div>
+            </div>
+        </v-card-text>
+    </v-card>
+</v-dialog>
