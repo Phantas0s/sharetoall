@@ -57,6 +57,7 @@ class RedirectController
 
     public function twitterAction(Request $request)
     {
+        $this->log(LogLevel::DEBUG, "Debug test");
         if (!$request->get('oauth_token') || !$request->get('oauth_verifier')) {
             throw new NotFoundException('The twitter api response miss oauth_token or oauth_verifier');
         }
