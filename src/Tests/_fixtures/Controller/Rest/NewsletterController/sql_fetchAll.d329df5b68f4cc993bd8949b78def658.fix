@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:1:{i:0;a:10:{s:6:"userId";s:1:"1";s:9:"userEmail";s:19:"user@sharetoall.com";s:12:"userPassword";s:60:"$2y$10$lQtIrnC2WGvOdz5crEt3L.WRjg3iHh.HsM8dEToXodfP6gF5kI8Vu";s:19:"userVerifEmailToken";N;s:12:"userVerified";s:19:"2012-12-12 00:00:00";s:22:"userResetPasswordToken";N;s:14:"userNewsletter";N;s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}}s:4:"args";a:1:{i:0;s:4898:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:1:{i:0;a:10:{s:6:"userId";s:1:"1";s:9:"userEmail";s:19:"user@sharetoall.com";s:12:"userPassword";s:60:"$2y$10$lQtIrnC2WGvOdz5crEt3L.WRjg3iHh.HsM8dEToXodfP6gF5kI8Vu";s:19:"userVerifEmailToken";N;s:12:"userVerified";s:19:"2012-12-12 00:00:00";s:22:"userResetPasswordToken";N;s:14:"userNewsletter";N;s:7:"created";N;s:7:"updated";N;s:7:"deleted";N;}}s:4:"args";a:1:{i:0;s:4892:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (
@@ -29,12 +29,12 @@ a:2:{s:6:"result";a:1:{i:0;a:10:{s:6:"userId";s:1:"1";s:9:"userEmail";s:19:"user
  *RECURSION*
                 )
 
-            [_isConnected:Doctrine\DBAL\Connection:private] => 1
+            [isConnected:Doctrine\DBAL\Connection:private] => 1
             [autoCommit:Doctrine\DBAL\Connection:private] => 1
-            [_transactionNestingLevel:Doctrine\DBAL\Connection:private] => 0
-            [_transactionIsolationLevel:Doctrine\DBAL\Connection:private] => 
-            [_nestTransactionsWithSavepoints:Doctrine\DBAL\Connection:private] => 
-            [_params:Doctrine\DBAL\Connection:private] => Array
+            [transactionNestingLevel:Doctrine\DBAL\Connection:private] => 0
+            [transactionIsolationLevel:Doctrine\DBAL\Connection:private] => 
+            [nestTransactionsWithSavepoints:Doctrine\DBAL\Connection:private] => 
+            [params:Doctrine\DBAL\Connection:private] => Array
                 (
                     [host] => db
                     [port] => 3306
@@ -63,7 +63,7 @@ a:2:{s:6:"result";a:1:{i:0;a:10:{s:6:"userId";s:1:"1";s:9:"userEmail";s:19:"user
                 (
                 )
 
-            [_isRollbackOnly:Doctrine\DBAL\Connection:private] => 
+            [isRollbackOnly:Doctrine\DBAL\Connection:private] => 
             [defaultFetchMode:protected] => 2
             [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Controller/Rest/NewsletterController/
             [_fixturePrefix:TestTools\Doctrine\DBAL\Connection:private] => sql

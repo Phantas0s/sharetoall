@@ -5,4 +5,10 @@ namespace App\Model;
 
 class Message extends ModelAbstract
 {
+    public function saveMessage(array $values)
+    {
+        $messageDao = $this->createDao('Message');
+        $messageDao->setValues($values);
+        $messageDao->save();
+    }
 }

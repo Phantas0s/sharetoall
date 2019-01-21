@@ -1,4 +1,4 @@
-a:2:{s:6:"result";a:2:{s:11:"networkSlug";s:12:"supernetwork";s:11:"networkName";s:13:"Super Network";}s:4:"args";a:1:{i:0;s:4792:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
+a:2:{s:6:"result";a:2:{s:11:"networkSlug";s:12:"supernetwork";s:11:"networkName";s:13:"Super Network";}s:4:"args";a:1:{i:0;s:4786:"Argument could not be serialized: Doctrine\DBAL\Query\QueryBuilder Object
 (
     [connection:Doctrine\DBAL\Query\QueryBuilder:private] => App\Tests\Doctrine\DBAL\Connection Object
         (
@@ -29,12 +29,12 @@ a:2:{s:6:"result";a:2:{s:11:"networkSlug";s:12:"supernetwork";s:11:"networkName"
  *RECURSION*
                 )
 
-            [_isConnected:Doctrine\DBAL\Connection:private] => 1
+            [isConnected:Doctrine\DBAL\Connection:private] => 1
             [autoCommit:Doctrine\DBAL\Connection:private] => 1
-            [_transactionNestingLevel:Doctrine\DBAL\Connection:private] => 0
-            [_transactionIsolationLevel:Doctrine\DBAL\Connection:private] => 
-            [_nestTransactionsWithSavepoints:Doctrine\DBAL\Connection:private] => 
-            [_params:Doctrine\DBAL\Connection:private] => Array
+            [transactionNestingLevel:Doctrine\DBAL\Connection:private] => 0
+            [transactionIsolationLevel:Doctrine\DBAL\Connection:private] => 
+            [nestTransactionsWithSavepoints:Doctrine\DBAL\Connection:private] => 
+            [params:Doctrine\DBAL\Connection:private] => Array
                 (
                     [host] => db
                     [port] => 3306
@@ -63,7 +63,7 @@ a:2:{s:6:"result";a:2:{s:11:"networkSlug";s:12:"supernetwork";s:11:"networkName"
                 (
                 )
 
-            [_isRollbackOnly:Doctrine\DBAL\Connection:private] => 
+            [isRollbackOnly:Doctrine\DBAL\Connection:private] => 
             [defaultFetchMode:protected] => 2
             [_fixturePath:TestTools\Doctrine\DBAL\Connection:private] => /sharetoall/src/Tests/_fixtures/Model/Network/
             [_fixturePrefix:TestTools\Doctrine\DBAL\Connection:private] => sql

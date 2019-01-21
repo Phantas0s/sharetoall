@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Rest;
 
+use App\Model\Message;
 use App\Traits\LoggerTrait;
 
 use App\Exception\ApiException;
@@ -34,6 +35,9 @@ class MessageController extends EntityControllerAbstract
     /** @var Session */
     protected $session;
 
+    /** @var Message */
+    private $messageModel;
+
     public function __construct(
         Session $session,
         ModelFactory $modelFactory,
@@ -43,6 +47,7 @@ class MessageController extends EntityControllerAbstract
         parent::__construct($session, $modelFactory, $formFactory);
         $this->networkFactory = $networkFactory;
         $this->networkModel = $modelFactory->create('Network');
+        $this->messageModel = $modelFactory->create('Message');
         $this->session = $session;
     }
 
@@ -54,8 +59,13 @@ class MessageController extends EntityControllerAbstract
             throw new NotFoundException('The message can\'t be empty.');
         }
 
+        $userId = $this->session->getUserId();
+
         $networkSlug = $request->get('networkSlug');
-        $network = $this->networkModel->findWithNetworkUser(['networkSlug' => $networkSlug])->getFirstResult();
+        $network = $this->networkModel->findWithNetworkUser([
+            'networkSlug' => $networkSlug,
+            'un.userId' => $userId,
+        ])->getFirstResult();
 
         $networkApi = $this->networkFactory->create($networkSlug);
 
@@ -82,6 +92,11 @@ class MessageController extends EntityControllerAbstract
             $this->log(LogLevel::ERROR, $message);
             throw new ApiException($message);
         }
+
+        $this->messageModel->saveMessage([
+            "messageContent" => $message,
+            "userId" => $userId,
+        ]);
 
         return $response;
     }
